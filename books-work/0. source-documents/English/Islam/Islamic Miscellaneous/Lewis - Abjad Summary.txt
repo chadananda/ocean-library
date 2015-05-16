@@ -1,0 +1,84 @@
+ Franklin D. Lewis 
+
+
+1) ABJAD AND THE RISE AND DECLINE OF ALPHANUMERIC SYSTEMS
+
+	The word *abjad* is an acronym derived from the first four consonantal shapes in the Arabic alphabet-- Alif, Baa, Jim, Daal. As such *abjad* designates the letters of the Arabic alphabet (also known as *alifbaa'*) in the phrase *huruuf al-abjad.* An adjective formed from this, abjadii, means a novice at something. Nowadays the Arabic alphabet does not follow the sequence a-b-j-d, but rather the order: A-B-T-Th-J-H.-Kh-D (the basic shapes of the letters A-B-J-D without their diacritical dots do, however, occur in that order, insofar as T and Th are distinguished from B only by dots, and the H. and Kh from the J only by dots). However, the order A-B-J-D is quite ancient, insofar as the word *abjad* is not of Arabic origin, but comes from earlier written alphabets, perhaps from Phoenician though the sequence may be as old as Ugaritic. In any case, it certainly predates the writing down of Arabic, as can be seen by comparison of Hebrew (Aleph, Beth, Gimel, Daleth) and Greek (Alpha Beta Gamma Delta).
+
+	The Arabic alphabet and the corresponding numerical values known as abjad are therefore derived from earlier prototypes, as the following comparison shows:
+
+      Hebrew:    Aleph = 1  Beth = 2  gimel = 3  daleth = 4
+      Greek :    alpha = 1  beta = 2  gamma = 3  delta  = 4
+      Arabic:    alif  = 1  baa' = 2  jiim  = 3  daal   = 4
+
+	The so-called Arabic numerals that we use as ciphers to represent our numbers (1,2,3,4, etc.) were invented in India c. 600 A.D. They were first used in the Middle East by the mathematician al-Khwarazmi (c. 875), along with the zero. Though some Europeans were aware of these "Arabic" computational symbols as early as the 10th century, they did not come into general use until the 13th century in Europe. The point being that up until this time, written texts in Greek, Latin, Hebrew/Aramaic, Arabic/Persian, etc. used letters of the alphabet to represent numbers (the Latin equivalent is Roman numerals).
+
+	The Arabic numerals proved far superior for computational purposes to the previous systems (it is not possible to do positional computation with roman numerals, nor did they come with the zero, another gift of India). The older letter/numbers gradually fell out of use, except in certain contexts (specifically the use of Roman numerals and Abjad numerals to mark the page numbers of the introduction of a book and the use of Roman numerals to record the publication date of books until the 19th century and the production date of motion pictures until the 1960s). However, just because the letters were no longer generally used as numbers, this does not mean that the numerical associations died out. Among poets the numbers were used to write chronograms (a word that contains a numerical value; poets frequently tried to find words with a numerical equivalent to the year of someone's death to write an elegy, for example). Theologians and mystics invested the letters and their associated numberical values with mystical significance. I have never studied the matter, but the Bab perhaps took one of his cues for the use of gematria from Fazl Allah Astarabadi, founder of the Horufi sect (Todd Lawson would, I am sure, be able to speak in an informed manner on what is mere speculation on my part).
+
+2)  ABJAD SYSTEM AND HOW IT WORKS
+
+	There are two principle variations in the Abjad system as to the value of certain letters; the Arabs of North Africa and Spain gave a different alpha-numeric order to some of the letters in the 100s than was common in the Levant and the Islamic east. However, this variation does not affect the values of letters under 100, which have always and everywhere been the same, so far as I know.
+
+	The Abjad values and their mnemonic groupings are as follows. Short vowels have no value (except in the beginning of a word, where they are necessarily accompanied by alif/hamza). Note that hamza (') and `ayn (`) are different letters with different values, as are the letters followed by dots (which would be underdots in printed versions of texts rendered in accord with the romanization system used by Shoghi Effendi for Baha'i texts). For the details of why hamza and alif have the same value (i.e., aa = ' = 1), see section #4 below:
+
+abjad:             hawwaz         h.ut.t.i      kalaman    sa`fas.
+
+aa/ '     1        h       5      h.     8      k    20    s    60
+b         2        w/v/uu  6      t.     9      l    30    `    70
+j         3        z       7      y/ii  10      m    40    f    80
+d         4                                     n    50    s.   90
+
+
+qarashat           thakhidh       d.az.agh
+
+q       100        th    500      d.   800
+r       200        kh    600      z.   900
+sh      300        dh    700      gh  1000
+t       400
+
+	In the maghrib (Spain and North Africa), the following variant values obtained, to wit: s.= 60, d.= 90, s= 300, z.= 800, gh= 900, sh=1000.
+
+	N.B.: Certain phonemes which require two letters to represent in the roman alphabet (e.g., Th, Kh, Dh, Gh, Sh) are each rendered by a unique letter in the Arabic alphabet. In the system of Baha'i transliteration as used by Shoghi Effendi, these letter combinations are written with an underline (I can't quite render it in ASCII text, but: _sh_, _kh_, etc.) . Do not count the "h" of underlined letters for the purposes of calculating abjad values if you are working from an English transliteration. _Kh_aal would be Kh= 600 aa= 1 l= 30 for a total of 631.
+
+	Likewise, doubled consonants (huruuf mushaddada) are counted only once. For example, though in transliteration we write Muhammad, in the Arabic script, the doubled consonant "mm" is represented by a diacritical mark (tashdid) over a single "m", which is therefore only written once and only counted once. Hence the numerical values of Muhammad and Nabiil are identical (remember not to count the short vowels, which are any vowels in transliteration which lack the accent mark):
+
+     M +  h. +   mma +  d
+     40   8      40     4 =    92
+
+     N +  b +    i/y +  l
+     50   2      10     30 =   92
+
+	The word Rid.waan totals to 1057: R= 200, d.= 800, w= 6, aa= 1, n= 50 Mustaghaath equal M=40, s=60, t=400, gh=1000, aa= 1, th= 500
+
+3)  SPELLING THE WORD BAHA'
+
+	The numerical value of Baha' (*bahaa'*) would in either eastern or western Islamic version of abjad total to nine (9), as follows: b= 2, h= 5, aa (a with accent in transliteration)= 1, hamza (')= 1 TOTAL: 9
+
+	Although Persians do not generally pronounce hamza after final alif (which occurs only in words of Arabic origin), this does not mean that the letter does not exist. The existence of the final hamza is extremely important for Arabic declension, because only with that final short vowel is it possible to distinguish the nominative (bahaa'u), accusative (bahaa'a) or genitive (bahaa'i) forms of the word from one another. This is of utmost importance for the correct vocalizing of an Arabic sentence or phrase with the word Bahaa' in it, and may also play a role in correctly comprehending the meaning. Persian has no noun declension, so the elision of the final hamza in words of this pattern (e.g., *sanaa'* *bahaa'* *shay'* *ridaa'* *a`daa'* *qurraa'* *`ulamaa'*, etc.) does no great harm (except that sometimes it creates homonyms; e.g., bahaa = price, bahaa' = glory). In neither Persian nor Arabic is Bahaa' spelled with an alif maqsuura (this would give bahiyy, as in Bahiyyih Khanum), a dagger alef (which would not change the abjad value, anyway), with two alifs, or any of the other variations which have been proposed, in so far as I am aware (though the Bab has a long tablet with various permutations of the root B-H-Y and he sometimes produced morphologically possible forms which, though theoretically meaningful, had never actually been used by anyone).
+
+	Incidentally, the value of *kull shay'* should be 361 (k= 20, l = 30, doubled or mashdudd consonants are not counted twice, sh = 300, y = 10, hamza = 1). Persians sometimes elide the final hamza when writing this word in Persian (sometimes an extra "y" is also incorrectly added), which could lead to the value of 360, but the Bab was using an Arabic term which should always have the value 361 (except in Northwest Africa, where it would have been 1061).
+
+4)  NUMERIC VALUE OF HAMZA AND ALIF ARE THE SAME
+
+	As Iskandar Hai pointed out, alif and hamza have the same numerical value. If we stop to consider how the word "abjad" is written and pronounced in Arabic or Persian, this fact should not come as a great surprise. The initial sound in *abjad* is a short "a." In any language a word beginning with a vowel is proceeded by a glottal stop (quickly pronounce the words "a apple" and you will hear and feel the glottal stop in between them). The letter which marks the glottal stop in Arabic is the hamza.
+
+	It is true that the word abjad begins with an alif, but the alif in this case is merely a place-holder for the initial hamza. This is because according to the rules of Arabic orthography, word-initial hamza, the phonetic value of which is a glottal stop followed by a vowel, must be written with an alif. This is true for any word beginning in a short vowel -- a, u, i. In word-initial position a short vowel rests upon a hamza, which in turn rests upon an alif.
+
+	But alif is used not only as a place-holder for initial short vowels. It also has other purposes, and this is where the confusion comes about. In the middle of a word, and sometimes at the end, alif represents the long vowel "aa" (in Arabic, fatha and long alif have the same vowel quality in most phonetic environments, the difference being one of quantity--the alif is pronounced twice as long; in Persian, however, the long alif [aa] sound is not only held longer, but is also qualitatively different from the fatha [a], having the value of the "a" in "law" as opposed to the "a" in "hat").
+
+	Technically speaking, the alif that represents the long "aa" is a doubled or elongated fatha (a), and consists of a fatha combined with a hamza. Neither the fatha nor the hamza are written in this case, however, but instead the combination is marked by an alif. So the long vowel "aa," represented in writing by the letter alif, does contain a hamza, even though that hamza isn't written out. Though modern Arabic orthography does not call for the hamza to be written with the alif of the long vowel, it can be found written out in some ancient manuscripts and inscriptions (it would be far easier to explain this if we could write Arabic characters in electronic form; those of you interested in actually seeing what I'm talking about can check Wright's extremely detailed explanation in Grammar of the Arabic Language, in the first section, under hamza and alif).
+
+	One might argue that it is not actually because of the alif, but rather because of the unwritten hamza that usually accompanies the alif, that the letter has the numerical value of one. Due to the conventions of writing Arabic, the hamza occurs everywhere an alif has a phonetic value (the alif is written in some cases without a phonetic value, such as in the alif wasl or as a soundless marker at the end of the 3rd person masc. pl. verb ending). So, for most purposes, where there is an alif with a phonetic value, it actually contains within it a hamza. However, the hamza can also occur without the alif. Hamza is written as a separate symbol (without the alif) when two vowels fall next to each other (e.g., *su'aal, masaa'il*), when an unvowelled consonant is followed by a short vowel (e.g., mas'ala; in words like *qur'aan, mir'aat*, where a syllabic break occurs with a consonant, followed by a long vowel "aa", the hamza is written as a madda stroke above the alif, and not usually in the form of hamza); or when a short vowel occurs at the end of a word immediately after a long vowel (*bahaa', shay'*).
+
+	The long and short of it is that both alif and hamza are counted as one in Abjad. Where there is both an alif and a separate hamza in a word, as in Bahaa', you count them separately. aa = 1 , ' = 1.
+
+5) METHODOLOGICAL MEDITATION
+
+	This brings to mind a methodological/epistemological question, or perhaps an observation on the nature of internet discussions. There are many reference works, such as the Encyclopedia of Islam and Encyclopeadia Iranica, the Arabic Lexicon of Lane, the Dictionaries of Mo'in and Dehkhoda, that contain information on the Abjad system. Most of the dictionaries explain that alif and hamza have the same numerical value.
+
+	I have not checked it to see whether it specifies the value of hamza and alif, but I seem to recall that Marzieh Gail's *Baha'i Glossary* had an abjad chart with explanation of the numerical value of certain key words. I would not be surprised if an explanation also shows up in one of the volumes of Baha'i World or even in Star of the West. How is it that so many well-informed people could have been discussing a pseudo-problem (the calculation of the numerical value of Bahaa') for several days on H-Baha'i, before it was pointed out that Bahaa' does indeed equal nine?
+
+	Does it not seem unlikely in the extreme that something this elementary (and theologically important) could have escaped the notice of the Babis or their enemies? If the word Baha' was supposed to total nine but according to the normal mode of calculation it had totalled eight, would this not have cast some doubt on the Bab's writings? (Karim Khan or the orthodox Shiite ulama would have certainly added this charge to that of ungrammaticality of the Bab's Arabic)? It is easy with the benefit of hindsight or in the light of subsequent scientific knowledge, to develop a sense of hubris about the superior understanding of matters of history we have compared to the actual participants in the events had. However, those participants had as much common sense and often more specific knowledge than we, so that when confronted with a question of this nature, as part of our procedural methodology, we would do well to ask ourselves if we are correctly understanding what we read or if one of our assumptions or premises might not be amiss.
+
+Frank Lewis
+Emory University

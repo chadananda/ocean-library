@@ -1,0 +1,889 @@
+The
+Sacred Books of the East
+Translated
+By various Oriental scholars
+and edited by
+ 
+
+F. Max Müller
+Vol. I
+The Upanishads
+Translated by F. Max Müller
+ 
+
+In two parts
+Part I
+Chandogya Upanishad
+Talavakara (Kena) Upanishad
+Aitareya Upanishad
+Kausitaki Upanishad
+Vajasaneyi (Isa) Upanshad
+(1879)
+TO
+THE RIGHT HONOURABLE THE MARQUIS OF SALISBURY, K.G.
+CHANCELLOR OF THE UNIVERSITY OF OXFORD,
+LATELY SECRETARY OF STATE FOR INDIA,
+SIR HENRY J. S. MAINE, K.O.S.I.
+MEMBER OF THE COUNCIL OF INDIA,
+AND
+THE VERY REV. H. G. LIDDELL, D.D.
+DEAN OF CHRIST CHURCH,
+TO WHOSE KIND INTEREST AND EXERTIONS
+THIS ATTEMPT TO MAKE KNOWN TO THE ENGLISH PEOPLE
+THE SACRED BOOKS OF THE EAST
+IS SO LARGELY INDEBTED,
+I NOW DEDICATE THESE VOLUMES WITH SINCERE RESPECT AND GRATITUDE,
+F. MAX MÜLLER.
+
+'The general inclinations which are naturally implanted in my soul to some religion, it is impossible for me to shift off: but there being such a multiplicity of religions in the world, I desire now seriously to consider with my self which of them all to restrain these my general inclinations to. And the reason of this my enquiry is not, that I am in the least dissatisfied with that religion I have already embraced; but because 'tis natural for all men to have an overbearing opinion and esteem for that particular religion they are born and bred-up in. That, therefore, I may not seem biassed by the prejudice of education, I am resolved to prove and examine them all; that I may see and hold fast to that which is best ....
+
+'Indeed there was never any religion so barbarous and diabolical, but it was preferred before all other religions whatsoever, by them that did profess it; otherwise they would not have professed it ....
+
+'And why, say they, may not you be mistaken as well as we? Especially when there is, at least, six to one against your Christian religion; all of which think they serve God aright; and expect happiness thereby as well as you And hence it is that in my looking out for the truest religion, being conscious to my self how great an ascendant Christianity holds over me beyond the rest, as being that religion whereinto I was born and baptized, that which the supreme authority has enjoined and my parents educated me in; that which every one I meet withal highly approves of, and which I my self have, by a long continued profession, made almost natural to me: I am resolved to be more jealous and suspicious of this religion, than of the rest, and be sure not to entertain it any longer without being convinced by solid and substantial arguments, of the truth and certainty of it. That, therefore, I may make diligent and impartial enquiry into all religions and so be sure to find out the best, I shall for a time, look upon my self as one not at all interested in any particular religion whatsoever, much less in the Christian religion; but only as one who desires, in general, to serve and obey Him that made me, in a right manner, and thereby to be made partaker of that happiness my nature is capable of.'
+
+    BISHOP BEVERIDGE (1636-1707).
+
+Private Thoughts on Religion, Part 1, Article 2.
+
+PREFACE
+TO
+THE SACRED BOOKS OF THE EAST.
+I MUST begin this series of translations of the Sacred Books of the East with three cautions: the first, referring to the character of the original texts here translated; the second, with regard to the difficulties in making a proper use of translations; the third, showing what is possible and what is impossible in rendering ancient thought into modern speech.
+
+Readers who have been led to believe that the Vedas of the ancient Brahmans, the Avesta of the Zoroastrians, the Tripitaka of the Buddhists, the Kings of Confucius, or the Koran of Mohammed are books full of primeval wisdom and religious enthusiasm, or at least of sound and simple moral teaching, will be disappointed on consulting these volumes. Looking at many of the books that have lately been published on the religions of the ancient world, I do not wonder that such a belief should have been raised; but I have long felt that it was high time to dispel such illusions, and to place the study of the ancient religions of the world on a more real and sound, on a more truly historical basis. It is but natural that those who write on ancient religions, and who have studied them from translations only, not from original documents, should have had eyes for their bright rather than for their dark sides. The former absorb all the attention of the student, the latter, as they teach nothing, seem hardly to deserve any notice. Scholars also who have devoted their life either to the editing of the original texts or to the careful interpretation of some of the sacred books, are more inclined, after they have disinterred from a heap of rubbish some solitary fragments of pure gold, to exhibit these treasures only than to display all the refuse from which they had to extract them. I do not blame them for this, perhaps I should feel that I was open to the same blame myself, for it is but natural that scholars in their joy at finding one or two fragrant fruits or flowers should gladly forget the brambles and thorns that had to be thrown aside in the course of their search.
+
+But whether I am myself one of the guilty or not, I cannot help calling attention to the real mischief that has been done and is still being done by the enthusiasm of those pioneers who have opened the first avenues through the bewildering forest of the sacred literature of the East. They have raised expectations that cannot be fulfilled, fears also that, as will be easily seen, are unfounded. Anyhow they have removed the study of religion from that wholesome and matter-of-fact atmosphere in which alone it can produce valuable and permanent results.
+
+The time has come when the study of the ancient religions of mankind must be approached in a different, in a less enthusiastic, and more discriminating, in fact, in a more scholarlike spirit. Not that I object to dilettanti, if they only are what by their name they profess to be, devoted lovers, and not mere amateurs. The religions of antiquity must always be approached in a loving spirit, and the dry and cold-blooded scholar is likely to do here as much mischief as the enthusiastic sciolist. But true love does not ignore all faults and failings: on the contrary, it scans them keenly, though only in order to be able to understand, to explain, and thus to excuse them. To watch in the Sacred Books of the East the dawn of the religious consciousness of man, must always remain one of the most inspiring and hallowing sights in the whole history of the world; and he whose heart cannot quiver with the first quivering rays of human thought and human faith, as revealed in those ancient documents, is, in his own way, as unfit for these studies as, from another side, the man who shrinks from copying and collating ancient MSS., or toiling through volumes of tedious commentary. What we want here, as everywhere else, is the truth, and the whole truth; and if the whole truth must be told, it is that, however radiant the dawn of religious thought, it is not without its dark clouds, its chilling colds, its noxious vapours. Whoever does not know these, or would hide them from his own sight and from the sight of others, does not know and can never understand the real toil and travail of the human heart in its first religious aspirations; and not knowing its toil and travail, can never know the intensity of its triumphs and its joys.
+
+In order to have a solid foundation for a comparative study of the religions of the East, we must have before all things complete and thoroughly faithful translations of their sacred books. Extracts will no longer suffice. We do not know Germany, if we know the Rhine; nor Rome, when we have admired St. Peter's. No one who collects and publishes such extracts can resist, no one at all events, so far as I know, has ever resisted, the temptation of giving what is beautiful, or it may be what is strange and startling, and leaving out what is commonplace, tedious, or it may be repulsive, or, lastly, what is difficult to construe and to understand. We must face the problem in its completeness, and I confess it has been for many years a problem to me, aye, and to a great extent is so still, how the Sacred Books of the East should, by the side of so much that is fresh, natural, simple, beautiful, and true, contain so much that is not only unmeaning, artificial, and silly, but even hideous and repellent. This is a fact, and must be accounted for in some way or other.
+
+To some minds this problem may seem to be no problem at all. To those (and I do not speak of Christians only) who look upon the sacred books of all religions except their own as necessarily the outcome of human or superhuman ignorance and depravity, the mixed nature of their contents may seem to be exactly what it ought to be, what they expected it would be. But there are other and more reverent minds who can feel a divine afflatus in the sacred books, not only of their own, but of other religions also, and to them the mixed character of some of the ancient sacred canons must always be extremely perplexing.
+
+I can account for it to a certain extent, though not entirely to my own satisfaction. Most of the ancient sacred books have been handed down by oral tradition for many generations before they were consigned to writing. In an age when there was nothing corresponding to what we call literature, every saying, every proverb, every story handed down from father to son, received very soon a kind of hallowed character. They became sacred heirlooms, sacred, because they came from an unknown source, from a distant age. There was a stage in the development of human thought, when the distance that separated the living generation from their grandfathers or great-grandfathers was as yet the nearest approach to a conception of eternity, and when the name of grandfather and great-grandfather seemed the nearest expression of God[1]. Hence, what had been said by these half-human, half-divine ancestors, if it was preserved at all, was soon looked upon as a more than human utterance. It was received with reverence, it was never questioned and criticised.
+
+Some of these ancient sayings were preserved because they were so true and so striking that they could not be forgotten. They contained eternal truths, expressed for the first time in human language. Of such oracles of truth it was said in India that they had been heard, sruta, and from it arose the word sruti, the recognised term for divine revelation in Sanskrit.
+
+But besides those utterances which had a vitality of their own, strong enough to defy the power of
+
+[1. Bishop Callaway, Unkulunkulu, or the Tradition of Creation, as existing among the Amazulu and other tribes of South Africa, P.7.]
+
+time, there were others which might have struck the minds of the listeners with great force under the peculiar circumstances that evoked them, but which, when these circumstances were forgotten, became trivial and almost unintelligible. A few verses sung by warriors on the eve of a great battle would, if that battle ended in victory, assume a charm quite independent of their poetic merit. They would be repeated in memory of the heroes who conquered, and of the gods who granted victory. But when the heroes, and the gods, and the victory were all forgotten, the song of victory and thanksgiving would often survive as a relic of the past, though almost unintelligible to later generations.
+
+Even a single ceremonial act, performed at the time of a famine or an inundation, and apparently attended with a sudden and almost miraculous success, might often be preserved in the liturgical code of a family or a tribe with a superstitious awe entirely beyond our understanding. It might be repeated for some time on similar emergencies, till when it had failed again and again it survived only as a superstitious custom in the memory of priests and poets.
+
+Further, it should be remembered that in ancient as in modern times, the utterances of men who had once gained a certain prestige, would often receive attention far beyond their merits, so that in many a family or tribe the sayings and teachings of one man, who had once in his youth or manhood uttered words of inspired wisdom, would all be handed down together, without any attempt to separate the grain from the chaff.
+
+Nor must we forget that though oral tradition, when once brought under proper discipline, is a most faithful guardian, it is not without its dangers in its incipient stages. Many a word may have been misunderstood, many a sentence confused, as it was told by father to son, before it became fixed in the tradition of a village community, and then resisted by its very sacredness all attempts at emendation.
+
+Lastly, we must remember that those who handed down the ancestral treasures of ancient wisdom, would often feel inclined to add what seemed useful to themselves, and what they knew could be preserved in one way only, namely, if it was allowed to form part of the tradition that had to be handed down, as a sacred trust, from generation to generation. The priestly influence was at work, even before there were priests by profession, and when the priesthood had once become professional, its influence may account for much that would otherwise seem inexplicable in the sacred codes of the ancient world.
+
+These are some of the considerations which may help to explain how, mixed up with real treasures of thought, we meet in the sacred books with so many passages and whole chapters which either never had any life or meaning at all, or if they had, have, in the form in which they have come down to us, completely lost it. We must try to imagine what the Old Testament would have been, if it had not been kept distinct from the Talmud; or the New Testament, if it had been mixed up not only with the spurious gospels, but with the records of the wranglings of the early Councils, if we wish to understand, to some extent at least, the wild confusion of sublime truth with vulgar stupidity that meets us in the pages of the Veda, the Avesta, and the Tripitaka. The idea of keeping the original and genuine tradition separate from apocryphal accretions was an idea of later growth, that could spring up only after the earlier tendency of preserving whatever could be preserved of sacred or half-sacred lore, had done its work, and wrought its own destruction.
+
+In using, what may seem to some of my fellow-workers, this very strong and almost irreverent language with regard to the ancient Sacred Books of the East, I have not neglected to make full allowance for that very important intellectual parallax which, no doubt, renders it most difficult for a Western observer to see things and thoughts under exactly the same angle and in the same light as they would appear to an Eastern eye. There are Western expressions which offend Eastern taste as much as Eastern expressions are apt to offend Western taste. A symphony of Beethoven's would be mere noise to an Indian ear, an Indian Sangita seems to us without melody, harmony, or rhythm. All this I fully admit, yet after making every allowance for national taste and traditions, I still confidently appeal to the best Oriental scholars, who have not entirely forgotten that there is a world outside the four walls of their study, whether they think that my condemnation is too severe, or that Eastern nations themselves would tolerate, in any of their classical literary compositions, such violations of the simplest rules of taste as they have accustomed themselves to tolerate, if not to admire, in their sacred books.
+
+But then it might no doubt be objected that books of such a character hardly deserve the honour of being translated into English, and that the sooner they are forgotten, the better. Such opinions have of late been freely expressed by some eminent writers, and supported by arguments worthy of the Khalif Omar himself. In these days of anthropological research, when no custom is too disgusting to be recorded, no rules of intermarriage too complicated to be disentangled, it may seem strange that the few genuine relics of ancient religion which, as by a miracle, have been preserved to us, should thus have been judged from a purely aesthetic, and not from an historical point of view. There was some excuse for this in the days of Sir William Jones and Colebrooke. The latter, as is well known, considered 'the Vedas as too voluminous for a complete translation of the whole,' adding that (what they contain would hardly reward the labour of the reader; much less that of the translator[1].' The former went still further in the condemnation which he pronounced on Anquetil Duperron's translation of the Zend-avesta. Sir W. Jones, we must remember, was not only a scholar, but also a man of taste, and the man of taste sometimes gained a victory over the scholar. His controversy with Anquetil Duperron, the discoverer of the Zend-avesta, is well known. It was carried on by Sir W. Jones apparently with great success, and yet in the end the victor has proved to be the vanquished. It was easy, no doubt, to pick out from Anquetil Duperron's translation of the sacred writings of Zoroaster hundreds of passages which were or seemed to be utterly unmeaning or absurd. This arose partly, but partly only, from the imperfections
+
+[1. Colebrooke's Miscellaneous Essays, 1873, vo1. ii, P.102.]
+
+of the translation. Much, however, of what Sir W. Jones represented as ridiculous, and therefore unworthy of Zoroaster, and therefore unworthy of being translated, forms an integral part of the sacred code of the Zoroastrians. Sir W. Jones smiles at those who 'think obscurity sublime and venerable, like that of ancient cloisters and temples, shedding,' as Milton expresses it, 'a dim religious light[1].' 'On possédait déjà,' he writes in his letter addressed to Anquetil Duperron, and composed in very good and sparkling French, 'plusieurs traités attribués à Zardusht ou Zeratusht, traduits en Persan moderne; de prétendues conférences de ce législateur avec Ormuzd, des prières, des dogmes, des lois religieuses. Quelques savans, qui ont lu ces traductions, nous ont assure que les originaux étaient de la plus haute antiquité, parce qu'ils renfermaient beaucoup de platitudes, de bévues, et de contradictions: mais nous avons conclu par les mêmes raisons, qu'ils étaient très-modernes, ou bien qu'ils n'étaient pas d'un homme d'esprit, et d'un philosophe, tel que Zoroastre est peint par nos historiens. Votre nouvelle traduction, Monsieur, nous confirme dans ce jugement: tout le collège des Guèbres aurait beau nous Yassurer; nous ne croirons jamais que le charlatan le moins habile ait pu écrire les fadaises dont vos deux derniers volumes sont remplis [2].' He at last sums up his argument in the following words: 'Ou Zoroastre n'avait pas le sens commun, ou il n'écrivit pas le livre que vous lui attribuez: s'il n'avait pas le sens commun, il fallait le laisser dans la foule, et dans l'obscurité; s'il n'écrivit pas
+
+[1. Sir W. Jones's Works, vol. iv, p. 113.
+
+2. Ib., vol. x, p. 408.]
+
+ce livre, il était impudent de le publier sous son nom. Ainsi, ou vous avez insulté le goût du public en lui présentant des sottises, ou vous l'avez trompé en lui donnant des faussetés: et de chaque côté vous méritez son mépris[1].'
+
+This alternative holds good no longer. The sacred code of Zoroaster or of any other of the founders of religions may appear to us to be full of absurdities, or may in fact really be so, and it may yet be the duty of the scholar to publish, to translate, and carefully to examine those codes as memorials of the past, as the only trustworthy documents in which to study the growth and decay of religion. It does not answer to say that if Zoroaster was what we believe him to have been, a wise man, in our sense of the word, he could not have written the rubbish which we find in the Avesta. If we are once satisfied that the text of the Avesta, or the Veda, or the Tripitaka is old and genuine, and that this text formed the foundation on which, during many centuries, the religious belief of millions of human beings was based, it becomes our duty, both as historians and philosophers, to study these books, to try to understand how they could have arisen, and how they could have exercised for ages an influence over human beings who in all other respects were not inferior to ourselves, nay, whom we are accustomed to look up to on many points as patterns of wisdom, of virtue, and of taste.
+
+The facts, such as they are, must be faced, if the study of the ancient religions of the world is ever to assume a really historical character; and having
+
+[1. Works, vol. x, p.437.]
+
+myself grudged no praise to what to my mind is really beautiful or sublime in the early revelations of religious truth, I feel the less hesitation in fulfilling the duty of the true scholar, and placing before historians and philosophers accurate, complete, and unembellished versions of some of the sacred books of the East. Such versions alone will enable them to form a true and just estimate of the real development of early religious thought, so far as we can still gain a sight of it in literary records to which the highest human or even divine authority has been ascribed by the followers of the great religions of antiquity. It often requires an effort to spoil a beautiful sentence by a few words which might so easily be suppressed, but which are there in the original, and must be taken into account quite as much as the pointed ears in the beautiful Faun of the Capitol. We want to know the ancient religions such as they really were, not such as we wish they should have been. We want to know, not their wisdom only, but their folly also; and while we must learn to look up to their highest points where they seem to rise nearer to heaven than anything we were acquainted with before, we must not shrink from looking down into their stony tracts, their dark abysses, their muddy moraines, in order to comprehend both the heighth and the depth of the human mind in its searchings after the Infinite.
+
+I can answer for myself and for those who have worked with me, that our translations are truthful, that we have suppressed nothing, that we have varnished nothing, however hard it seemed sometimes even to write it down.
+
+There is only one exception. There are in ancient books, and particularly in religious books, frequent allusions to the sexual aspects of nature, which, though perfectly harmless and innocent in themselves, cannot be rendered in modern language without the appearance of coarseness. We may regret that it should be so, but tradition is too strong on this point, and I have therefore felt obliged to leave certain passages untranslated, and to give the original, when necessary, in a note. But this has been done in extreme cases only, and many things which we should feel inclined to suppress have been left in all their outspoken simplicity, because those who want to study ancient man, must learn to study him as he really was, an animal, with all the strength and weaknesses of an animal, though an animal that was to rise above himself, and in the end discover his true self, after many struggles and many defeats.
+
+After this first caution, which I thought was due to those who might expect to find in these volumes nothing but gems, I feel I owe another to those who may approach these translations under the impression that they have only to read them in order to gain an insight into the nature and character of the religions of mankind. There are philosophers who have accustomed themselves to look upon religions as things that can be studied as they study the manners and customs of savage tribes, by glancing at the entertaining accounts of travellers or missionaries, and. then classing each religion under such wide categories as fetishism, polytheism, monotheism, and the rest. That is not the case. Translations can do much, but they can never take the place of the originals, and if the originals require not only to be read, but to be read again and again, translations of sacred books require to be studied with much greater care, before we can hope to gain a real understanding of the intentions of their authors or venture on general assertions.
+
+Such general assertions, if once made, are difficult to extirpate. It has been stated, for instance, that the religious notion of sin is wanting altogether in the hymns of the Rig-veda, and some important conclusions have been based on this supposed fact. Yet the gradual growth of the concept of guilt is one of the most interesting lessons which certain passages of these ancient hymns can teach us [1]. It has been asserted that in the Rig-veda Agni, fire, was adored essentially as earthly sacrificial fire, and not as an elemental force. How greatly such an assertion has to be qualified, may be seen from a more careful examination of the translations of the Vedic hymns now accessible [2]. In many parts of the Avesta fire is no doubt spoken of with great reverence, but those who speak of the Zoroastrians as fire-worshippers, should know that the true followers of Zoroaster abhor that very name. Again, there are certainly many passages in the Vedic writings which prohibit the promiscuous communication of the Veda, but those who maintain that the Brahmans, like Roman Catholic priests, keep their sacred books from the people, must have for gotten
+
+[1. M. M., History of Ancient Sanskrit Literature, second edition, 1859, p.540 seq.
+
+2. Ludwig, Rig-veda, übersetzt, vol. iii, p.331 seq. Muir, Sanskrit Texts, vol. v, p. 199 seq. On the later growth of Agni, see a very useful essay by Holtzmann, 'Agni, nach den Vorstellungen des Mahâbhârata,' 1878.]
+
+the many passages in the Brâhmanas, the Sûtras, and even in the Laws of Manu, where the duty of learning the Veda by heart is inculcated for every Brâhmana, Kshatriya, Vaisya, that is, for every man except a Sûdra.
+
+These are a few specimens only to show how dangerous it is to generalise even where there exist complete translations of certain sacred books. It is far easier to misapprehend, or even totally to misunderstand, a translation than the original; and it should not be supposed, because a sentence or a whole chapter seems at first sight unintelligible in a translation, that therefore they are indeed devoid of all meaning.
+
+What can be more perplexing than the beginning of the Khândogya-upanishad? 'Let a man meditate,' we read, or, as others translate it, ' Let a man worship the syllable Om.' It may seem impossible at first sight to elicit any definite meaning from these words and from much that follows after.
+
+But it would be a mistake, nevertheless, to conclude that we have here vox et præterea nihil. Meditation on the syllable Om consisted in a long continued repetition of that syllable with a view of drawing the thoughts away from all other subjects, and thus concentrating them on some higher object of thought of which that syllable was made to be the symbol. This concentration of thought, ekâgratâ or one-pointedness, as the Hindus called it, is something to us almost unknown. Our minds are like kaleidoscopes of thoughts in constant motion; and to shut our mental eyes to everything else, while dwelling on one thought only, has become to most of us almost as impossible as to apprehend one musical note without harmonics. With the life we are leading now, with telegrams, letters, newspapers, reviews, pamphlets, and books ever breaking in upon us, it has become impossible, or almost impossible, ever to arrive at that intensity of thought which the Hindus meant by ekâgratâ, and the attainment of which was to them the indispensable condition of all philosophical and religious speculation. The loss may not be altogether on our side, yet a loss it is, and if we see the Hindus, even in their comparatively monotonous life, adopting all kinds of contrivances in order to assist them in drawing away their thoughts from all disturbing impressions and to fix them on one subject only, we must not be satisfied with smiling at their simplicity, but try to appreciate the object they had in view.
+
+When by means of repeating the syllable Om, which originally seems to have meant 'that,' or 'yes,' they had arrived at a certain degree of mental tranquillity, the question arose what was meant by this Om, and to this question the most various answers were given, according as the mind was to be led up to higher and higher objects. Thus in one passage we are told at first that Om is the beginning of the Veda, or, as we have to deal with an Upanishad of the Sâma-veda, the beginning of the Sâma-veda, so that he who meditates on Om, may be supposed to be meditating on the whole of the Sâma-veda. But that is not enough. Om is said to be the essence of the Sâma-veda, which, being almost entirely taken from the Rig-veda, may itself be called the essence of the Rig-veda. And more than that. The Rig-veda stands for all speech, the Sâma-veda for all breath or life, so that Om may be conceived again as the symbol of all speech and all life. Orn thus becomes the name, not only of all our physical and mental powers, but especially of the living principle, the Prâna or spirit. This is explained by the parable in the second chapter, while in the third chapter, that spirit within us is identified with the spirit in the sun. He therefore who meditates on Om, meditates on the spirit in man as identical with the spirit in nature, or in the sun; and thus the lesson that is meant to be taught in the beginning of the Khândogya-upanishad is really this, that none of the Vedas with their sacrifices and ceremonies could ever secure the salvation of the worshipper, i.e. that sacred works, performed according to the rules of the Vedas, are of no avail in the end , but that meditation on Om alone, or that knowledge of what is meant by Om alone, can procure true salvation, or true immortality. Thus the pupil is led on step by step to what is the highest object of the Upanishads, viz. the recognition of the self in man as identical with the Highest Self or Brahman. The lessons which are to lead up to that highest conception of the universe, both subjective and objective, are no doubt mixed up with much that is superstitious and absurd; still the main object is never lost sight of. Thus, when we come to the eighth chapter, the discussion, though it begins with Om or the Udgîtha, ends with the question of the origin of the world; and though the final answer, namely, that Om means ether (âkâsa), and that ether is the origin of all things, may still sound to us more physical than metaphysical, still the description given of ether or âkâsa, shows that more is meant by it than the physical ether, and that ether is in fact one of the earlier and less perfect names of the Infinite, of Brahman, the universal Self. This, at least, is the lesson which the Brahmans themselves read in this chapter[1]; and if we look at the ancient language of the Upanishads as representing mere attempts at finding expression for what their language could hardly express as yet, we shall, I think, be less inclined to disagree with the interpretation put on those ancient oracles by the later Vedânta philosophers [2], or, at all events, we shall hesitate before we reject what is difficult to interpret, as altogether devoid of meaning.
+
+This is but one instance to show that even behind the fantastic and whimsical phraseology of the sacred writings of the Hindus and other Eastern nations, there may be sometimes aspirations after truth which deserve careful consideration from the student of the psychological development and the historical growth of early religious thought, and that after careful sifting, treasures may be found in what at first we may feel inclined to throw away as utterly worthless.
+
+And now I come to the third caution. Let it not be supposed that a text, three thousand years old, or, even if of more modern date, still widely distant from our own sphere of thought, can be translated in the same manner as a book
+
+[1. The Upanishad itself says: 'The Brahman is the same as the ether which is around us; and the ether which is around us, is the same as the ether which is within us. And the ether which is within, that is the ether within the heart. That ether in the heart is omnipresent and unchanging. He who knows this obtains omnipresent and unchangeable happiness.' Kh. Up. III, 12, 7-9.
+
+2. Cf. Vedânta-sûtras I, 1, 22.]
+
+written a few years ago in French or German. Those who know French and German well enough, know how difficult, nay, how impossible it is, to render justice to certain touches of genius which the true artist knows how to give to a sentence. Many poets have translated Heine into English or Tennyson into German, many painters have copied the Madonna di San Sisto or the so-called portrait of Beatrice Cenci. But the greater the excellence of these translators, the more frank has been their avowal, that the original is beyond their reach. And what is a translation of modern German into modern English compared with a translation of ancient Sanskrit or Zend or Chinese into any modern language? It is an undertaking which, from its very nature, admits of the most partial success only, and a more intimate knowledge of the ancient language, so far from facilitating the task, of the translator, renders it only more hopeless. Modern words are round, ancient words are square, and we may as well hope to solve the quadrature of the circle, as to express adequately the ancient thoughts of the Veda in modern English.
+
+We must not expect therefore that a translation of the sacred books of the ancients can ever be more than an approximation of our language to theirs, of our thoughts to theirs. The translator, however, if he has once gained the conviction that it is impossible to translate old thought into modern speech, without doing some violence either to the one or to the other, will hardly hesitate in his choice between two evils. He will prefer to do some violence to language rather than to misrepresent old thoughts by clothing them in words which do not fit them. If therefore the reader finds some of these translations rather rugged, if he meets with expressions which sound foreign, with combinations of nouns and adjectives such as he has never seen before, with sentences that seem too long or too abrupt, let him feel sure that the translator has had to deal with a choice of evils, and that when the choice lay between sacrificing idiom or truth, he has chosen the smaller evil of the two. I do not claim, of course, either for myself or for my fellow-workers, that we have always sacrificed as little as was possible of truth or idiom, and that here and there a happier rendering of certain passages may not be suggested by those who come after us. I only wish to warn the reader once more not to expect too much from a translation, and to bear in mind that, easy as it might be to render word by word, it is difficult, aye, sometimes impossible, to render thought by thought.
+
+I shall give one instance only from my own translation of the Upanishads. One of the most important words in the ancient philosophy of the Brahmans is Âtman, nom. sing. Âtmâ. It is rendered in our dictionaries by 'breath, soul, the principle of life and sensation, the individual soul, the self, the abstract individual, self, one's self, the reflexive pronoun, the natural temperament -or disposition, essence, nature, character, peculiarity, the person or the whole body, the body, the understanding, intellect, the mind, the faculty of thought and reason, the thinking faculty, the highest principle of life, Brahma, the supreme deity or soul of the universe, care, effort, pains, firmness, the Sun, fire, wind, air, a son.'
+
+This will give classical scholars an idea of the chaotic state from which, thanks to the excellent work done by Boehtlingk, Roth, and others, Sanskrit lexicology is only just emerging. Some of the meanings here mentioned ought certainly not to be ascribed to Âtman. It never means, for instance, the understanding, nor could it ever by itself be translated by sun, fire, wind, air, pains or firmness. But after deducting such surplusage, there still remains a large variety of meanings which may, under certain circumstances, be ascribed to Âtman.
+
+When Âtman occurs in philosophical treatises, such as the Upanishads and the Vedânta system which is based on them, it has generally been translated by soul, mind, or spirit. I tried myself to use one or other of these words, but the oftener I employed them, the more I felt their inadequacy, and was driven at last to adopt self and Self as the least liable to misunderstanding.
+
+No doubt in many passages it sounds strange in English to use self, and in the plural selfs instead of selves; but that very strangeness is useful, for while such words as soul and mind and spirit pass over us unrealised, self and selfs will always ruffle the surface of the mind, and stir up some reflection in the reader. In English to speak even of the I and the Non-I, was till lately considered harsh; it may still be called a foreign philosophical idiom. In German the Ich and Nicht-ich have, since the time of Fichte, become recognised and almost familiar, not only as philosophical terms, but as legitimate expressions in the literary language of the day. But while the Ich with Fichte expressed the highest abstraction of personal existence, the corresponding word in Sanskrit, the Aham or Ahankâra, was always looked upon as a secondary develoment only and as by no means free from all purely phenomenal ingredients. Beyond the Aham or Ego, with all its accidents and limitations, such as sex, sense, language, country, and religion, the ancient sages of India perceived, from a very early time, the Âtman or the self, independent of all such accidents.
+
+The individual âtman or self, however, was with the Brahmans a phase or phenomenal modification only of the Highest Self, and that Highest Self was to them the last point which could be reached by philosophical speculation. It was to them what in other systems of philosophy has been called by various names, [to hon], the Divine, the Absolute. The highest aim of all thought and study with the Brahman of the Upanishads was to recognise his own self as a mere limited reflection of the Highest Self, to know his self in the Highest Self, and through that knowledge to return to it, and regain his identity with it. Here to know was to be, to know the Âtman was to be the Âtman, and the reward of that highest knowledge after death was freedom from new births, or immortality.
+
+That Highest Self which had become to the ancient Brahmans the goal of all their mental efforts, was looked upon at the same time as the starting-point of all phenomenal existence, the root of the world, the only thing that could truly be said to be, to be real and true. As the root of all that exists, the Âtman was identified with the Brahman, which in Sanskrit is both masculine and neuter, and with the Sat, which is neuter only, that which is, or Satya, the true, the real. It alone exists in the beginning and for ever; it has no second. Whatever else is said to exist, derives its real being from the Sat. How the one Sat became many, how what we call the creation, what they call emanation ([pródos]), constantly proceeds and returns to it, has been explained in various more or less fanciful ways by ancient prophets and poets. But what they all agree in is this, that the whole creation, the visible and invisible world, all plants, all animals, all men are due to the one Sat, are upheld by it, and will return to it.
+
+If we translate Âtman by soul, mind, or spirit, we commit, first of all, that fundamental mistake of using words which may be predicated, in place of a word which is a subject only, and can never become a predicate. We may say in English that man possesses a soul, that a man is out of his mind, that man has or even that man is a spirit, but we could never predicate Âtman, or self, of anything else. Spirit, if it means breath or life; mind, if it means the organ of perception and conception; soul, if, like kaitanya, it means intelligence in general, all these may be predicated of the Âtman, as manifested in the phenomenal world. But they are never subjects in the sense in which the Âtman is; they have no independent being, apart from Âtman. Thus to translate the beginning of the Aitareya-upanishad, Âtmâ vâ idam eka evâgra âsît, by 'This (world) verily was before (the creation of the world) soul alone' (Röer); or, 'Originally this (universe) was indeed soul only' (Colebrooke), would give us a totally false idea. M. Regnaud in his 'Matériaux pour servir à l'histoire de la philosophie de l'Inde' (vol. ii, p. 24) has evidently felt this, and has kept the word Âtman untranslated, 'Au commencement cet univers n'était que l'âtman.' But while in French it would seem impossible to find any equivalent for âtman, I have ventured to translate in English, as I should have done in German, 'Verily, in the beginning all this was Self, one only.'
+
+Thus again when we read in Sanskrit, 'Know the Self by the self,' âtmânam âtmanâ pasya, tempting as it may seem, it would be entirely wrong to render it by the Greek [gnôthi seautón.] The Brahman called upon his young pupil to know not himself, but his Self, that is, to know his individual self as a merely temporary reflex of the Eternal Self. Were we to translate this so-called âtmavidyâ, this self-knowledge, by knowledge of the soul, we should not be altogether wrong, but we should nevertheless lose all that distinguishes Indian from Greek thought. It may not be good English to say to know his self, still less to know our selfs, but it would be bad Sanskrit to say to know himself, to know ourselves; or, at all events, such a rendering would deprive us of the greatest advantage in the study of Indian philosophy, the opportunity of seeing in how many different ways man has tried to solve the riddles of the world and of his soul.
+
+I have thought it best therefore to keep as close as possible to the Sanskrit original, and where I could not find an adequate term in English, I have often retained the Sanskrit word rather than use a misleading substitute in English. It is impossible, for instance, to find an English equivalent for so simple a word as Sat, [tò hón]. We cannot render the Greek [tò hón] and [tò mè hón] by Being or Not-being, for both are abstract nouns; nor by 'the Being,' for this would almost always convey a wrong impression. In German it is easy to distinguish between das Sein, i.e. being, in the abstract, and das Seiende, [tò hón]. In the same way the Sanskrit sat can easily be rendered in Greek by [tò hón], in German by das Seiende, but in English, unless we say 'that which is,' we are driven to retain the original Sat.
+
+From this Sat was derived in Sanskrit Sat-ya, meaning originally 'endowed with being,' then 'true.' This is an adjective; but the same word, as a neuter, is also used in the sense of truth, as an abstract; and in translating it is very necessary always to distinguish between Satyam, the true, frequently the same as Sat, [tò hón], and Satyam, truth, veracity. One example will suffice to show how much the clearness of a translation depends on the right rendering of such words as âtman, sat, and satyam.
+
+In a dialogue between Uddâlaka and his son Svetaketu, in which the father tries to open his son's mind, and to make him see man's true relation to the Highest Self (Khândogya-upanishad VI), the father first explains how the Sat produced what we should call the three elements [1], viz. fire, water, and earth, which he calls heat, water, and food. Having produced them (VI, 2, 4), the Sat entered into them, but not with its real nature, but only with its 'living self' (VI, 3, which is a reflection (Abhâsamâtram) of the real Sat, as the sun in the water is a reflection
+
+[1. Devatâs, literally deities, but frequently to be translated by powers or beings. Mahadeva Moreshvar Kunte, the learned editor of the Vedânta-sûtras, ought not (p. 70) to have rendered devata, in Kh. Up. 1, 11, 5, by goddess.]
+
+of the real sun. By this apparent union of the Sat with the three elements, every form (rûpa) and every name (nâman) in the world was produced; and therefore he who knows the three elements is supposed to know everything in this world, nearly in the same manner in which the Greeks imagined that through a knowledge of the elements, everything else became known (VI, 4, 7). The same three elements are shown to be also the constituent elements of man (VI, 5). Food or the earthy element is supposed to produce not only flesh, but also mind; water, not only blood, but also breath; heat, not only bone, but also speech. This is more or less fanciful; the important point, however, is this, that, from the Brahmanic point of view, breath, speech, and mind are purely elemental, or external instruments, and require the support of the living self, the givâtman, before they can act.
+
+Having explained how the Sat produces progressively heat, how heat leads to water, water to earth, and how, by a peculiar mixture of the three, speech, breath, and mind are produced, the teacher afterwards shows how in death, speech returns to mind, mind to breath, breath to heat, and heat to the Sat (VI, 8, 6). This Sat, the root of everything, is called parâ devatâ, the highest deity, not in the ordinary sense of the word deity, but as expressing the highest abstraction of the human mind. We must therefore translate it by the Highest Being, in the same manner as we translate devatâ, when applied to heat, water, and earth, not by deity, but by substance or element.
+
+The same Sat, as the root or highest essence of all material existence, is called animan, from anu, small, subtile, infinitesimal, atom. It is an abstract word, and I have translated it by subtile essence.
+
+The father then goes on explaining in various ways that this Sat is underlying all existence, and that we must learn to recognise it as the root, not only of all the objective, but likewise of our own subjective existence. 'Bring the fruit of a Nyagrodha tree,' he says, 'break it, and what do you find?' 'The seeds,' the son replies, 'almost infinitesimal.' 'Break one of them, and tell me what you See.' 'Nothing,' the son replies. Then the father continues: 'My son, that subtile essence which you do not see there, of that very essence this great Nyagrodha tree exists.'
+
+After that follows this sentence: 'Etadâtmyam idam sarvam, tat satyam, sa âtmâ, tat tvam asi Svetaketo.'
+
+This sentence has been rendered by Rajendralal Mitra in the following way: 'All this universe has the (Supreme) Deity for its life. That Deity is Truth. He is the Universal Soul. Thou art He, O Svetaketu [1].'
+
+This translation is quite correct, as far as the words go, but I doubt whether we can connect any definite thoughts with these words. In spite of the division adopted in the text, I believe it will be necessary to join this sentence with the last words of the preceding paragraph. This is clear from the commentary, and from later paragraphs, where this sentence is repeated, VI, 9, 4, &c. The division
+
+[1. Anquetil Duperron translates: 'Ipso hoc modo (ens) illud est subtile: et hoc omne, unus âtma est: et id verum et rectum est, O Sopatkit, tatoumes, id est, ille âtma tu as.']
+
+in the printed text (VI, 8, 6) is wrong, and VI, 8, 7 should begin with sa ya esho 'nimâ, i. e. that which is the subtile essence.
+
+The question then is, what is further to be said about this subtile essence. I have ventured to translate the passage in the following way:
+
+'That which is the subtile essence (the Sat, the root of everything), in it all that exists has its self, or more literally, its self-hood. It is the True (not the Truth in the abstract, but that which truly and really exists). It is the Self, i. e. the Sat is what is called the Self of everything[1].' Lastly, he sums up, and tells Svetaketu that, not only the whole world, but he too himself is that Self, that Satya, that Sat.
+
+No doubt this translation sounds strange to English ears, but as the thoughts contained in the Upanishads are strange, it would be wrong to smoothe down their strangeness by clothing them in language familiar to us, which, because it is familiar, will fail to startle us, and because it fails to startle us, will fail also to set us thinking.
+
+To know oneself to be the Sat, to know that all that is real and eternal in us is the Sat, that all came from it and will, through knowledge, return to it, requires an independent effort of speculative thought. We must realise, as well as we can, the thoughts of the ancient Rishis, before we can hope to translate them. It is not enough simply to read the half-religious, half-philosophical utterances which we find in
+
+[1. The change of gender in sa for tad is idiomatic. One could not say in Sanskrit tad âtmâ, it is the Self, but sa âtmâ. By sa, he, the Sat, that which is, is meant. The commentary explains sa âtmâ by tat sat, and continues tat sat tat tvam asi (p.443).]
+
+the Sacred Books of the East, and to say that they are strange, or obscure, or mystic. Plato is strange, till we know him; Berkeley is mystic, till for a time we have identified ourselves with him. So it is with these ancient sages, who have become the founders of the great religions of antiquity. They can never be judged from without, they must be judged from within. We need not become Brahmans or Buddhists or Taosze altogether, but we must for a time, if we wish to understand, and still more, if we are bold enough to undertake to translate their doctrines. Whoever shrinks from that effort, will see hardly anything in these sacred books or their translations but matter to wonder at or to laugh at; possibly something to make him thankful that he is not as other men. But to the patient reader these same books will, in spite of many drawbacks, open a new view of the history of the human race, of that one race to which we all belong, with all the fibres of our flesh, with all the fears and hopes of our soul. We cannot separate ourselves from those who believed in these sacred books. There is no specific difference between ourselves and the Brahmans, the Buddhists, the Zoroastrians, or the Taosze. Our powers of perceiving, of reasoning, and of believing may be more highly developed, but we cannot claim the possession of any verifying power or of any power of belief which they did not possess as well. Shall we say then that they were forsaken of God, while we are His chosen people? God forbid! There is much, no doubt, in their sacred books which we should tolerate no longer, though we must not forget that there are portions in our own sacred books, too, which many of us would wish to be absent, which, from the earliest ages of Christianity, have been regretted by theologians of undoubted piety, and which often prove a stumbling block to those who have been won over by our missionaries to the simple faith of Christ. But that is not the question. The question is, whether there is or whether there is not, hidden in every one of the sacred books, something that could lift up the human heart from this earth to a higher world, something that could make man feel the omnipresence of a higher Power, something that could make him shrink from evil and incline to good, something to sustain him in the short journey through life, with its bright moments of happiness, and its long hours of terrible distress.
+
+If some of those who read and mark these translations learn how to discover some such precious grains in the sacred books of other nations, though hidden under heaps of rubbish, our labour will not have been in vain, for there is no lesson which at the present time seems more important than to learn that in every religion there are such precious grains; that we must draw in every religion a broad distinction between what is essential and what is not, between the eternal and the temporary, between the divine and the human; and that though the non-essential may fill many volumes, the essential can often be comprehended in a few words, but words on which 'hang all the law and the prophets.'
+
+PROGRAM OF A TRANSLATION
+OF
+THE SACRED BOOKS OF THE EAST.
+I here subjoin the program in which I first put forward the idea of a translation of the Sacred Books of the East, and through which I invited the co-operation of Oriental scholars in this undertaking. The difficulty of finding translators, both willing and competent to take a part in it, proved far greater than I had anticipated. Even when I had secured the assistance of a number of excellent scholars, and had received their promises of prompt co-operation, illness, domestic affliction, and even death asserted their control over all human affairs. Professor Childers, who had shown the warmest interest in our work, and on whom I chiefly depended for the Pali literature of the Buddhists, was taken from us, an irreparable loss to Oriental scholarship in general, and to our undertaking in particular. Among native scholars, whose co-operation I had been particularly desired to secure, Rajendralal Mitra, who had promised a translation of the Vâyu-purâna, was prevented by serious illness from fulfilling his engagement. In other cases sorrow and sickness have caused, at all events, serious delay in the translation of the very books which were to have inaugurated this Series. However, new offers of assistance have come, and I hope that more may still come from Oriental scholars both in India and England, so that the limit of time which had been originally assigned to the publication of twenty-four volumes may not, I hope, be much exceeded.
+
+THE SACRED BOOKS OF THE EAST, TRANSLATED, WITH INTRODUCTIONS AND NOTES, BY VARIOUS ORIENTAL SCHOLARS, AND EDITED By F. MAX MULLER.
+Apart from the interest which the Sacred Books of all religions possess in the eyes of the theologian, and, more particularly, of the missionary, to whom an accurate knowledge of them is as indispensable as a knowledge of the enemy's country is to a general, these works have of late assumed a new importance, as viewed in the character of ancient historical documents. In every country where Sacred Books have been preserved, whether by oral tradition or by writing, they are the oldest records, and mark the beginning of what may be called documentary, in opposition to purely traditional, history.
+
+There is nothing more ancient in India than the Vedas; and, if we except the Vedas and the literature connected with them, there is again no literary work in India which, so far as we know at present, can with certainty be referred to an earlier date than that of the Sacred Canon of the Buddhists. Whatever age we may assign to the various portions of the Avesta and to their final arrangement, there is no book in the Persian language of greater antiquity than the Sacred Books of the followers of Zarathustra, nay, even than their translation in Pehlevi. There may have been an extensive ancient literature in China long before Khung-fû-tze and Lâo-tze, but among all that was rescued and preserved of it, the five King and the four Shû claim again the highest antiquity. As to the Koran, it is known to be the fountain-head both of the religion and of the literature of the Arabs.
+
+This being the case, it was but natural that the attention of the historian should of late have been more strongly attracted by these Sacred Books, as likely to afford most valuable information, not only on the religion, but also on the moral sentiments, the social institutions, the legal maxims of some of the most important nations of antiquity. There are not many nations that have preserved sacred writings, and many of those that have been preserved have but lately become accessible to us in their original form, through the rapid advance of Oriental scholarship in Europe. Neither Greeks, nor Romans, nor Germans, nor Celts, nor Slaves have left us anything that deserves the name of Sacred Books. The Homeric Poems are national Epics, like the Râmâyana, and the Nibelunge, and the Homeric Hymns have never received that general recognition or sanction which alone can impart to the poetical effusions of personal piety the sacred or canonical character which is the distingishing feature of the Vedic Hymns. The sacred literature of the early inhabitants of Italy seems to have been of a liturgical rather than of a purely religious kind, and whatever the Celts, the Germans, the Slaves may have possessed of sacred traditions about their gods and heroes, having been handed down by oral tradition chiefly, has perished beyond all hope of recovery. Some portions of the Eddas alone give us an idea of what the religious and heroic poetry of the Scandinavians may have been. The Egyptians possessed Sacred Books, and some of them, such as the Book of the Dead, have come down to us in various forms. There is a translation of the Book of the Dead by Dr. Birch, published in the fifth volume of Bunsen's Egypt, and a new edition and translation of this important work may be expected from the combined labours of Birch, Chabas, Lepsius, and Naville, In Babylon and Assyria, too, important fragments of what may be called a Sacred Literature have lately come to light. The interpretation, however, of these Hieroglyphic and Cuneiform texts is as yet so difficult that, for the present, they are of interest to the scholar only, and hardly available for historical purposes.
+
+Leaving out of consideration the Jewish and Christian Scriptures, it appears that the only great and original religions which profess to be founded on Sacred Books[1], and have preserved them in manuscript, are:-
+
+1. The religion of the Brahmans.
+2. The religion of the followers of Buddha.
+3. The religion of the followers of Zarathustra.
+4. The religion of the followers of Khung-fû-tze.
+5. The religion of the followers of Lâo-tze.
+6. The religion of the followers of Mohammed.
+
+A desire for a trustworthy translation of the Sacred Books of these six Eastern religions has often been expressed. Several have been translated into English, French, German, or Latin, but in some cases these translations are difficult to procure, in others they are loaded with notes and commentaries, which are intended for
+
+[1. Introduction to the Science of Religion, by F. Max Müller (Longmans, 1873), p.104]
+
+students by profession only. Oriental scholars have been blamed for not having as yet supplied a want so generally felt, and so frequently expressed, as a complete, trustworthy, and readable translation of the principal Sacred Books of the Eastern Religions. The reasons, however, why hitherto they have shrunk from such an undertaking are clear enough. The difficulties in many cases of giving complete translations, and not selections only, are very great. There is still much work to be done in a critical restoration of the original texts, in an examination of their grammar and metres, and in determining the exact meaning of many words and passages. That kind of work is naturally far more attractive to scholars than a mere translation, particularly when they cannot but feel that, with the progress of our knowledge, many a passage which now seems clear and easy, may, on being re-examined, assume a new import. Thus while scholars who are most competent to undertake a translation, prefer to devote their time to more special researches, the work of a complete translation is deferred to the future, and historians are left under the impression that Oriental scholarship is still in so unsatisfactory a state as to make any reliance on translations of the Veda, the Avesta, or the Tâo-te King extremely hazardous.
+
+It is clear, therefore, that a translation of the principal Sacred Books of the East can be carried out only at a certain sacrifice. Scholars must leave for a time their own special researches in order to render the general results already obtained accessible to the public at large. And even then, really useful results can be achieved viribus unitis only. If four of the best Egyptologists have to combine in order to produce a satisfactory edition and translation of one of the Sacred Books of ancient Egypt, a much larger number of Oriental scholars will be required for translating the Sacred Books of the Brahmans, the Buddhists, the Zoroastrians, the followers of Khung-fû-tze, Lâo-tze, and Mohammed.
+
+Lastly, there was the most serious difficulty of all, a difficulty which no scholar could remove, viz. the difficulty of finding the funds necessary for carrying out so large an undertaking. No doubt there exists at present a very keen interest in questions connected with the origin, the growth, and decay of religion. But much of that interest is theoretic rather than historical. How people might or could or should have elaborated religious ideas, is a topic most warmly discussed among psychologists and theologians, but a study of the documents, in which alone the actual growth of religious thought can be traced, is much neglected. A faithful, unvarnished prose translation of the Sacred Books of India, Persia, China, and Arabia, though it may interest careful students, will never, I fear, excite a widespread interest, or command a circulation large enough to make it a matter of private enterprise and commercial speculation.
+
+No doubt there is much in these old books that is startling by its very simplicity and truth, much that is elevated and elevating, much that is beautiful and sublime; but people who have vague ideas of primeval wisdom and the splendour of Eastern poetry will soon find themselves grievously disappointed. It cannot be too strongly stated, that the chief, and, in many cases, the only interest of the Sacred Books of the East is historical; that much in them is extremely childish, tedious, if not repulsive; and that no one but the historian will be able to understand the important lessons which they teach. It would have been impossible to undertake a translation even of the most important only of the Sacred Books of the East, without the support of an Academy or a University which recognises the necessity of rendering these works more generally accessible, on the same grounds on which it recognises the duty of collecting and exhibiting in Museums the petrifactions of bygone ages, little concerned whether the public admires the beauty of fossilised plants and broken skeletons, as long as hard-working students find there some light for reading once more the darker pages in the history of the earth.
+
+Having been so fortunate as to secure that support, having also received promises of assistance from some of the best Oriental scholars in England and India, I hope I shall be able, after the necessary preparations are completed, to publish about three volumes of translations every year, selecting from the stores of the six so-called 'Book-religions' those works which at present can be translated, and which are most likely to prove useful. All translations will be made from the original texts, and where good translations exist already, they will be carefully revised by competent scholars. Such is the bulk of the religious literature of the Brahmans and the Buddhists, that to attempt a complete translation would be far beyond the powers of one generation of scholars. Still, if the interest in the work itself should continue, there is no reason why this series of translations should not be carried on, even after those who commenced it shall have ceased from their labours.
+
+What I contemplate at present and I am afraid at my time of life even this may seem too sanguine, is no more than a Series of twenty-four volumes, the publication of which will probably extend over eight years. In this Series I hope to comprehend the following books, though I do not pledge myself to adhere strictly to this outline:-
+
+1. From among the Sacred Books of the Brahmans I hope to give a translation of the Hymns of the Rig-veda. While I shall continue my translation of selected hymns of that Veda, a traduction raisonnée which is intended for Sanskrit scholars only, on the same principles which I have followed in the first volume [1], explaining every word and sentence that seems to require elucidation, and carefully examining the opinions of previous commentators, both native and European, I intend to contribute a freer translation of the hymns to this Series, with a few explanatory notes only, such as are absolutely necessary to enable readers who are unacquainted with Sanskrit to understand the thoughts of the Vedic poets. The translation of perhaps another Samhitâ, one or two of the Brâhmanas, or portions of them, will have to be included in our Series, as well as the principal Upanishads, theosophic treatises of great interest and beauty. There is every prospect of an early appearance of a translation of the Bhagavad-gîtâ, of the most important among the sacred Law-books, and of one at least of the Purânas. I should have wished to include a translation of some of the Gain books, of the Granth of the Sikhs, and of similar works illustrative of the later developments of religion in India, but there is hardly room for them at present.
+
+2. The Sacred Books of the Buddhists will be translated chiefly from the two original collections, the Southern in Pali, the Northern in Sanskrit. Here the selection will, no doubt, be most difficult. Among the first books to be published will be, I hope, Sûtras from the Dîgha Nikâya, a part of the Vinaya-pilaka, the Dhammapada, the Divyâvadâna, the Lalita-vistara, or legendary life of Buddha.
+
+3. The Sacred Books of the Zoroastrians lie within a smaller compass, but they will require fuller notes and commentaries in order to make a translation intelligible and useful.
+
+4. The books which enjoy the highest authority with the followers of Khung-fû-tze are the King and the Shû. Of the former the Shû King or Book of History; the Odes of the Temple and
+
+[1. Rig-veda-sanhitâ, The Sacred Hymns of the Brahmans, translated and explained by F. Max Müller. Vol. i. Hymns to the Maruts or the Storm-Gods. London, 1869.]
+
+the Altar, and other pieces illustrating the ancient religious views and practices of the Chinese, in the Shih King or Book of Poetry; the Yî King; the Lî K'î; and the Hsiâo King or Classic of Filial Piety, will all be given, it is hoped, entire. Of the latter, the Series will contain the Kung Yung or Doctrine of the Mean; the Tâ Hsio or Great Learning; all Confucius' utterances in the Lun Yü or Confucian Analects, which are of a religious nature, and refer to the principles of his moral system; and Mang-tze's Doctrine of the Goodness of Human Nature.
+
+5. For the system of Lâo-tze we require only a translation of the Tâo-teh King with some of its commentaries, and, it may be, an authoritative work to illustrate the actual operation of its principles.
+
+6. For Islam, all that is essential is a trustworthy translation of the Koran.
+
+It will be my endeavour to divide the twenty-four volumes which are contemplated in this Series as equally as possible among the six religions. But much must depend on the assistance which I receive from Oriental scholars, and also on the interest and the wishes of the public.
+
+F. MAX MÜLLER.
+
+OXFORD, October, 1876.
+
+The following distinguished scholars, all of them occupying the foremost rank in their own special departments of Oriental literature, are at present engaged in preparing translations of some of the Sacred Books of the East: S. Beal, R. G. Bhandarkar, G. Bühler, A. Burnell, E. B. Cowell, J. Darmesteter, T. W. Rhys Davids, J. Eggeling, V. Fausböll, H. Jacobi, J. Jolly, H. Kern, F. Kielhorn, J. Legge, H. Oldenberg, E. H. Palmer, R. Pischel, K. T. Telang, E. W. West.
+
+The works which for the present have been selected for translation are the following:
+
+1. ANCIENT VEDIC RELIGION.
+
+Hymns of the Rig-veda.
+The Satapatha-brâhmana.
+The Upanishads.
+The Grihya-sûtras of Hiranyakesin and others.
+
+II. LAW-BOOKS IN PROSE.
+
+The Sûtras of Âpastamba, Gautama, Baudhâyana, Vasishtha, Vishnu, &c.
+
+III. LAW-BOOKS IN VERSE.
+
+The Laws of Manu,Yâgñavalkya, &c.
+
+IV. LATER BRAHMANISM.
+
+The Bhagavad-gîtâ.
+The Vâyu-purâna.
+
+V. BUDDHISM.
+
+1. Pali Documents.
+
+The Mahâparinibbâna Sutta, the Tevigga Sutta, the Mahasudassana Sutta, the Dhammakakkappavattana Sutta; the Suttanipâta; the Mahâvagga, the Kullavagga, and the Pâtimokkha.
+
+2. Sanskrit Documents.
+
+The Divyâvadâna and Saddharmapundarîka.
+
+3. Chinese Documents.
+
+The Phû-yâo King, or life of Buddha.
+
+4. Prakrit Gaina Documents.
+
+The Âkârânga Sûtra, Dasavaikâlika Sûtra, Sûtrakritânga, and Uttarâdhyayana Sûtra.
+
+VI. PARSI RELIGION.
+
+1. Zend Documents.
+
+The Vendidâd.
+
+2. Pehlevi and Parsi Documents.
+
+The Bundahis, Bahman Yasht, Shâyast-lâ-shâyast, Dâdistâni Dînî, Mainyôi Khard.
+
+VII. MOHAMMEDANISM.
+
+The Koran.
+
+VIII. CHINESE RELIGION.
+
+1. Confucianism.
+
+The Shû King, Shih King, Hsiâo King, Yî King, Lî Kî, Lun Yu, and Mang-tze.
+
+2. Tâoism.
+
+The Tâo-teh King, Kwang-tze, and Kan Ying Phien.
+
+TRANSLITERATION OF ORIENTAL ALPHABETS,
+The system of transcribing Oriental words with Roman types, adopted by the translators of the Sacred Books of the East, is, on the whole, the same which I first laid down in my Proposals for a Missionary Alphabet, 1854, and which afterwards I shortly described in my Lectures on the Science of Language, Second Series, p. 169 (ninth edition). That system allows of great freedom in its application to different languages, and has, therefore, recommended itself to many scholars, even if they had long been accustomed to use their own system of transliteration.
+
+It rests in fact on a few principles only, which may be applied to individual languages according to the views which each student has formed for himself of the character and the pronunciation of the vowels and consonants of any given alphabet.
+
+It does not differ essentially from the Standard Alphabet proposed by Professor Lepsius. It only endeavours to realise, by means of the ordinary types which are found in every printing office, what my learned friend has been enabled to achieve, it may be in a more perfect manner, by means of a number of new types with diacritical marks, cast expressly for him by the Berlin Academy.
+
+The general principles of what, on account of its easy application to all languages, I have called the Missionary Alphabet, are these:
+
+1. No letters are to be used which do not exist in ordinary founts.
+
+2. The same Roman type is always to represent the same foreign letter, and the same foreign letter is always to be represented by the same Roman type.
+
+3. Simple letters are, as a rule, to be represented by simple, compound by compound types.
+
+4. It is not attempted to indicate the pronunciation of foreign languages, but only to represent foreign letters by Roman types, leaving the pronunciation to be learnt, as it is now, from grammars or from conversation with natives.
+
+5. The foundation of every system of transliteration must consist of a classification of the typical sounds of human speech. Such classification may be more or less perfect, more or less minute, according to the objects in view. For ordinary purposes the classification in vowels and consonants, and of consonants again in gutturals, dentals, and labials suffices. In these three classes we distinguish hard (not-voiced) and sonant (voiced) consonants, each being liable to aspiration; nasals, sibilants, and semivowels, some of these also, being either voiced or not-voiced.
+
+6. After having settled the typical sounds, we assign to them, as much as possible, the ordinary Roman types of the first class.
+
+7. We then arrange in every language which possesses a richer alphabet, all remaining letters, according to their affinities, as modifications of the nearest typical letters, or as letters of the second and third class. Thus linguals in Sanskrit are treated as nearest to dentals, palatals to gutturals.
+
+8. The manner of expressing such modifications is uniform throughout. While all typical letters of the first class are expressed by Roman types, modified letters of the second class are expressed by italics, modified letters of the third class by small capitals. Only in extreme cases, where another class of modified types is wanted, are we compelled to have recourse either to diacritical marks, or to a different fount of types.
+
+9. Which letters in each language are to be considered as primary, secondary, or tertiary may, to a certain extent, be left to the discretion of individual scholars.
+
+10. As it has been found quite impossible to devise any practical alphabet that should accurately represent the pronunciation of words, the Missionary Alphabet, by not attempting to indicate minute shades of pronunciation, has at all events the advantage of not misleading readers in their pronunciation of foreign words. An italic t, for instance, or a small capital T, serves simply as a warning that this is not the ordinary t, though it has some affinity with it. How it is to be pronounced must be learnt for each language, as it now is, from a grammar or otherwise. Thus t in Sanskrit is the lingual t. How that is to be pronounced, we must learn from the Prâtisâkhvas, or from the mouth of a highly educated Srotriya. We shall then learn that its pronunciation is really that of what we call the ordinary dental t, as in town, while the ordinary dental t in Sanskrit has a pronunciation of its own, extremely difficult to acquire for Europeans.
+
+11. Words or sentences which used to be printed in italics are spaced.
+
+INTRODUCTION
+TO
+THE UPANISHADS.
+FIRST TRANSLATION OF THE UPANISHADS.
+DÂRÂ SHUKOH, ANQUETIL DUPERRON, SCHOPENHAUER.
+THE ancient Vedic literature, the foundation of the whole literature of India, which has been handed down in that country in an unbroken succession from the earliest times within the recollection of man to the present day, became known for the first time beyond the frontiers of India through the Upanishads. The Upanishads were translated from Sanskrit into Persian by, or, it may be, for Dârâ Shukoh, the eldest son of Shâh Jehân, an enlightened prince, who openly professed the liberal religious tenets of the great Emperor Akbar, and even wrote a book intended to reconcile the religious doctrines of Hindus and Mohammedans. He seems first to have heard of the Upanishads during his stay in Kashmir in 1640. He afterwards invited several Pandits from Benares to Delhi, who were to assist him in the work of translation. The translation was finished in 1657. Three years after the accomplishment of this work, in 1659, the prince was put to death by his brother Aurangzib[1], in reality, no doubt, because he was the eldest son and legitimate successor of Shâh Jehân, but under the pretext that he was an infidel, and dangerous to the established religion of the empire.
+
+When the Upanishads had once been translated from Sanskrit into Persian, at that time the most widely read language of the East and understood likewise by many European scholars, they became generally accessible to
+
+[1. Elphinstone, History of India, ed. Cowell, p. 610.]
+
+all who took an interest in the religious literature of India. It is true that under Akbar's reign (1556-1586) similar translations had been prepared[1], but neither those nor the translations of Dârâ Shukoh attracted the attention of European scholars till the year 1775. In that year Anquetil Duperron, the famous traveller and discoverer of the Zend-avesta, received one MS. of the Persian translation of the Upanishads, sent to him by M. Gentil, the French resident at the court of Shuja ud daula, and brought to France by M. Bernier. After receiving another MS., Anquetil Duperron collated the two, and translated the Persian translation [2] into French (not published), and into Latin. That Latin translation was published in 1801 and 1802, under the title of 'Oupnek'hat, id est, Secreturn tegendum: opus ipsa in India rarissimum, continens antiquam et arcanam, seu theologicam et philosophicam doctrinam, e quatuor sacris Indorum libris Rak baid, Djedjer baid, Sam baid, Athrban baid excerptam; ad verbum, e Persico idiomate, Samkreticis vocabulis intermixto, in Latinum conversum: Dissertationibus et Annotationibus difficiliora explanantibus, illustratum: studio et opera Anquetil Duperron, Indicopleustæ. Argentorati, typis et impensis fratrum Levrault, vol. i, 1801; vol. ii, 1802 [3].'
+
+This translation, though it attracted considerable interest among scholars, was written in so utterly unintelligible a style, that it required the lynxlike perspicacity of an intrepid
+
+[1. M. M., Introduction to the Science of Religion, p. 79.
+
+2. Several other MSS. of this translation have since come to Iight; one at Oxford, Codices Wilsoniani, 399 and 400. Anquetil Duperron gives the following title of the Persian translation: 'Hanc interpretationem [tôn] Oupnekhathai quorumvis quatuor librorum Beid, quod, designatum cum secreto magno (per secretum magnum) est, et integram cognitionem luminis luminum, hic Fakir sine tristitia (Sultan) Mohammed Dara Schakoh ipse, cum significatione recta, cum sinceritate, in tempore sex mensium (postremo die, secundo [toû] Schonbeh, vigesimo) sexto mensis [toû] Ramazzan, anno 1067 [toû] Hedjri (Christi, 1657) in urbe Delhi, in mansione nakhe noudeh, cum absolutione ad finem fecit pervenire.' The MS. was copied by Âtma Ram in the year 1767 A.D. Anquetil Duperron adds: 'Absolutum est hoc Apographum versionis Latinæ [tôn] quinquaginta Oupnekhatha, ad verbum, e Persico idiomate, Samskreticis vocabulis intermixto, factæ, die 9 Octobris, 1796, 18 Brumaire, anni 4, Reipublic. Gall. Parisiis.'
+
+3 M. M., History of Ancient Sanskrit Literature, second edition, p.325.]
+
+philosopher, such as Schopenhauer, to discover a thread through such a labyrinth. Schopenhauer, however, not only found and followed such a thread, but he had the courage to proclaim to an incredulous age the vast treasures of thought which were lying buried beneath that fearful jargon.
+
+As Anquetil Duperron's volumes have become scarce, I shall here give a short specimen of his translation, which corresponds to the first sentences of my translation of the Khândogya-upanishad (p. 1):-'Oum hoc verbum (esse) adkit ut sciveris, sic [tò] maschghouli fac (de co meditare), quod ipsurn hoc verbum aodkit est; propter illud quod hoc (verbum) oum, in Sam Beid, cum voce altâ, cum harmoniâ pronunciaturn fiat.
+
+'Adkiteh porro cremor (optimum, selectissimum) est: quemadmodum ex (præ) omni quieto (non moto), et moto, pulvis (terra) cremor (optimum) est; et e (præ) terra aqua cremor est; et ex aqua, comedendum (victus) cremor est; (et) e comedendo, comedens cremor est; et e comedente, loquela (id quod dicitur) cremor est; et e loquela, aïet [toû] Beid, et ex aïet, [tò] siam, id est, cum harmonia (pronunciatum); et e Sam, [tò] adkit, cremor est; id est, oum, voce alta, cum harmonia pronunciare, aokit, cremor cremorum (optimum optimorum) est. Major, ex (præ) adkit, cremor alter non est.'
+
+Schopenhauer not only read this translation carefully, but he makes no secret of it, that his own philosophy is powerfully impregnated by the fundamental doctrines of the Upanishads. He dwells on it again and again, and it seems both fair to Schopenhauer's memory and highly important for a true appreciation of the philosophical value of the Upanishads, to put together what that vigorous thinker has written on those ancient rhapsodies of truth.
+
+In his 'Welt als Wille und Vorstellung,' he writes, in the preface to the first edition, p. xiii:
+
+'If the reader has also received the benefit of the Vedas, the access to which by means of the Upanishads is in my eyes the greatest privilege which this still young century (1818) may claim before all previous centuries, (for I anticipate that the influence of Sanskrit literature will not be less profound than the revival of Greek in the fourteenth century,)-if then the reader, I say, has received his initiation in primeval Indian wisdom, and received it with an open heart, he will be prepared in the very best way for hearing what I have to tell him. It will not sound to him strange, as to many others, much less disagreeable; for I might, if it did not sound conceited, contend that every one of the detached statements which constitute the Upanishads, may be deduced as a necessary result from the fundamental thoughts which I have to enunciate, though those deductions themselves are by no means to be found there.'
+
+And again[1]:
+
+'If I consider how difficult it is, even with the assistance of the best and carefully educated teachers, and with all the excellent philological appliances collected in the course of this century, to arrive at a really correct, accurate, and living understanding of Greek and Roman authors, whose language was after all the language of our own predecessors in Europe, and the mother of our own, while Sanskrit, on the contrary, was spoken thousands of years ago in distant India, and can be learnt only with appliances which are as yet very imperfect;-if I add to this the impression which the translations of Sanskrit works by European scholars, with very few exceptions, produce on my mind, I cannot resist a certain suspicion that our Sanskrit scholars do not understand their texts much better than the higher class of schoolboys their Greek. Of course, as they are not boys, but men of knowledge and understanding, they put together, out of what they do understand, something like what the general meaning may have been, but much probably creeps in ex ingenio. It is still worse with the Chinese of our European Sinologues.
+
+'If then I consider, on the other hand, that Sultan Mohammed Dârâ Shukoh, the brother of Aurangzib, was born and bred in India, was a learned, thoughtful, and enquiring man, and therefore probably understood his Sanskrit about as well as we our Latin, that moreover
+
+[1. Schopenhauer, Parerga, third edition, II, p.426.]
+
+he was assisted by a number of the most learned Pandits, all this together gives me at once a very high opinion of his translation of the Vedic Upanishads into Persian. If, besides this, I see with what profound and quite appropriate reverence Anquetil Duperron has treated that Persian translation, rendering it in Latin word by word, retaining, in spite of Latin grammar, the Persian syntax, and all the Sanskrit words which the Sultan himself had left untranslated, though explaining them in a glossary, I feel the most perfect confidence in reading that translation, and that confidence soon receives its most perfect justification. For how entirely does the Oupnekhat breathe throughout the holy spirit of the Vedas! How is every one who by a diligent study of its Persian Latin has become familiar with that incomparable book, stirred by that spirit to the very depth of his soul! How does every line display its firm, definite, and throughout harmonious meaning! From every sentence deep, original, and sublime thoughts arise, and the whole is pervaded by a high and holy and earnest spirit. Indian air surrounds us, and original thoughts of kindred spirits. And oh, how thoroughly is the mind here washed clean of all early engrafted Jewish superstitions, and of all philosophy that cringes before those superstitions! In the whole world there is no study, except that of the originals, so beneficial and so elevating as that of the Oupnekhat. It has been the solace of my life, it will be the solace of my death!
+
+'Though [1] I feel the highest regard for the religious and philosophical works of Sanskrit literature, I have not been able to derive much pleasure from their poetical compositions. Nay, they seem to me sometimes as tasteless and monstrous as the sculpture of India.
+
+'In I most of the pagan philosophical writers of the first Christian centuries we see the Jewish theism, which, as Christianity, was soon to become the faith of the people, shining through, much as at present we may perceive shining through in the writings of the learned, the native
+
+[1. Loc. cit. II, pp. 425.
+
+2 Loc. cit. I, p. 59.]
+
+pantheism of India, which is destined sooner or later to become the faith of the people. Ex oriente lux.'
+
+This may seem strong language, and, in some respects, too strong. But I thought it right to quote it here, because, whatever may be urged against Schopenhauer, he was a thoroughly honest thinker and honest speaker, and no one would suspect him of any predilection for what has been so readily called Indian mysticism. That Schelling and his school should use rapturous language about the Upanishads, might carry little weight with that large class of philosophers by whom everything beyond the clouds of their own horizon is labelled mysticism. But that Schopenhauer should have spoken of the Upanishads as 'products of the highest wisdom' (Ausgeburt der höchsten Weisheit)', that he should have placed the pantheism there taught high above the pantheism of Bruno, Malebranche, Spinoza, and Scotus Erigena, as brought to light again at Oxford in 1681 [2], may perhaps secure a more considerate reception for these relics of ancient wisdom than anything that I could say in their favour.
+
+RAMMOHUN ROY.
+Greater, however, than the influence exercised on the philosophical thought of modern Europe, has been the impulse which these same Upanishads have imparted to the religious life of modern India. In about the same year (1774 or 1775) when the first MS. of the Persian translation of the Upanishads was received by Anquetil Duperron, Rammohun Roy[3] was born in India, the reformer and reviver of the ancient religion of the Brahmans. A man who in his youth could write a book 'Against the Idolatry of all Religions,' and who afterwards expressed in so many exact words his 'belief in the divine authority of Christ [4]' was not likely to retain anything of the sacred literature of his own religion, unless he had perceived in it the same
+
+[1. Loc. cit. 11, p.428.
+
+2. Loc. cit. I, p. 6. These passages were pointed out to me by Professor Noiré.
+
+3. Born 1774, died at 2.30 A.M., on Friday, 28th September, 1833.
+
+4. Last Days of Rammohun Roy, by Mary Carpenter, 1866, p. 135.]
+
+divine authority which he recognised in the teaching of Christ. He rejected the Purânas, he would not have been swayed in his convictions by the authority of the Laws of Manu, or even by the sacredness of the Vedas. He was above all that. But he discovered in the Upanishads and in the so-called Vedânta something different from all the rest, something that ought not to be thrown away, something that, if rightly understood, might supply the right native soil in which alone the seeds of true religion, aye, of true Christianity, might spring up again and prosper in India, as they had once sprung up and prospered from out the philosophies of Origen or Synesius. European scholars have often wondered that Rammohun Roy, in his defence of the Veda, should have put aside the Samhitâs and the Brâhmanas, and laid his finger on the Upanishads only, as the true kernel of the whole Veda. Historically, no doubt, he was wrong, for the Upanishads presuppose both the hymns and the liturgical books of the Veda. But as the ancient philosophers distinguished in the Veda between the Karma-kânda and the Gñâna-kânda, between works and knowledge; as they themselves pointed to the learning of the sacred hymns and the performance of sacrifices as a preparation only for that enlightenment which was reserved as the highest reward for the faithful performance of all previous duties[1], Rammohun Roy, like Buddha and other enlightened men before him, perceived that the time for insisting on all that previous discipline with its minute prescriptions and superstitious observances was gone, while the knowledge conveyed in the Upanishads or the Vedânta, enveloped though it may be in strange coverings, should henceforth form the foundation of a new religious life [2]. He would tolerate nothing idolatrous, not even in his mother, poor woman, who after joining his most bitter opponents, confessed to her son, before she set out on her
+
+[1. M. M., History of Ancient Sanskrit Literature, p. 319.
+
+2. 'The adoration of the invisible Supreme Being is exclusively prescribed by the Upanishads or the principal parts of the Vedas and also by the Vedant.' Rammohun Roy, Translation of the Kena-upanishad, Calcutta, 1816, p. 6. M. M., History of Ancient Sanskrit Literature, p.320.]
+
+last pilgrimage to Juggernaut, where she died, that 'he was right, but that she was a weak woman, and grown too old to give up the observances which were a comfort to her.' It was not therefore from any regard of their antiquity or their sacred character that Rammohun Roy clung to the Upanishads, that he translated them into Bengali, Hindi, and English, and published them at his own expense. It was because he recognised in them seeds of eternal truth, and was bold enough to distinguish between what was essential in them and what was not,-a distinction, as he often remarked with great perplexity, which Christian teachers seemed either unable or unwilling to make [1].
+
+The death of that really great and good man during his stay in England in 1833, was one of the severest blows that have fallen on the prospects of India. But his work has not been in vain. Like a tree whose first shoot has been killed by one winter frost, it has broken out again in a number of new and more vigorous shoots, for whatever the outward differences may be between the Âdi Brahmo Samâj of Debendranath Tagore, or the Brahmo Samâj of India of Keshub Chunder Sen, or the Sadharan Brahmo Samâj, the common root of them all is the work done, once for all, by Rammohun Roy. That work may have disappeared from sight for a time, and its present manifestations may seem to many observers who are too near, not very promising. But in one form or another, under one name or another, I feel convinced that work will live. 'In India,' Schopenhauer writes, 'our religion will now and never strike root: the primitive wisdom of the human race will never be pushed aside there by the events of Galilee. On the contrary, Indian wisdom will flow back upon Europe, and produce a thorough change in our knowing and thinking.' Here, again, the great philosopher seems to me to have allowed himself to be carried away too far by his enthusiasm for the less known. He is blind for the dark sides of the Upanishads, and he wilfully shuts his eyes against the bright rays of eternal truth in the Gospels, which even
+
+[1. Last Days, p. 11.]
+
+Rammohun Roy was quick enough to perceive behind the mists and clouds of tradition that gather so quickly round the sunrise of every religion.
+
+POSITION OF THE UPANISHADS IN VEDIC LITERATURE.
+If now we ask what has been thought of the Upanishads by Sanskrit scholars or by Oriental scholars in general, it must be confessed that hitherto they have not received at their hands that treatment which in the eyes of philosophers and theologians they seem so fully to deserve. When the first enthusiasm for such works as Sakuntalâ and Gîta-Govinda had somewhat subsided, and Sanskrit scholars had recognised that a truly scholarlike study of Indian literature must begin with the beginning, the exclusively historical interest prevailed to so large an extent that the hymns of the Veda, the Brâhmanas, and the Sûtras absorbed all interest, while the Upanishads were put aside for a time as of doubtful antiquity, and therefore of minor importance.
+
+My real love for Sanskrit literature was first kindled by the Upanishads. It was in the year 1844, when attending Schelling's lectures at Berlin, that my attention was drawn to those ancient theosophic treatises, and I still possess my collations of the Sanskrit MSS. which had then just arrived at Berlin, the Chambers collection, and my copies of commentaries, and commentaries on commentaries, which I made at that time. Some of my translations which I left with Schelling, I have never been able to recover, though to judge from others which I still possess, the loss of them is of small consequence. Soon after leaving Berlin, when continuing my Sanskrit studies at Paris under Burnouf, I put aside the Upanishads, convinced that for a true appreciation of them it was necessary to study, first of all, the earlier periods of Vedic literature, as represented by the hymns and the Brâhmanas of the Vedas.
+
+In returning, after more than thirty years, to these favourite studies, I find that my interest in them, though it has changed in character, has by no means diminished.
+
+It is true, no doubt, that the stratum of literature which contains the Upanishads is later than the Samhitâs, and later than the Brâhmanas, but the first germs of Upanishad doctrines go back at least as far as the Mantra period, which provisionally has been fixed between 1000 and 800 B.C. Conceptions corresponding to the general teaching of the Upanishads occur in certain hymns of the Rig-veda-samhitâ, they must have existed therefore before that collection was finally closed. One hymn in the Samhitâ of the Rig-veda (I, 191) was designated by Kâtyâyana, the author of the Sarvânukramanikâ, as an Upanishad. Here, however, upanishad means rather a secret charm than a philosophical doctrine. Verses of the hymns have often been incorporated in the Upanishads, and among the Oupnekhats translated into Persian by Dârâ Shukoh we actually find the Purusha-sûkta, the 90th hymn of the tenth book of the Rig-veda [1], forming the greater portion of the Bark'heh Soukt. In the Samhitâ of the Yagur-veda, however, in the Vâgasaneyisâkhâ, we meet with a real Upanishad, the famous Îsâ or Îsâvâsya-upanishad, while the Sivasamkalpa, too, forms part of its thirty-fourth book [2]. In the Brâhmanas several Upanishads occur, even in portions which are not classed as Âranyakas, as, for instance, the well-known Kena or Talavakâra upanishad. The recognised place, however, for the ancient Upanishads is in the Âranyakas, or forest-books, which, as a rule, form an appendix to the Brâhmanas, but are sometimes included also under the general name of Brâhmana. Brâhmana, in fact, meaning originally the sayings of Brahmans, whether in the general sense of priests, or in the more special of Brahman-priest, is a name applicable not only to the books, properly so called, but to all old prose traditions, whether contained in the Samhitâs, such as the Taittirîya-samhitâ, the Brâhmanas, the Âranyakas, the Upanishads, and even, in certain cases, in the Sûtras. We shall see in the introduction to the Aitareya-âranyaka, that that Âranyaka is in the beginning
+
+[1. See Weber. Indische Studien, IX, p. 1 seq.
+
+2 See M. M., History of Ancient Sanskrit Literature, p.317.]
+
+a Brâhmana, a mere continuation of the Aitareya-brâhmana, explaining the Mahâvrata ceremony, while its last book contains the Sûtras or short technical rules explaining the same ceremony which in the first book had been treated in the style peculiar to the Brâhmanas. In the same Aitareya-âranyaka, III, 2, 6, 6, a passage of the Upanishad is spoken of as a Brâhmana, possibly as something like a Brâhmana, while something very like an Upanishad occurs in the Âpastamba-sûtras, and might be quoted therefore as a Sûtra [1]. At all events the Upanishads, like the Âranyakas, belong to what Hindu theologians call Sruti, or revealed literature, in opposition to Smriti, or traditional literature, which is supposed to be founded on the former, and allowed to claim a secondary authority only; and the earliest of these philosophical treatises will always, I believe, maintain a place in the literature of the world, among the most astounding productions of the human mind in any age and in any country.
+
+DIFFERENT CLASSES OF UPANISHADS.
+The ancient Upanishads, i. e. those which occupy a place in the Samhitâs, Brâhmanas, and Âranyakas, must be, if we follow the chronology which at present is commonly, though, it may be, provisionally only, received by Sanskrit scholars, older than 600 B. C., i.e. anterior to the rise of Buddhism. As to other Upanishads, and their number is very large, which either stand by themselves, or which are ascribed to the Atharva-veda, it is extremely difficult to fix their age. Some of them arc, no doubt, quite modern, for mention is made even of an Allah-upanishad; but others may claim a far higher antiquity than is generally assigned to them on internal evidence. I shall only mention that the name of Atharvasiras [1] an Upanishad generally assigned to a very modern date, is quoted in the Sûtras of Gautama and Baudhâyana[2];
+
+[1. Âpastamba, translated by Bühler, Sacred Books of the East, vol. ii, p. 75.
+
+2. Gautama, translated by Bühler, Sacred Books of the East, vol. ii, p. 272, and Introduction, p. lvi.]
+
+that the Svetâsvatara-upanishad, or the Svetâsvataranâm Mantropanishad, though bearing many notes of later periods of thought, is quoted by Sankara in his commentary on the Vedânta-sûtras [1]; while the Nrisimhottaratâpanîya-upanishad forms part of the twelve Upanishads explained by Vidyâranya in his Sarvopanishad-arthânubhûti-prakâsa. The Upanishads comprehended in that work are:
+
+1. Aitareya-upanishad.
+2. Taittirîya-upanishad.
+3. Khândogya-upanishad.
+4. Mundaka-upanishad.
+5. Prasna-upanishad.
+6. Kaushîtaki-upanishad.
+7. Maitrâyanîya-upanishad.
+8. Kathavallî-upanishad.
+9. Svetâsvatara-upanishad.
+10. Brihad-âranyaka-upanishad.
+11. Talavakâra (Kena)-upanishad.
+12. Nrisimhottaratâpanîya-upanishad [2].
+
+The number of Upanishads translated by Dârâ Shukoh amounts to 50; their number, as given in the Mahâvâkyamuktâvalî and in the Muktikâ-upanishad, is 108 [3]. Professor Weber thinks that their number, so far as we know at present, may be reckoned at 235 [4]. In order, however, to arrive at so high a number, every title of an Upanishad would have to be counted separately, while in several cases it is clearly the same Upanishad which is quoted under different names. In an alphabetical list which I published in 1855 (Zeitschrift der Deutschen Morgenländischen Gesellschaft XIX, 137-158), the number of real Upanishads reached 149. To that number Dr. Burnell[5] in his Catalogue
+
+[1. Vedânta-sûtras I, I, II.
+
+2. One misses the Îsâ or Îsâvâsya-upanishad in this list. The Upanishads chiefly studied in Bengal are the Brihad-âranyaka, Aitareya, Khândogya, Taittirîya, Îsâ, Kena, Katha, Prasna, Mundaka, and Mândûkya, to which should be added the Svetâsvatara. M.M., History of Ancient Sanskrit Literature, p.325.
+
+3. Dr. Burnell thinks that this is an artificial computation, 108 being a sacred number in Southern India. See Kielhorn in Gough's Papers on Ancient Sanskrit Literature, p. 193.
+
+4. Weber, History of Sanskrit Literature, p. 155 note.
+
+5. Indian Antiquary, II, 267.]
+
+(p. 59) added 5, Professor Haug (Brahma und die Brahmanen) 16, making a sum total of 170. New names, however, are constantly being added in the catalogues of MSS. published by Bühler, Kielhorn, Burnell, Rajendralal Mitra, and others, and I shall reserve therefore a more complete list of Upanishads for a later volume.
+
+Though it is easy to see that these Upanishads belong to very different periods of Indian thought, any attempt to fix their relative age seems to me for the present almost hopeless. No one can doubt that the Upanishads which have had a place assigned to them in the Samhitâs, Brâhmanas, and Âranyakas are the oldest. Next to these we can draw a line to include the Upanishads clearly referred to in the Vedânta-sûtras, or explained and quoted by Sankara, by Sâyana, and other more modern commentators. We can distinguish Upanishads in prose from Upanishads in mixed prose and verse, and again Upanishads in archaic verse from Upanishads in regular and continuous Anushtubh Slokas. We can also class them according to their subjects, and, at last, according to the sects to which they belong. But beyond this it is hardly safe to venture at present. Attempts have been made by Professor Weber and M. Regnaud to fix in each class the relative age of certain Upanishads, and I do not deny to their arguments, even where they conflict with each other, considerable weight in forming a preliminary judgment. But I know of hardy any argument which is really convincing, or which could not be met by counter arguments equally strong. Simplicity may be a sign of antiquity, but it is not so always, for what seems simple, may be the result of abbreviation. One Upanishad may give the correct, another an evidently corrupt reading, yet it does not follow that the correct reading may not be the result of an emendation. It is quite clear that a large mass of traditional Upanishads must have existed before they assumed their present form. Where two or three or four Upanishads contain the same story, told almost in the same words, they are not always copied from one another, but they have been settled independently, in different localities, by different teachers, it may be, for different purposes. Lastly, the influence of Sâkhâs or schools may have told more or less on certain Upanishads. Thus the Maitrâyanîya-upanishad, as we now possess it, shows a number of irregular forms which even the commentator can account for only as peculiarities of the Maitrâyanîya-sâkha[1]. That Upanishad, as it has come down to us, is full of what we should call clear indications of a modern and corrupt age. It contains in VI, 37, a sloka from the Mânava-dharma-sâstra, which startled even the commentator, but is explained away by him as possibly found in another Sâkhâ, and borrowed from there by Manu. It contains corruptions of easy words which one would have thought must have been familiar to every student. Thus instead of the passage as found in the Khândogya-upanishad VIII, 7, 1, ya âtmâpahatapâpmâ vigaro vimrityur visoko 'vigighatso 'pipâsah, &c., the text of the Maitrâyanîya-upanishad (VII, 7) reads, âtmâpahatapâpmâ vigaro vimrityur visoko 'vikikitso 'vipâsah. But here again the commentator explains that another Sâkhâ reads 'vigighatsa, and that avipâsa is to be explained by means of a change of letters as apipâsa. Corruptions, therefore, or modern elements which are found in one Upanishad, as handed down in one Sâkhâ, do not prove that the same existed in other Sâkhâs, or that they were found in the original text.
+
+All these questions have to be taken into account before we can venture to give a final judgment on the relative age of Upanishads which belong to one and the same class. I know of no problem which offers so many similarities with the one before us as that of the relative age of the four Gospels. All the difficulties which occur in the Upanishads occur here, and no critical student who knows the difficulties that have to be encountered in determining the relative age of the four Gospels, will feel inclined, in the present state of Vedic scholarship, to speak with confidence on the relative age of the ancient Upanishads.
+
+[1. They are generally explained as khândasa, but in one place (Maitr. Up. II, 4) the commentator treats such irregularities as etakkhâkhâsanketapâthah, a reading peculiar to the Maitrâyanîya school. Some learned remarks on this point may be seen in an article by Dr. L. Schroeder, Über die Maitrâyanî Samhitâ.]
+
+CRITICAL TREATMENT OF THE TEXT OF THE UPANISHADS.
+With regard to a critical restoration of the text of the Upanishads, I have but seldom relied on the authority of new MSS., but have endeavoured throughout to follow that text which is presupposed by the commentaries, whether they are the work of the old Sankarâkârya, or of the more modern Sankarânanda, or Sâyana, or others. Though there still prevails some uncertainty as to the date of Sankarâkârya, commonly assigned to the eighth century A.D., yet I doubt whether any MSS. of the Upanishads could now be found prior to 1000 A.D. The text, therefore, which Sankara had before his eyes, or, it may be, his ears, commands, I think, a higher authority than that of any MSS. likely to be recovered at present.
+
+It may be objected that Sankara's text belonged to one locality only, and that different readings and different recensions may have existed in other parts of India. That is perfectly true. We possess various recensions of several Upanishads, as handed down in different Sâkhâs of different Vedas, and we know of various readings recorded by the commentators. These, where they are of importance for our purposes, have been carefully taken into account.
+
+It has also been supposed that Sankara, who, in writing his commentaries on the Upanishad, was chiefly guided by philosophical considerations, his chief object being to use the Upanishads as a sacred foundation for the Vedânta philosophy, may now and then have taken liberties with the text. That may be so, but no stringent proof of it has as yet been brought forward, and I therefore hold that when we succeed in establishing throughout that text which served as the basis of Sankara's commentaries, we have done enough for the present, and have fulfilled at all events the first and indispensable task in a critical treatment of the text of the Upanishads.
+
+But in the same manner as it is easy to see that the text of the Rig-veda, which is presupposed by Sâyana's commentary and even by earlier works, is in many places palpably corrupt, we cannot resist the same conviction with regard to the text of the Upanishads. In some cases the metre, in others grammar, in others again the collation of analogous passages enable us to detect errors, and probably very ancient errors, that had crept into the text long before Sankara composed his commentaries.
+
+Some questions connected with the metres of the Upanishads have been very learnedly treated by Professor Gildemeister in his essalv, 'Zur Theorie des Sloka.' The lesson to be derived from that essay, and from a study of the Upanishads, is certainly to abstain for the present from conjectural emendations. In the old Upanishads the same metrical freedom prevails as in the hymns; in the later Upanishads, much may be tolerated as the result of conscious or unconscious imitation. The metrical emendations that suggest themselves are generally so easy and so obvious that, for that very reason, we should hesitate before correcting what native scholars would have corrected long ago, if they had thought that there was any real necessity for correction.
+
+It is easy to suggest, for instance, that in the Vâgasaneyisamhîtâ-upanishad, verse 5, instead of tad antar asya sarvasya, tadu sarvasyâsya bâhyatah, the original text may have been tad antar asya sarvasya tadu sarvasya bâhyatah; yet Sankara evidently read sarvasyâsya, and as the same reading is found in the text of the Vâgasaneyi-samhitâ, who would venture to correct so old a mistake?
+
+Again, if in verse 8, we left out yâthâtathyatah, we should get a much more regular metre,
+
+Kavir manîshî paribhûh svyambhûh
+arthân vyadahâk khâsvatîbhyah samâbhyah.
+
+Here vyada forms one syllable by what I have proposed to call synizesis [1], which is allowed in the Upanishads as well as in the hymns. All would then seem right, except
+
+[1. Rig-veda, translated by M. M., vol. i, Preface, p. cxliii.]
+
+that it is difficult to explain how so rare a word as yâthâtathyatah could have been introduced into the text.
+
+In verse 10 one feels tempted to propose the omission of eva in anyad âhur avidyayâ, while in verse 11, an eva inserted after vidyâm ka would certainly improve the metre.
+
+In verse 15 the expression satyadharmâya drishtaye is archaic, but perfectly legitimate in the sense of 'that we may see the nature of the True,' or 'that we see him whose nature is true.' When this verse is repeated in the Maitr. Up. VI, 35, we find instead, satyadharmâya vishnave, 'for the true Vishnu.' But here, again, no sound critic would venture to correct a mistake, intentional or unintentional, which is sanctioned both by the MSS. of the text and by the commentary.
+
+Such instances, where every reader feels tempted at once to correct the textus receptus, occur again and again, and when they seem of any interest they have been mentioned in the notes. It may happen, however, that the correction, though at first sight plausible, has to be surrendered on more mature consideration. Thus in the Vâgasaneyi-samhitâ-upanishad, verse 2, one feels certainly inclined to write evam tve nânyatheto 'sti, instead of evam tvayi nânyatheto 'sti. But tve, if it were used here, would probably itself have to be pronounced dissyllabically, while tvayi, though it never occurs in the Rig-veda, may well keep its place here, in the last book of the Vâgasaneyisamhitâ, provided we pronounce it by synizesis, i. e. as one syllable.
+
+Attempts have been made sometimes to go beyond Sankara, and to restore the text, as it ought to have been originally, but as it was no longer in Sankara's time. It is one thing to decline to follow Sankara in every one of his interpretations, it is quite another to decline to accept the text which he interprets. The former is inevitable, the latter is always very precarious.
+
+Thus I see, for instance, that M. Regnaud, in the Errata to the second volume of his excellent work on the Upanishads (Matériaux pour servir à l'histoire de la philosophie de l'Inde, 1878) proposes to read in the Brihad-âranyaka upanishad IV, 3, 1-8, sam anena vadishya iti, instead of sa mene na vadishya iti. Sankara adopted the latter reading, and explained accordingly, that Yâgñavalkya went to king Ganaka, but made up his mind not to speak. M. Regnaud, reading sam anena vadishya iti, takes the very opposite view, namely, that Yâgñavalkya went to king Ganaka, having made up his mind to have a conversation with him. As M. Regnaud does not rest this emendation on the authority of any new MSS., we may examine it as an ingenious conjecture; but in that case it seems to me clear that, if we adopted it, we should have at the same time to omit the whole sentence which follows. Sankara saw clearly that what had to be accounted or explained was why the king should address the Brahman first, samrâd eva pûrvam paprakkha; whereas if Yâgñavalkya had come with the intention of having a conversation with the king, he, the Brahman, should have spoken first. This irregularity is explained by the intervening sentence, in which we are reminded that on a former occasion, when Ganaka and Yâgñavalkya had a disputation on the Agnihotra, Yâgñavalkya granted Ganaka a boon to choose, and he chose as his boon the right of asking questions according to his pleasure. Having received that boon, Ganaka was at liberty to question Yâgñavalkya, even though he did not like it, and hence Ganaka is introduced here as the first to ask a question.
+
+All this hangs well together, while if we assume that Yâgñavalkya came for the purpose of having a conversation with Ganaka, the whole sentence from 'atha ha yag ganakas ka' to 'pûrvam paprakkha' would be useless, nor would there be any excuse for Ganaka beginning the conversation, when Yâgñavalkya came himself on purpose to question him.
+
+It is necessary, even when we feel obliged to reject an interpretation of Sankara's, without at the same time altering the text, to remember that Sankara, where he is not blinded by philosophical predilections, commands the highest respect as an interpreter. I cannot help thinking therefore that M. Regnaud (vol. i, p. 59) was right in translating the passage in the Khând. Up. V, 3, 7, tasmâd u sarveshu lokeshu kshattrasyaiva prasâsanam abhût, by 'que le kshatriya seul l'a enseignée dans tous les mondes.' For when he proposes in the 'Errata' to translate instead, 'ç'est pourquoi 1'empire dans tous les mondes fut attribué au kshatriya seulement,' he forgets that such an idea is foreign to the ordinary atmosphere in which the Upanishads move. It is not on account of the philosophical knowledge possessed by a few Kshatriyas, such as Ganaka or Pravâhana, that the privilege of government belongs everywhere to the second class. That rests on a totally different basis. Such exceptional knowledge, as is displayed by a few kings, might be an excuse for their claiming the privileges belonging to the Brahmans, but it would never, in the eyes of the ancient Indian Aryas, be considered as an argument for their claiming kingly power. Therefore, although I am well aware that prasâs is most frequently used in the sense of ruling, I have no doubt that Sankara likewise was fully aware of that, and that if he nevertheless explained prasâsana here in the sense of prasâstritvam sishyânâm, he did so because this meaning too was admissible, particularly here, where we may actually translate it by proclaiming, while the other meaning, that of ruling, would simply be impossible in the concatenation of ideas, which is placed before us in the Upanishad.
+
+It seems, no doubt, extremely strange that neither the last redactors of the text of the Upanishads, nor the commentators, who probably knew the principal Upanishads by heart, should have perceived how certain passages in one Upanishad represented the same or nearly the same text which is found in another Upanishad, only occasionally with the most palpable corruptions.
+
+Thus when the ceremony of offering a mantha or mash is described, we read in the Khândogya-upanishad V, 2, 6, that it is to be accompanied by certain words which on the whole are intelligible. But when the same passage occurs again in the Brihad-âranyaka, those words have been changed to such a degree, and in two different ways in the two Sâkhâs of the Mâdhyandinas and Kânvas, that, though the commentator explains them, they are almost unintelligible. I shall place the three passages together in three parallel lines:
+
+1. Khândogya-upanishad V, 2, 6:
+II. Brihad-âranyaka, Mâdhyandina-sâkhâ, XIV, 9, 3, 10:
+III. Brihad-âranyaka-upanishad, Kânva-sâkhâ, VI, 3, 5:
+
+I. Amo nâmâsy amâ hi te sarvam idam sa hi gyeshthah
+II. Âmo 'sy âmam hi te mayi sa hi
+III. âmamsy âmamhi te mahi sa hi
+
+I. sreshtho râgâdhipatih sa mâ gyaishthyam srai-
+II. râgesâno 'dhipatih sa mâ râgesâno
+III. râgesâno
+
+I. shthyam râgyam âdhipatyam gamayatv aham evedam
+II. 'dhipatim karotv iti.
+III. 'dhipatim karotv iti.
+
+I. sarvam asânâti.
+II.
+III.
+
+The text in the Khândogya-upanishad yields a certain sense, viz. 'Thou art Ama by name, for all this together exists in thee. He is the oldest and best, the king, the sovereign. May he make me the oldest, the best, the king, the sovereign. May I be all this.' This, according to the commentator, is addressed to Prâna, and Ama, though a purely artificial word, is used in the sense of Prâna, or breath, in another passage also, viz. Brihad-âranyaka-up. I, 3, 22. If therefore we accept this meaning of Ama, the rest is easy and intelligible.
+
+But if we proceed to the Brihad-âranyaka, in the Mâdhyandina-sâkhâ, we find the commentator proposing the following interpretation: 'O Mantha, thou art a full knower, complete knowledge of me belongs to thee.' This meaning is obtained by deriving âmah from â+man, in the sense of knower, and then taking âmam, as a neuter, in the sense of knowledge, derivations which are simply impossible.
+
+Lastly, if we come to the text of the Kânva-sâkhâ, the grammatical interpretation becomes bolder still. Sankara does not explain the passage at all, which is strange, but Anandagiri interprets âmamsi tvam by 'Thou knowest (all),' and âmamhi te mahi, by 'we know thy great (shape),' which are again impossible forms.
+
+But although there can be little doubt here that the reading of the Khândogya-upanishad gives us the original text, or a text nearest to the original, no sound critic would venture to correct the readings of the Brihad-âranyaka. They are corruptions, but even as corruptions they possess authority, at all events up to a certain point, and it is the fixing of those certain points or cbronological limits, which alone can impart a scientific character to our criticism of ancient texts.
+
+In the Kaushîtaki-brâhmana-upanishad Professor Cowell has pointed out a passage to me, where we must go beyond the text as it stood when commented on by the Sankarânanda. In the beginning of the fourth adhyâya all MSS. of the text read savasan, and this is the reading which the commentator seems anxious to explain, though not very successfully. I thought that possibly the commentator might have had before him the reading savasan, or so 'vasan, but both would be very unusual. Professor Cowell in his Various Readings, p. xii, conjectured samvasan, which would be liable to the same objection. He now, however, informs me that, as B. has samtvan, and C. satvan, he believes the original text to have been Satvan-Matsyeshu. This seems to me quite convincing, and is borne out by the reading of the Berlin MS., so far as it can be made out from Professor Weber's essay on the Upanishads, Indische Studien I, p.419. I see that Boehtlingk and Roth in their Sanskrit Dictionary, s.v. satvat, suggest the same emendation.
+
+The more we study the nature of Sanskrit MSS., the more, I believe, we shall feel convinced that their proper arrangement is one by locality rather than by time. I have frequently dwelt on this subject in the introductions to the successive volumes of my edition of the Rig-veda and its commentary by Sâyanâkârya, and my convictions on this point have become stronger ever since. A MS., however modern, from the south of India or from the north, is more important as a check on the textus receptus of any Sanskrit work, as prevalent in Bengal or Bombay, than ever so many MSS., even if of greater antiquity, from the same locality. When therefore I was informed by my friend Dr. Bühler that he had discovered in Kashmir a MS. of the Aitareya-upanishad, I certainly expected some real help from such a treasure. The MS. is described by its discoverer in the last number of the journal of the Bombay Asiatic Society, p.34 [1], and has since been sent to me by the Indian Government. It is written on birch bark (bhûrga), and in the alphabet commonly called Sâradâ. The leaves are very much injured on the margin and it is almost impossible to handle them without some injury. In many places the bark has shrunk, probably on being moistened, and the letters have become illegible. Apart from these drawbacks, there remain the difficulties inherent in the Sâradâ alphabet which, owing to its numerous combinations, is extremely difficult to read, and very trying to eyes which are growing weak. However, I collated the Upanishad from the Aitareya-âranyaka, which turned out to be the last portion only, viz. the Samhitâ-upanishad (Ait. Âr. 111, 1-2), or, as it is called here, Samhitâranya, and I am sorry to say my expectations have been disappointed. The MS. shows certain graphic peculiarities which Dr. Bühler has pointed out. It is particularly careful in the use of the sibilants, replacing the Visarga by sibilants, writing s + s and s + s instead of h + s and h + s; distinguishing also the Gihvâmûlîya and Upadhmanîya. If therefore the MS. writes antastha, we may be sure that it really meant to write so, and not antahstha, or, as it would have written, antasstha. It shows equal care in the use of the nasals, and generally carries on the sandhi between different paragraphs. Here and there I met with better readings than those given in Rajendralal Mitra's edition, but in most cases the commentary would have been sufficient to restore the right reading. A few various readings, which seemed to deserve being mentioned, will be found
+
+[1. Journal of the Bombay Branch of the Royal Asiatic Society, 1877. Extra Number, containing the Detailed Report of a Tour in search of Sanskrit MSS., made in Kásmir, Rajputana, and Central India, by G. Bühler.]
+
+in the notes. The MS., though carefully written, is not free from the ordinary blunders. At first one feels inclined to attribute some importance to every peculiarity of a new MS., but very soon one finds out that what seems peculiar, is in reality carelessness. Thus Ait. Âr. III, I, 5, 2, the Kashmir MS. has pûrvam aksharam rûpam, instead of what alone can be right, pûrvarûpam. Instead of pragayâ pasubhih it writes repeatedly pragaya pasubhih, which is impossible. In III, 2, 2, it leaves out again and again manomaya between khandomaya and vânmaya; but that this is a mere accident we learn later on, where in the same sentence manomayo, is found in its right place. Such cases reduce this MS. to its proper level, and make us look with suspicion on any accidental variations, such as I have noticed in my translation.
+
+The additional paragraph, noticed by Dr. Bühler, is very indistinct, and contains, so far as I am able to find out, sânti verses only.
+
+I have no doubt that the discovery of new MSS. of the Upanishads and their commentaries will throw new light on the very numerous difficulties with which a translator of the Upanishads, particularly in attempting a complete and faithful translation, has at present to grapple. Some of the difficulties, which existed thirty years ago, have been removed since by the general progress of Vedic scholarship, and by the editions of texts and commentaries and translations of Upanishads, many of which were known at that time in manuscript only. But I fully agree with M. Regnaud as to the difficultés considérables que les meilleures traductions laissent subsister, and which can be solved only by a continued study of the Upanishads, the Âranyakas, the Brâhmanas, and the Vedânta-sûtras.
+
+MEANING OF THE WORD UPANISHAD.
+How Upanishad became the recognised name of the philosophical treatises contained in the Veda is difficult to explain. Most European scholars are agreed in deriving upa-ni-shad from the root sad, to sit down, preceded by the two prepositions ni, down, and upa, near, so that it would express the idea of session, or assembly of pupils sitting down near their teacher to listen to his instruction. In the Trikândasesha, upanishad is explained by samipasadana, sitting down near a person[1].
+
+Such a word, however, would have been applicable, it would seem, to any other portion of the Veda as well as to the chapters called Upanishad, and it has never been explained how its meaning came thus to be restricted. It is still more strange that upanishad, in the sense of session or assembly, has never, so far as I am aware, been met with. Whenever the word occurs, it has the meaning of doctrine, secret doctrine, or is simply used as the title of the philosophic treatises which constitute the gñânakânda, the knowledge portion, as opposed to the karmakânda, the work or ceremonial portion, of the Veda.
+
+Native philosophers seem never to have thought of deriving upanishad from sad, to sit down. They derive it either from the root sad, in the sense of destruction, supposing these ancient treatises to have received their name because they were intended to destroy passion and ignorance by means of divine revelation[2], or from the root sad, in the sense of approaching, because a knowledge of Brahman comes near to us by means of the Upanishads, or because we approach Brahman by their help. Another explanation proposed by Sankara in his commentary on the Taittirîya-upanishad II, 9, is that the highest bliss is contained in the Upanishad (param sreyo 'syâm nishannam).
+
+These explanations seem so wilfully perverse that it is difficult to understand the unanimity of native scholars. We ought to take into account, however, that very general tendency among half-educated people, to acquiesce in any etymology which accounts for the most prevalent meaning of a word. The Âranyakas abound in
+
+[1. Pânini I, 4, 79, has upanishatkritya.
+
+2. M. M., History of Ancient Sanskrit Literature, p. 318; Colebrooke, Essays, I, 92; Regnaud, Matériaux, p. 7.]
+
+such etymologies, which probably were never intended as real etymologies, in our sense of the word, but simply as plays on words, helping to account somehow for their meaning. The Upanishads, no doubt, were meant to destroy ignorance and passion, and nothing seemed more natural therefore than that their etymological meaning should be that of destroyers [1].
+
+The history and the genius of the Sanskrit language leave little doubt that upanishad meant originally session, particularly a session consisting of pupils, assembled at a respectful distance round their teacher.
+
+With upa alone, sad occurs as early as the hymns of the Rig-veda, in the sense of approaching respectfully [2]:-
+
+Rig-veda IX, 11, 6. Nâmasâ ít úpa sîdata, 'approach him with praise.' See also Rig-veda X, 73, II; I, 65, I.
+
+In the Khândogya-upanishad VI, 13, I, a teacher says to his pupil, atha mâ prâtar upasîdathâh, 'come to me (for advice) to-morrow morning.'
+
+In the same Upanishad VII, 8, I, a distinction is made between those who serve their teachers (parikaritâ), and those who are admitted to their more intimate society (upasattâ, comm. samîpagah, antarangah, priyah).
+
+Again, in the Khândogya-upanishad VII, I, we read of a pupil approaching his teacher (upâsasâda or upasasâda), and of the teacher telling him to approach with what he knows, i.e. to tell him first what he has learnt already (yad vettha tena mopasîda [3]).
+
+In the Sûtras (Gobhilîya Grihya-sûtra II, 10, 38) upasad is the recognised term for the position assumed by a pupil with his hands folded and his eyes looking up to the teacher who is to instruct him.
+
+It should be stated, however, that no passage has yet been met with in which upa-ni-sad is used in the sense of pupils approaching and listening to their teacher. In the
+
+[1. The distinction between possible and real etymologies is as modern as that between legend and history.
+
+2. See M. M.'s History of Ancient Sanskrit Literature, p. 318.
+
+3. See also Khand. Up. VI, 7, 2.]
+
+only passage in which upanishasâda occurs (Ait. Âr. II, 2, 1), it is used of Indra sitting down by the side of Visvâmitra, and it is curious to observe that both MSS. and commentaries give here upanishasasâda, an entirely irregular form.
+
+The same is the case with two other roots which are used almost synonymously with sad, viz. âs and vis. We find upa+âs used to express the position which the pupil occupies when listening to his teacher, e.g. Pân. III, 4, 72, upâsito gurum bhavân, 'thou hast approached the Guru,' or upâsito gurur bhavatâ, 'the Guru has been approached by thee.' We find pari+upa+âs used with regard to relations assembled round the bed of a dying friend, Khând. Up. VI, 15; or of hungry children sitting round their mother, and likened to people performing the Agnihotra sacrifice (Khând. Up. V, 24, 5). But I have never met with upa-ni-as in that sense.
+
+We likewise find upa-vis used in the sense of sitting down to a discussion (Khând. Up. I, 8, 2), but I have never found upa+ni+vis as applied to a pupil listening to his teacher.
+
+The two prepositions upa and ni occur, however, with pat, to fly, in the sense of flying down and settling near a person, Khând. Up. IV, 7, 2; IV, 8, 2. And the same prepositions joined to the verb sri, impart to it the meaning of sitting down beneath a person, so as to show him respect: Brih. Âr. I, 4, II. 'Although a king is exalted, he sits down at the end of the sacrifice below the Brahman,' brahmaivântata upanisrayati.
+
+Sad, with upa and ni, occurs in upanishâdin only, and has there the meaning of subject, e.g. Satap. Brâhm. IX, 4, 3, 3, kshatrâya tad visam adhastâd upanishâdinîm karoti, 'he thus makes the Vis (citizen) below, subject to the Kshatriya.'
+
+Sometimes nishad is used by the side of upanishad, and so far as we can judge, without any difference of meaning [1].
+
+All we can say therefore, for the present, is that upanishad,
+
+[1. Mahâbhârata, Sântiparva, 1613.]
+
+besides being the recognised title of certain philosophical treatises, occurs also in the sense of doctrine and of secret doctrine, and that it seems to have assumed this meaning from having been used originally in the sense of session or assembly in which one or more pupils receive instruction from a teacher.
+
+Thus we find the word upanishad used in the Upanishads themselves in the following meanings:
+
+1. Secret or esoteric explanation, whether true or false.
+
+2. Knowledge derived from such explanation.
+
+3. Special rules or observances incumbent on those who have received such knowledge.
+
+4. Title of the books containing such knowledge.
+
+I. Ait. Âr. III, 1, 6, 3. 'For this Upanishad, i.e. in order to obtain the information about the true meaning of Samhitâ, Târukshya served as a cowherd for a whole year.'
+
+Taitt. Up. 1, 3. 'We shall now explain the Upanishad of the Samhitâ.'
+
+Ait. Âr. III, 2, 5, 1. 'Next follows this Upanishad of the whole speech. True, all these are Upanishads of the whole speech, but this they declare especially.'
+
+Talav. Up. IV, 7. 'As you have asked me to tell you the Upanishad, the Upanishad has now been told you. We have told you the Brâhmî Upanishad,' i.e. the true meaning of Brahman.
+
+In the Khând. Up. III, II, 3, after the meaning of Brahman has been explained, the text says: 'To him who thus knows this Brahma upanishad (the secret doctrine of Brahman) the sun does not rise and does not set.' In the next paragraph brahma itself is used, meaning either Brahman as the object taught in the Upanishad, or, by a slight change of meaning, the Upanishad itself.
+
+Khând. Up. I, 13, 4. 'Speech yields its milk to him who knows this Upanishad (secret doctrine) of the Sâmans in this wise.'
+
+Khând. Up. VIII, 8, 4. When Indra and Virokana had both misunderstood the teaching of Pragâpati, he says: 'They both go away without having perceived and without having known the Self, and whoever of these two, whether Devas or Asuras, will follow this doctrine (upanishad), will perish.'
+
+II. In the Khând. Up. I, i, after the deeper meaning of the Udgîtha or Om has been described, the advantage of knowing that deeper meaning is put forward, and it is said that the sacrifice which a man performs with knowledge, with faith, and with the Upanishad, i.e. with an understanding of its deeper meaning, is more powerful.
+
+III. In the Taittirîya-upanishad, at the end of the second chapter, called the Brahmânandavallî, and again at the end of the tenth chapter, the text itself says: Ity upanishad, this is the Upanishad, the true doctrine.'
+
+IV. In the Kaushîtaki-upanishad II, I; 2, we read: 'Let him not beg, this is the Upanishad for him who knows this.' Here upanishad stands for vrata or rahasya-vrata, rule.
+
+WORKS ON THE UPANISHADS.
+Anquetil Duperron, Oupnek'hat, 1801, 1802. See page clii.
+
+Rammohun Roy, Translation of Several Principal Books, Passages, and Texts of the Veds. Second edition. London, 1832.
+
+Translation of the Moonduk-Ooptinishud of the Uthurvu Ved, p. 23.
+Translation of the Céna Upanishad, one of the Chapters of the Sáma Véda, p. 41.
+Translation of the Kut'h-Oopunishud of the Ujoor-Ved, p. 55.
+Translation of the Ishopanishad, one of the Chapters of the Yajur Véda, p. 81.
+
+H. T. Colebrooke, Miscellaneous Essays, in three volumes, 1873.
+
+K. J. H. Windischmann, Die Philosophie im Fortgange der Weltgeschichte, 1827-34.
+
+F. W. Windischmann, Sancara, seu de theologumenis Vedanticorum, 1833.
+
+E. Röer, The Taittirîya, Aitareya, Svetâsvatara, Kena Îsâ, Katha, Prasna, Mundaka, and Mândûkya Upanishads translated; Bibliotheca, Indica. Calcutta, 1853.
+
+Rajendralal Mitra, The Khândogya Upanishad, with extracts from the commentary of Sankara; Bibliotheca Indica. Calcutta, 1862.
+
+E. B. Cowell, The Kaushîtaki-brâhmana-upanishad, edited with an English translation; Bibliotheca Indica. Calcutta, 1861.
+
+E. B. Cowell, The Maitri Upanishad, edited with an English translation; Bibliotheca Indica. Calcutta, 1870.
+
+A. Weber, Die Vagrasûkî des Asvaghosha. Berlin, 1860.
+
+A. Weber, Die Râma-tâpanîya Upanishad. Berlin, 1864.
+
+A. Weber, Analyse der in Anquetil du Perron's Übersetzung enthalten Upanishad; Indische Studien, vol. i, p. 247 et seq.
+
+A. E. Gough, The Philosophy of the Upanishads; Calcutta Review, CXXXI.
+
+P. Regnaud, Matériaux pour servir à l'histoire de la Philosophic de l'Inde. Paris, 1876.
+
+Editions of the Upanishads, their commentaries and glosses have been published in the Tattvabodhinî patrikâ, and by Poley (who has also translated several Upanishads into French), by Röer, Cowell, Rajendralal Mitra, Harakandra Vidyâbhûshana, Visvanâtha Sâstrî, Râmamaya Tarkaratna, and others. For fuller titles see Gildemeister, Bibliotheca Sanscrita, and E. Haas, Catalogue of Sanskrit and Pali Books in the British Museum, s. v. Upanishads.
+
+I.
+THE KHÂNDOGYA-UPANISHAD.
+THE Khândogya-upanishad belongs to the Sâma-veda. Together with the Brihad-âranyaka, which belongs to the Yagur-veda, it has contributed the most important materials to what may be called the orthodox philosophy of India, the Vedânta[1], i.e. the end, the purpose, the highest object of the Veda. It consists of eight adhyâyas or lectures, and formed part of a Khândogya-brâhmana, in which it was preceded by two other adhyâyas. While MSS. of the Khândogya-upanishad and its commentary are frequent, no MSS. of the whole Brâhmana has been met with in Europe. Several scholars had actually doubted its existence, but Rajendralal Mitra[1], in the Introduction to his translation of the Khândogya-upanishad, states that in India 'MSS. of the work are easily available, though as yet he has seen no commentary attached to the Brâhmana portion of any one of them.' 'According to general acceptation,'
+
+[1. Vedânta, as a technical term, did not mean originally the last portions of the Veda, or chapters placed, as it were, at the end of a volume of Vedic literature, but the end, i. e. the object, the highest purpose of the Veda. There are, of course, passages, like the one in the Taittirîya-âranyaka (ed. Rajendralal Mitra, p. 820), which have been misunderstood both by native and European scholars, and where vedânta means simply the end of the Veda:-yo vedâdau svarah prokto vedânte ka pratishthitah, 'the Om which is pronounced at the beginning of the Veda, and has its place also at the end of the Veda.' Here vedânta stands simply in opposition to vedâdau, and it is impossible to translate it, as Sayana does, by Vedânta or Upanishad. Vedânta, in the sense of philosophy, occurs in the Taittirîya-âranyaka (p. 817), in a verse of the Narâyanîya-upanishad, repeated in the Mundaka-upanishad III, 2, 6, and elsewhere, vedântavigñânasuniskitârâh, 'those who have well understood the object of the knowledge arising from the Vedânta,' not 'from the last books of the Veda;' and Svetâsvatara-up. VI, 2 2, vedânte paramam guhyam, 'the highest mystery in the Vedânta.' Afterwards it is used in the plural also, e. g. Kshurikopanishad, 10 (Bibl. Ind. p. 210), pundarîketi vedânteshu nigadyate, 'it is called pundarika in the Vedintas,' i. e. in the Khândogya and other Upanishads, as the commentator says, but not in the last books of each Veda. A curious passage is found in the Gautama-sûtras XIX, 12, where a distinction seems to be made between Upanishad and Vedânta. Sacred Books, vol. ii, p. 272.
+
+2. Khândogya-upanishad, translated by Rajendralal Mitra, Calcutta, 1862, Introduction, p. 17.]
+
+he adds, 'the work embraces ten chapters, of which the first two are reckoned to be the Brâhmana, and the rest is known under the name of Khândogya-upanishad. In their arrangement and style the two portions differ greatly, and judged by them they appear to be productions of very different ages, though both are evidently relics of pretty remote antiquity. Of the two chapters of the Khândogya-brâhmana[1], the first includes eight sûktas (hymns) on the ceremony of marriage, and the rites necessary to be observed at the birth of a child. The first sûktas is intended to be recited when offering an oblation to Agni on the occasion of a marriage, and its object is to pray for prosperity in behalf of the married couple. The second prays for long life, kind relatives, and a numerous progeny. The third is the marriage pledge by which the contracting parties bind themselves to each other. Its spirit may be guessed from a single verse. In talking of the unanimity with which they will dwell, the bridegroom addresses his bride, "That heart of thine shall be mine, and this heart of mine shall be thine [2]." The fourth and the fifth invoke Agni, Vâyu, Kandramas, and Sûrya to bless the couple and ensure healthful progeny. The sixth is a mantra for offering an oblation on the birth of a child; and the seventh and the eighth are prayers for its being healthy, wealthy, and powerful, not weak, poor, or mute, and to ensure a profusion of wealth and milch-cows. The first sûkta of the second chapter is addressed to the Earth, Agni, and Indra, with a prayer for wealth, health, and prosperity; the second, third, fourth, fifth, and sixth are mantras for offering oblations to cattle, the manes, Sûrya, and divers minor deities. The seventh is a curse upon worms, insects, flies, and other nuisances, and the last, the concluding mantra of the marriage ceremony, in which a general blessing is invoked for all concerned.'
+
+After this statement there can be but little doubt that
+
+[1. It begins, Om, deva savitah, pra Suva yagñam pra suva yagñapatim bhagâya. The second begins, yah prâkyâm disi sarparâga esha te balih.
+
+2 Yad etad dhridayam tava tad astu hridayam mama, Yad idam hridayam mama tad astu hridayam tava.]
+
+this Upanishad originally formed part of a Brâhmana. This may have been called either by a general name, the Brâhmana of the Khandogas, the followers of the Sâma-veda, or, on account of the prominent place occupied in it by the Upanishad, the Upanishad-brâhmana[1]. In that case it would be one of the eight Brâhmanas of the Sâma-veda, enumerated by Kumârila Bhatta and others[2], and called simply Upanishad, scil. Brâhmana.
+
+The text of the Upanishad with the commentary of Sankara and the gloss of Ânandagiri has been published in the Bibliotheca Indica. The edition can only claim the character of a manuscript, and of a manuscript not always very correctly read.
+
+A translation of the Upanishad was published, likewise in the Bibliotheca Indica, by Rajendralal Mitra.
+
+It is one of the Upanishads that was translated into Persian under the auspices of Dârâ Shukoh [3], and from Persian into French by Anquetil Duperron, in his Oupnekhat, i.e. Secreturn Tegendum. Portions of it were translated into English by Colebrooke in his Miscellaneous Essays, into Latin and German by F. W. Windischmann, in his Sankara, seu de theologumenis Vedanticorum. (Bonn, 1833), and in a work published by his father, K. J. H. Windischmann, Die Philosophie im Fortgang der Weltgeschichte (Bonn, 1827-34). Professor A. Weber has treated of this Upanishad in his Indische Studien I, 254; likewise M. P. Regnaud in his Matériaux pour servir à l'histoire dc la philosophie de I'Inde (Paris, 1876) and Mr. Gough in several articles on 'the Philosophy of the Upanishads,' in the Calcutta Review, No. CXXXI.
+
+I have consulted my predecessors whenever there was a serious difficulty to solve in the translation of these ancient texts. These difficulties are very numerous, as those know
+
+[1. The same name seems, however, to be given to the adhyâya of the Talavakâra-brâhmana, which contains the Kena-upanishad.
+
+2 M. M., History of Ancient Sanskrit Literature, p. 348. Most valuable information on the literature of the Sâma-veda may be found in Dr. Burnell's editions of the smaller Brâhmanas of that Veda.
+
+3. M. M., History of Ancient Sanskrit Literature, p. 325.]
+
+best who have attempted to give complete translations of these ancient texts. It will be seen that my translation differs sometimes very considerably from those of my predecessors. Though I have but seldom entered into any controversy with them, they may rest assured that I have not deviated from them without careful reflection.
+
+II.
+THE TALAVAKÂRA-UPANISHAD.
+THIS Upanishad is best known by the name of Kena-upanishad, from its first word. The name of brâhmî-upanishad (IV, 7) can hardly be considered as a title. It means 'the teaching of Brahman,' and is used with reference to other Upanishads also [1]. Sankara, in his commentary, tells us that this Upanishad forms the ninth adhyâya of a Brâhmana, or, if we take his words quite literally, he says, 'the beginning of the ninth adhyâya is "the Upanishad beginning with the words Keneshitam, and treating of the Highest Brahman has to be taught."[1] In the eight preceeding adhyâyas, he tells us, all the sacred rites or sacrifices had been fully explained, and likewise the meditations (upâsana) on the prâna (vital breath) which belongs to all these sacrifices, and those meditations also which have reference to the fivefold and sevenfold Sâmans. After that followed Gâyatra-sâman and the Vamsa, the genealogical list. All this would naturally form the subject of a Sâma-veda-brâhmana, and we find portions corresponding to the description given by Sankara in the Khândogya-upanishad, e.g. the fivefold Sâman, II, 2; the sevenfold Sâman, II, 8; the Gâyatra-sâman, III, 12, I.
+
+Ânandagñâna tells us that our Upanishad belonged to the Sâkhâ of the Talavakâras.
+
+All this had formerly to be taken on trust, because no Brâhmana was known containing the Upanishad. Dr. Burnell, however, has lately discovered a Brâhmana of the Sâma-veda which comes very near the description given by Sankara. In a letter dated Tanjore, 8th Dec. 1878, he
+
+[1. See before, p. lxxxiii.]
+
+writes: 'It appears to me that you would be glad to know the following about the Kena-upanishad, as it occurs in my MS. of the Talavakâra-brâhmana.
+
+'The last book but one of this Brâhmana is termed Upanishad-brâhmana. It consists of 145 khandas treating of the Gâyatra-sâman, and the 134th is a Vamsa. The Kena-upanishad comprises the 135-145 khandas, or the tenth anuvâka of a chapter. The 139th section begins: âsâ vâ idam agra âsit, &c.
+
+'My MS. of the Talavakâra-brâhmana agrees, as regards the contents, exactly with what Sankara says, but not in the,divisions. He says that the Kena-upanishad begins the ninth adhyâya, but that is not so in my MS. Neither the beginning nor the end of this Upanishad is noticed particularly.
+
+'The last book of this Brâhmana is the Arsheya-brâhmana, which I printed last February.
+
+'Among the teachers quoted in the Brâhmana I have noticed both Tândya and Sâtyâyani. I should not be surprised to find in it the difficult quotations which are incorrectly given in the MSS. of Sâyana's commentary on the Rig-veda. The story of Apâlâ, quoted by Slyana in his commentary on the Rig-veda, VIII, 80, as from the Sâtyâyanaka, is found word for word, except some trivial var. lectiones, in sections 220-221 of the Agnishtoma book of the Talavakâra-brâhmana. The Sâtyâyanins seem to be closely connected with the Talavakâra-sâkhâ.'
+
+From a communication made by Dr. Burnell to the Academy (1 Feb. 79), I gather that this Talavakâra-brâhmana is called by those who study it 'Gaiminîya-brâhmana,' after the Sâkhâ of the Sâma-veda which they follow. The account given in the Academy differs on some particulars slightly from that given in Dr. Burnell's letter to me. He writes: 'The largest part of the Brâhmana treats of the sacrifices and the Sâmans used at them. The first chapter is on the Agnihotra, and the Agnishtoma and other rites follow at great length. Then comes a book termed Upanishad-brâhmana. This contains 145 sections in four chapters. It begins with speculations on the Gâyatra-sâman, followed by a Vamsa; next, some similar matter and another Vamsa. Then (§§135-138) comes the Kenaupanishad (Talavakâra). The last book is the Ârsheya. The Upanishad forms the tenth anuvâka of the fourth chapter, not the beginning of a ninth chapter, as Sankara remarks.'
+
+The Kena-upanishad has been frequently published and translated. It forms part of Dârâ Shukoh's Persian, and Anquetil Duperron's Latin translations. It was several times published in English by Rammohun Roy (Translations of Several Principal Books, Passages, and Texts of the Veda, London, 1832, p. 41), in German by Windischmann, Poley, and others. It has been more or less fully discussed by Colebrooke, Windischmann, Poley, Weber, Röer, Gough, and Regnaud in the books mentioned before,
+
+Besides the text of this Upanishad contained in the Brâhmana of the Sâma-veda, there is another text, slightly differing, belonging to the Atharva-veda, and there are commentaries on both texts (Colebrooke, Misc. Essays, 1873, II, p. 80).
+
+THE AITAREYA-ÂRANYAKA.
+IN giving a translation of the Aitareya-upanishad, I found it necessary to give at the same time a translation of that portion of the Aitareya-âranyaka which precedes the Upanishad. The Âranyakas seem to have been from the beginning the proper repositories of the ancient Upanishads, though it is difficult at first sight to find out in what relation the Upanishads stood to the Âranyakas. The Âranyakas are to be read and studied, not in the village (grâme), but in the forest, and so are the Upanishads. But the subjects treated in the Upanishads belong to a very different order from those treated in the other portions of the Âranyakas, the former being philosophical, the latter liturgical.
+
+The liturgical chapters of the Âranyakas might quite as well have formed part of the Brâhmanas, and but for the restriction that they are to be read in the forest, it is difficult to distinguish between them and the Brâhmanas. The first chapter of the Aitareya-âranyaka is a mere continuation of the Aitareya-brâhmana, and gives the description of the Mahâvrata, the last day but one of the Gavâmayana, a sattra or sacrifice which is supposed to last a whole year. The duties which are to be performed by the Hotri priests are described in the Aitareya-âranyaka; not all, however, but those only which are peculiar to the Mahâvrata day. The general rules for the performance of the Mahâvrata are to be taken over from other sacrifices, such as the Visvagit, Katurvimsa, &c., which form the type (prakriti) of the Mahâvrata. Thus the two sastras or recitations, called âgya-praüga, are taken over from the Visvagit, the sastras of the Hotrakas from the Katurvimsa. The Mahâvrata is treated here as belonging to the Gavâmayana sattra, which is described in a different Sâkhâ, see Taittirîya Samhitâ VII, 5, 8, and partly in other Vedas. It is the day preceding the udayanîya, the last day of the sattra. It can be celebrated, however, by itself also, as an ekâha or ahîna sacrifice, and in the latter case it is the tenth day of the Ekadasarâtra (eleven nights sacrifice) called Pundarîka.
+
+Sâyana does not hesitate to speak of the Aitareya-Âranyaka as a part of the Brâhmana[1]; and a still earlier authority, Sankara, by calling the Aitareya-upanishad by the name of Bahvrika-brâhmana-upanishad [2], seems to imply that both the Upanishad and the Âranyaka may be classed as Brâhmana.
+
+The Aitareya-Âranyaka appears at first sight a miscellaneous work, consisting of liturgical treatises in the first, fourth, and fifth Âranyakas, and of three Upanishads, in the second and third Âranyakas. This, however, is not the case. The first Âranyaka is purely liturgical, giving a description of the Mahâvrata, so far as it concerns the Hotri priest. It is written in the ordinary Brâhmana style. Then follows the first Upanishad, Âranyaka II, 1-3, showing
+
+[1. Aitareyabrâhmane 'sti kândam âranyakâbhidham (introduction), a remark which he repeats in the fifth Âranyaka. He also speaks of the Âranyaka-vratarûpam brahmanam; see p. cxiv, 1. 24.
+
+2. In the same manner the Kaushîtaki-upanishad is properly called Kaushîtaki-brahmana-upanishad, though occurring in the Âranyaka; see Kaushîtaki-brâhmana-upanishad, ed. Cowell, p. 30.]
+
+how certain portions of the Mahâvrata, as described in the first Âranyaka, can be made to suggest a deeper meaning, and ought to lead the mind of the sacrificer away from the purely outward ceremonial to meditation on higher subjects. Without a knowledge of the first Âranyaka therefore the first Upanishad would be almost unintelligible, and though its translation was extremely tedious, it could not well have been omitted.
+
+The second and third Upanishads are not connected with the ceremonial of the Mahâvrata, but in the fourth and fifth Âranyakas the Mahâvrata forms again the principal subject, treated, however, not as before in the style of the Brâhmanas, but in the style of Sûtras. The fourth Âranyaka contains nothing but a list of the Mahânâmni hymns [1], but the fifth describes the Mahâvrata again, so that if the first Âranyaka may be looked upon as a portion of the Aitareya-brâhmanas, the fifth could best be classed with the Sûtras of Âsvalâyana.
+
+To a certain extent this fact, the composite character of the Aitareya-Âranyaka, is recognised even by native scholars, who generally do not trouble themselves much on such questions. They look both on the Aitareya-brâhmana and on the greater portion of Aitareya-Âranyaka as the works of an inspired Rishi, Mahidâsa Aitareya[2], but they consider the fourth and fifth books of the Âranyaka as contributed by purely human authors, such as Asvalâyana and Saunaka, who, like other Sûtrakâras, took in verses belonging to other Sâkhâs, and did not confine their rules to their own Sâkhâ only.
+
+There are many legends about Mahidâsa, the reputed author of the Aitareya-brâhmana and Âranyaka. He is
+
+[1. See Boehtlingk and Roth, s.v. 'Neun Vedische Verse die in ihrem vollständigenWortlaut aber noch nachtnachgewiesen sind.' Weber Indische Studien VIII, 68. How these hymns are to be employed we learn from the Âsvalâyana-sûtras VII, 12, 10, where we are told that if the Udgâtris sing the Sâkvara Sâman as the Prishthastotra, the nine verses beginning with Vidâ maghavan, and known by the name of Mahânâmnî, are to be joined in a peculiar manner. The only excuse given, why these Mahânâmnîs are mentioned here, and not in the Brâhmana, is that they are to be studied in the forest.
+
+2. M. M., History of Ancient Sanskrit Literature, pp. 177, 335.]
+
+quoted several times as Mahidâsa Aitareya in the Âranyaka itself, though not in the Brâhmana. We also meet his name in the Khândogya-upanishad (III, 16, 7), where we are told that he lived to an age of 116 years[1]. All this, however, would only prove that, at the time of the composition or collection of these Âranyakas and Upanishads, a sage was known of the name of Mahidâsa Aitareya, descended possibly from Itara or Itarâ. and that one text of the Brâhmanas and the Âranyakas of the Bahvrikas was handed down in the family of the Aitareyins.
+
+Not content with this apparently very obvious explanation, later theologians tried to discover their own reasons for the name of Aitareya. Thus Sâyana, in his introduction to the Aitareya-brâhmana [2], tells us that there was once a Rishi who had many wives. One of them was called Itarâ, and she had a son called Mahidâsa. His father preferred the sons of his other wives to Mahidâsa, and once he insulted him in the sacrificial hall, by placing his other sons on his lap, but not Mahidâsa. Mahidâsa's mother, seeing her son with tears in his eyes, prayed to her tutelary goddess, the Earth (svîyakuladevatâ Bhûmih), and the goddess in her heavenly form appeared in the midst of the assembly, placed Mahidâsa on a throne, and on account of his learning, gave him the gift of knowing the Brâhmana, consisting of forty adhyâyas, and, as Sâyana calls it, another Brâhmana, 'treating of the Âranyaka duties' (âranyakavratarûpam brâhmanam).
+
+Without attaching much value to the legend of Itarâ, we see at all events that Sâyana considered what we call the Aitareyâranyaka as a kind of Brâhmana, not however the whole of it, but only the first, second, and third Âranyakas (atha mahâvratam îtyâdikam âkâryâ âkâryâ ityantam). How easy it was for Hindu theologians to invent such legends we see from another account of Mahidâsa, given by Ânandatîrtha in his notes on the Aitareya-upanishad.
+
+[1. Not 1600 years, as I printed by mistake; for 24+44+48 make 116 years. Rajendralal Mitra should not have corrected his right rendering 116 into 1600. Ait. Âr. Introduction, p. 3.
+
+2. M. M., History of Ancient Sanskrit Literature, p. 336.]
+
+He, as Colebrooke was the first to point out, takes Mahidâsa 'to be an incarnation of Nârâyana, proceeding from Visâla, son of Abga,' and he adds, that on the sudden appearance of this deity at a solemn celebration, the whole assembly of gods and priests (suraviprasangha) fainted, but at the intercession of Brahmâ, they were revived, and after making their obeisance, they were instructed in holy science. This avatâra was called Mahidâsa, because those venerable personages (mahin) declared themselves to be his slaves (dâsa) [1].
+
+In order properly to understand this legend, we must remember that Ânandatîrtha, or rather Visvesvaratîrtha, whose commentary he explains, treated the whole of the Mahaitareya-upanishad from a Vaishnava point of view, and that his object was to identify Mahidâsa with Nârâyana. He therefore represents Nârâyana or Hari as the avatâra of Visâla, the son of Brahman (abgasuta), who appeared at a sacrifice, as described before, who received then and there the name of Mahidâsa (or Mahîdâsa), and who taught this Upanishad. Any other person besides Mahidâsa would have been identified with the same ease by Visvesvaratîrtha with Vishnu or Bhagavat.
+
+A third legend has been made up out of these two by European scholars who represent Mahidâsa as the son of Visâla and Itarâ, two persons who probably never met before, for even the Vaishnava commentator does not attempt to take liberties with the name of Aitareya, but simply states that the Upanishad was called Aitareyî, from Aitareya.
+
+Leaving these legends for what they are worth, we may at all events retain the fact that, whoever was the author of the Aitareya-brâhmana and the first three books of the Aitareya-Âranyaka, was not the author of the two concluding Âranyakas. And this is confirmed in different ways. Sâyana, when quoting in his commentary on the Rig-veda from the last books, constantly calls it a Sûtra of Saunaka, while the fourth Âranyaka is specially ascribed
+
+[1. Colebrooke, Miscellaneous Essays, 1873, II, p. 42.]
+
+to Âsvalâyana, the pupil and successor of Saunaka[1]. These two names of Saunaka and Âsvalâyana are frequently intermixed. If, however, in certain MSS. the whole of the Aitareya-âranyaka is sometimes ascribed either to Âsvalâyana or Saunaka, this is more probably due to the colophon of the fourth and fifth Âranyakas having been mistaken for the title of the whole work than to the fact that such MSS. represent the text of the Âranyaka, as adopted by the school of Âsvalâyana.
+
+The Aitareya-âranyaka consists of the following five Âranyakas:
+
+The first Âranyaka has five Adhyâyas:
+
+1. First Adhyâya, Atha mahftvratam, has four Khandas, 1-4.
+2. Second Adhyâya, Â tvâ ratham, has four Khandas, 5-8.
+3. Third Adhyâya, Hinkârena, has eight[2] Khandas, 9-16.
+4. Fourth Adhyâya, Atha sûdadohâh, has three Khandas, 17-19.
+5. Fifth Adhyâya, Vasam samsati, has three Khandas, 20-22.
+
+The second Âranyaka has seven Adhyâyas:
+
+6. First Adhyâya, Eshâ panthâh, has eight Khandas, 1-8.
+7. Second Adhyâya, Esha imam lokam, has four Khandas, 9-12.
+8. Third Adhyâya, Yo ha vâ âtmânam, has eight (not three) Khandas, 13-20.
+9. Fourth Adhyâya, Âtma vâ idam, has three Khandas, 21-23.
+10. Fifth Adhyâya, Purushe ha vâ, has one Khanda, 24
+11. Sixth Adhyâya, Ko 'yam âtmeti, has one Khanda, 25.
+12. Seventh Adhyâya, Vân me manasi, has one Khanda, 26.
+
+The third Âranyaka has two Adhyâyas:
+
+13. First Adhyâya, Athâtah samhitâyâ upanishat, has six Khandas, 1-6.
+14. Second Adhyâya, Prâno vamsa iti sthavirah Sâkalyah, has six Khandas, 7-12.
+
+The fourth Âranyaka, has one Adhyâya:
+
+15. First Adhyâya, Vidâ maghavan, has one Khanda (the Mahânâmnî's).
+
+The fifth Âranyaka has three Adhyâyas:
+
+16. First Adhyâya, Mahâvratasya pañkavimsatim, has six Khandas, 1-6.
+17. Second Adhyâya, (Grîvâh)Yasyedam,has five Khandas, 7-11.
+18. Third Adhyâya, (Ûrû) Indrâgnî, has four Khandas, 11-14
+
+[JBH: 9-11 are labelled Aitareya-upanishad and 6-14 are labelled Bahvrika-upanishad by vertical brackets in the original, as described below.]
+
+[1. M. M., History of Ancient Sanskrit Literature, p. 235.
+
+2. Not six, as in Rajendralal Mitra's edition.]
+
+With regard to the Upanishad, we must distinguish between the Aitareya-upanishad, properly so-called, which fills the fourth, fifth, and sixth adhyâyas of the second Âranyaka, and the Mahaitareya-upanishad [1], also called by a more general name Bahvrika-upanishad, which comprises the whole of the second and third Âranyakas.
+
+The Persian translator seems to have confined himself to the second Âranyaka [2], to which he gives various titles, Sarbsar, Asarbeb, Antrteheh. That Antrteheh [] is a misreading of [] was pointed out long ago by Burnouf, and the same explanation applies probably to [], asarbeh, and if to that, then to Sarbsar also. No explanation has ever been given why the Aitareya-upanishad should have been called Sarvasâra, which Professor Weber thinks was corrupted into Sarbsar. At all events the Aitareya-upanishad is not the Sarvasâra-upanishad, the Oupnek'hat Sarb, more correctly called Sarvopanishatsâra, and ascribed either to the Taittirîyaka or to the Atharva-veda [3].
+
+The Aitareya-upanishad, properly so called, has been edited and translated in the Bibliotheca Indica by Dr. Röer. The whole of the Aitareya-âranyaka with Sâyana's commentary was published in the same series by Rajendralal Mitra.
+
+Though I have had several MSS. of the text and commentary at my disposal, I have derived little aid from them, but have throughout endeavoured to restore that text which Sankara (the pupil of Govinda) and Sâyana had before them. Sâyana, for the Upanishad portion, follows Sankara's commentary, of which we have a gloss by Ânandagñâna.
+
+Colebrooke in his Essays (vol. ii, P- 42) says that he
+
+[1. This may have been the origin of a Rishi Mahaitareya, by the side of the Rishi Aitareya, mentioned in the Âsvalâyana Grihya-sûtras III, 4 (ed. Stenzier). Professor Weber takes Aitareya and Mabaitareya here as names of works, but he admits that in the Sânkhâyana Grihya-sûatras they are clearly names of Rishis (Ind. Stud. I, p. 389).
+
+2. He translates II, I-II, 3, 4, leaving out the rest of the third adhyâya afterwards II, 4-II, 7.
+
+3. Bibliotheca Indica, the Atharvana-upanishads, p.394]
+
+possessed one gloss by Nârâyanendra on Sankara's commentary, and another by Ânandatîrtha on a different gloss for the entire Upanishad. The gloss by Nârâyanendra [1], however, is, so Dr. Rost informs me, the same as that of Ânandagñâna, while, so far as I can see, the gloss contained in MS. E. I. H. 2386 (also MS. Wilson 401), to which Colebrooke refers, is not a gloss by Ânandatîrtha at all, but a gloss by Visvesvaratîrtha on a commentary by Ânandatîrthabhagavatpâdâkârya, also called Pûrnapragñâkârya, who explained the whole of the Mahaitareya-upanishad from a Vaishnava point of view.
+
+IV.
+THE KAUSHÎTAKI-BRÂHMANA-UPANISI-IAD.
+THE Kaushîtaki-upanishad, or, as it is more properly called, the Kaushîtaki-brâhmana-upanishad, belongs, like the Aitareya-upanishad, to the followers of the Rig-veda. It was translated into Persian under the title of Kokhenk, and has been published in the Bibliotheca Indica, with Sankarânanda's commentary and an excellent translation by Professor Cowell.
+
+Though it is called the Kaushîtaki-brâhmana-upanishad, it does not form part of the Kaushîtaki-brâhmana in 30 adhyâyas which we possess, and we must therefore account for its name by admitting that the Âranyaka, of which it formed a portion, could be reckoned as part of the Brâhmana literature of the Rig-veda (see Aitareya-âranyaka, Introduction, p. xcii), and that hence the Upanishad might be called the Upanishad of the Brâhmana of the Kaushîtakins [2].
+
+From a commentary discovered by Professor Cowell it appears that the four adhyâyas of this Upanishad
+
+[1. A MS. in the Notices of Sanskrit MSS., vol. ii, p. 133, ascribed to Abhinavanârâyanendra, called Âtmashatkabhâshyatîkâ, begins like the gloss edited by Dr. Röer, and ends like Sâyana's commentary on the seventh adhyâya, as edited by Rajendralal Mitra. The same name is given in MS. Wilson 94, Srîmatkaivalyendrasarasvatîpûgyapâdasishya-srîmadabhinavanârâyanendrasarasvatî.
+
+2. A Mahâ-kaushîtaki-brâhmana is quoted, but has not yet been met with.]
+
+were followed by five other adhyâyas, answering, so far as we can judge from a few extracts, to some of the adhyâyas of the Aitareya-âranyaka, while an imperfect MS. of an Âranyaka in the Royal Library at Berlin (Weber, Catalogue, p.20) begins, like the Aitareya-âranyaka, with a description of the Mahâvrata, followed by discussions on the uktha in the second adhyâya; and then proceeds in the third adhyâya to give the story of Kitra Gângyâyani in the same words as the Kaushîtaki-upanishad in the first adhyâya. Other MSS. again adopt different divisions. In one MS. of the commentary (MS. A), the four adhyâyas of the Upanishad are counted as sixth, seventh, eighth, and ninth (ending with ityâranyake navamo 'dhyâyah); in another (MS. P) the third and fourth adhyâyas of the Upanishad are quoted as the fifth and sixth of the Kaushîtakyâranyaka, possibly agreeing therefore, to a certain extent, with the Berlin MS. In a MS. of the Sânkhâyana Âranyaka in the Royal Library at Berlin, there are 15 adhyâyas, 1 and 2 corresponding to Ait. Âr. 1 and 5; 3-6 containing the Kaushîtaki-upanishad; 7 and 8 corresponding to Ait. Âr. 3 [1]. Poley seems to have known a MS. in which the four adhyâyas of the Upanishad formed the first, seventh, eighth, and ninth adhyâyas of a Kaushîtaki-brâhmana.
+
+As there were various recensions of the Kaushîtaki-brâhmana (the Sânkhâyana, Kauthuma, &c.), the Upanishad also exists in at least two texts. The commentator, in some of its MSS., refers to the various readings of the Sâkhâs, explaining them, whenever there seems to be occasion for it. I have generally followed the text which is presupposed by Sahkarânanda's Dîpikâ, and contained in MSS. F, G (Cowell, Preface, p. v), so far as regards the third and fourth adhyâyas. According to Professor Cowell, Vidyâranya in his Sarvopanishadarthânubhûtiprakâsa followed the text of the commentary, while Sankarâkârya, if we may trust to extracts in his commentary on the Vedânta-sûtras, followed the other text, contained in MS. A (Cowell, Preface, p. v).
+
+[1. See Weber, History of Sanskrit Literature, p. 50.]
+
+The style of the commentator differs in so marked a manner from that of Sankarâkârya, that even without the fact that the author of the commentary on the Kaushîtaki-upanishad is called Sankarânanda, it would have been difficult to ascribe it, as has been done by some scholars, to the famous Sankarânanda. Sankarânanda is called the teacher of Mâdhavâkârya (Hall, Index, p. 98), and the disciple of Ânandâtma Muni (Hall, Index, p. 116).
+
+I have had the great advantage of being able to consult for the Kaushîtaki-upanishad, not only the text and commentary as edited by Professor Cowell, but also his excellent translation. If I differ from him in some points, this is but natural, considering the character of the text and the many difficulties that have still to be solved, before we can hope to arrive at a full understanding of these ancient philosophical treatises.
+
+V.
+THE VÂGASANEYI-SAMHITÂ-UPANISHAD.
+THE Vâgasaneyi-samhitâ-upanishad, commonly called from its beginning, Îsâ or Îsâvâsya, forms the fortieth and concluding chapter of the Samhitâ of the White Yagur-veda. If the Samhitâs are presupposed by the Brâhmanas, at least in that form in which we possess them, then this Upanishad, being the only one that forms part of a Samhitâ, might claim a very early age. The Samhitâ of the White Yagur-veda, however, is acknowledged to be of modern origin, as compared with the Samhitâ of the Black Yagur-veda, and it would not be safe therefore to ascribe to this Upanishad a much higher antiquity than to those which have found a place in the older Brâhmanas and Âranyakas.
+
+There are differences between the text, as contained in the Yagur-veda-samhitâ, and the text of the Upanishad by itself. Those which are of some interest have been mentioned in the notes.
+
+In some notes appended to the translation of this Upanishad I have called attention to what seems to me its peculiar character, namely, the recognition of the necessity of works as a preparation for the reception of the highest knowledge. This agrees well with the position occupied by this Upanishad at the end of the Samhitâ, in which the sacrificial works and the hymns that are to accompany them are contained. The doctrine that the moment a man is enlightened, he becomes free, as taught in other Upanishads, led to a rejection of all discipline and a condemnation of all sacrifices, which could hardly have been tolerated in the last chapter of the Yagur-veda-samhitâ, the liturgical Veda par excellence.
+
+Other peculiarities -of this Upanishad are the name Îs, lord, a far more personal name for the highest Being than Brahman; the asurya (demoniacal) or asûrya (sunless) worlds to which all go who have lost their self; Mâtarisvan, used in the sense of prâna or spirit; asnâviram, without muscles, in the sense of incorporeal; and the distinction between sambhûti and asambhûti in verses 12-14.
+
+The editions of the text, commentaries, and glosses, and the earlier translations may be seen in the works quoted before, p. lxxxiv.
