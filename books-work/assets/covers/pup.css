@@ -1,0 +1,37 @@
+
+
+
+     h3.section_header {font-size: 16pt; text-align:center; margin-top:3em; padding:0; margin-left:0;
+      font-weight: normal;
+      page-break-before: always; }
+
+     .section_header .date {font-size: 16pt; text-align:center; font-style:italic; font-weight:normal; margin: .5em;}
+     .section_header .title {font-size: 12pt; text-align:center; font-style:italic; font-weight:normal; }
+     .section_header .venue {font-size: 12pt; text-align:center; font-style:italic; margin-top:0; font-weight:normal; }
+     .section_header .notes {font-size: 9pt; text-align:center; font-style:normal; margin-top:.5em; margin-bottom:1em; font-variant:small-caps; font-weight:normal; }
+
+     .par_label {color: gray; font-style:italic;}
+     .section_header {margin: 1em; margin-bottom: 2em;}
+
+     .talk {padding:0; border:0; padding-right:0em;  margin-bottom: 3em; background-color:white;}
+     .sectionnum {font-size: 20pt; font-weight: normal; text-align:center; color:gray; }
+
+
+/* Need more margin for paragraph numbers since we go up to 140.8 */
+p, aside, .continued {
+  margin-left: 2.8em;
+}
+p::before {
+  left: -3em;
+}
+
+/* With PUP, the first paragraph is the second child of the section */
+.abd section.content p:nth-child(2):first-letter {
+   float: left; color: #903;
+   font-size: 55pt; line-height: 60px; padding-top: 0px; padding-right: 8px;  margin-top:9pt;
+   color: DarkOliveGreen;
+   font-family: DropCap, georgia,garamond,serif;
+}
+.abd section.content p:nth-child(2):first-word {
+  text-transform:uppercase;
+}

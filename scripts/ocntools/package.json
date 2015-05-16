@@ -1,0 +1,14 @@
+{
+  "name": "ocntools",
+  "version": "1.0.0",
+  "description": "Ocean Script Tools for Text Conversion",
+  "main": "ocntools.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ocean"
+  ],
+  "author": "Chad Jones <chadananda@gmail.com> (http://bahai-education.org/)",
+  "license": "ISC"
+}

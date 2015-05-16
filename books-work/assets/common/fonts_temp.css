@@ -1,0 +1,72 @@
+/* Imported fonts */
+@font-face {
+  font-family: GentiumPlus;
+  src: url(fonts/Gentium/GentiumPlus-R.woff) format('woff');
+}
+@font-face {
+  font-family: GentiumPlus;
+  font-style: italic;
+  src: url(fonts/Gentium/GentiumPlus-I.woff) format('woff');
+}
+@font-face {
+  font-family: GoudyHandtooled;
+  src: url(fonts/goudy_handtooled.woff2);
+}
+@font-face {
+  font-family: Garamond1689;
+  src: url(fonts/1689_garamond.woff2);
+}
+@font-face {
+  font-family: Cabin;
+  src: url(fonts/Cabin/Cabin-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: Cabin;
+  font-style: italic;
+  src: url(fonts/Cabin/Cabin-Italic.ttf) format('truetype');
+}
+@font-face {
+  font-family: Sanchez;
+  src: url(fonts/Sanchez/Sanchez-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: Sanchez;
+  font-style: italic;
+  src: url(fonts/Sanchez/Sanchez-Italic.ttf) format('truetype');
+}
+@font-face {
+  font-family: Dyslexic;
+  src: url(fonts/OpenDyslexic/OpenDyslexic-Regular.otf) format('opentype');
+}
+@font-face {
+  font-family: Dyslexic;
+  font-style: italic;
+  src: url(fonts/OpenDyslexic/OpenDyslexic-Italic.otf) format('opentype');
+}
+@font-face {
+  font-family: Bembo;
+  src: url(fonts/Bembo/EBGaramond12-Regular.woff) format('woff');
+}
+@font-face {
+  font-family: Bembo;
+  font-style: italic;
+  src: url(fonts/Bembo/EBGaramond12-Italic.woff) format('woff');
+}
+/*
+@font-face {
+  font-family: Woodcut;
+  src: url(fonts/dropcaps/TypographerWoodcut01.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: Zalman;
+  src: url(fonts/dropcaps/ZallmanCaps.ttf) format('truetype');
+}*/
+@font-face {
+  font-family: Acorn;
+  src: url(fonts/dropcaps/acorninitials.TTF) format('truetype');
+}
+@font-face {
+  font-family: Dropcap;
+  src: url(fonts/dropcaps/Romantik.ttf) format('truetype');
+}

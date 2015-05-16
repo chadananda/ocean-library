@@ -1,0 +1,143 @@
+
+
+#control_panel {
+    display: none;
+    font-size: 16px !important;
+    text-align: center; font-family: arial;
+    padding:8px; border: 3px solid gray; border-radius: 5px;
+    background-color: lightgray; color: navy !important;
+    position: fixed; top: 4px; right:4px; font-size: .75em; line-height: 1.3em; cursor:pointer;
+    z-index: 100;
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+       -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+
+}
+#control_panel_hidden {
+    font-size: 32px !important; color: black;
+    text-align: center; font-family: Garamond1689;
+    padding:4px; border: 3px solid gray; border-radius: 15px; background-color: lightgray;
+    position: fixed; top: 4px; right:4px; font-size: .75em; line-height: .8em; cursor:pointer; padding-top:9px;
+    z-index: 100; opacity: .9;
+}
+#control_panel_hidden:hover {
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+       -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+
+// study format
+&.study_format, &.study_format_centered {
+    h3, h2, section.content{
+      p, div.par, aside, div.section_header {
+        margin-right: 150px;
+      }
+      aside.fn p {
+        margin-left:0; margin-right: 1em;
+      }
+    }
+  &.study_format_centered {
+    h3, h2, section.content {
+      p, div.par, aside, div.section_header {
+        margin-right: 75px;
+        margin-left: 85px;
+      }
+      aside.fn p {
+        margin-left:.6em; margin-right: .5em;
+      }
+    }
+}
+    span[data-pg] {
+     // display: none;
+    }
+}
+
+// Plain Text Display for Diffing two documents
+&.plaintext {
+    p[id]:before, div.par[id]:before {content: '' !important;}
+     hr, section:not(.content), span[data-pg], a[data-fnid], aside, #control_panel_hidden {display: none;}
+    p,div, h1,h2,h3,h4 {font-family: "Courier new" !important; font-size: 12pt !important;
+       margin-right: 10px !important; margin-left: 10px !important;
+    }
+    h1,h2,h3,h4 {text-transform: none !important;}
+    section.titlepage {display: inline;}
+    section.titlepage img, section.titlepage .copyright, section.titlepage .logo-label {display: none;}
+}
+
+
+// audio reading
+
+// Box around paragraph
+// Split sentences, or add large marker in sentences?
+// Hide footnotes, pages
+// Hide Non-content
+//
+&.audio_reading {
+  padding: 0 !important; margin: 0 !important; max-width: 1024px; overflow-x: hidden !important;
+  padding-left:5px;
+    hr, section:not(.content), span[data-pg], a[data-fnid], aside, #control_panel_hidden {display: none;}
+
+    p,div, h1,h2,h3,h4, .title, .subtitle, .date, h3.title, h3.subtitle, h3.sectionnum, h3.date {
+       margin-right: 10px !important;
+       margin-left: 60px !important; font-weight: normal !important;
+       max-width: 50em !important;
+       text-align: left !important;
+       text-transform: none !important;
+       font-variant: normal !important;
+    }
+
+    p, div.par, .section_header {margin-bottom: 2em !important; border-bottom: 2px solid #ddd; padding-bottom: 2em;}
+    .section_header {
+       margin-top: 6em !important;
+       h3.title, h3.subtitle, h3.sectionnum, h3.date {
+           margin: 0 !important;
+           padding: 0 !important;
+           font-size: 18pt !important;
+           font-family: Sanchez;
+       }
+       margin-left:60px !important;
+    }
+
+    hr {display: none !important;}
+
+    h1.section, h2.section, h3.section {
+      margin-left:60px !important;
+      font-family: Sanchez;
+    }
+    .section_header {max-width: 1024px;}
+
+    section.titlepage {display: inline;}
+
+    .sentence_seperator {color: #ccc;}
+
+    div.reading_instructions {
+        font-family: Sanchez;
+        border: 5px solid #a1c1a1;
+        border-radius: 25px;
+       // box-shadow: 10px 10px 5px #ccc;
+        margin:3em !important;
+        padding: .5em;
+        background: white;
+        li {margin-left: 2em}
+        margin-bottom: 10em !important;
+        page-break-after: always;
+
+    }
+
+    .sent_bk {margin-bottom: 1em; display: block;}
+
+    .audioreader {
+      width: 30px; height: 30px; position: absolute; left: -111px; top: -30px; color: silver;
+      text-shadow: 0px 0px 5px #fff, 0px 0px 6px #fff, 0px 0px 5px #fff, 0px 0px 7px #fff, 0px 0px 8px #fff
+          , 0px 0px 9px #fff, 0px 0px 10px #fff, 0px 0px 11px #fff ;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    span.tts {border-bottom: 1px solid navy !important; color: navy;}
+    span.tts:hover {background-color: yellow;}
+    .tts {cursor: pointer;}
+
+}
