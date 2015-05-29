@@ -5,9 +5,8 @@
 
 
 
+
 function Parseblock() {}
-
-
 
 Parseblock.prototype.wrapSpanWords = function(htmlblock, dictionary) {
   var self = this;
@@ -222,14 +221,16 @@ Parseblock.prototype.tokenizeString = function(str, type) {
 
 
     // remove Romanian suffixes -- , 'ul'
-    ['-ul','-ului','-ii','-uri','-ilor','-la','-ua','-ismului','-ismul','-smului','-i','ilor','lor','ului','atul'].forEach(function(suffix) {
+    // TODO: refactor into an approach with i18n extensions
+    //
+    ['-ul','-ului','-ii','-uri','-ilor','-la','-ua','-ismului','-ismul','-smului','-i','ilor','lor','ului','atul']
+    .forEach(function(suffix) {
       suffix = suffix.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'); // a regexp escape
       var re = new RegExp('^(.*)('+suffix+')$', 'img');
       if (tt = re.exec(token.word)) {
         token.word = tt[1]; token.suffix = tt[2] + token.suffix;
       }
     });
-
     // remove Romanian lower-case prefixes such as "din" or "la", "lui"
     var regex = /^([a-z]+)([\_\’\‘\'\`]*?[A-Z]+.*?)$/mg;
     if ((tt = regex.exec(token.word))  &&  (['din','la','lui','un'].indexOf(tt[1])>-1) ) {
@@ -240,6 +241,7 @@ Parseblock.prototype.tokenizeString = function(str, type) {
 
     // for each word, add some additional info
     token.info = tokenInfo(token);
+
     // replace list item with updated object
     tokens[index] = token;
   });
@@ -391,8 +393,7 @@ Parseblock.prototype.rebuildBlock = function(tokens, options, dictionary) {
   var self = this;
   // options: [clean], showall, suggest, original, spanwords
   if (!(['clean', 'showall', 'suggest', 'original', 'spanwords'].indexOf(options)>-1)) {
-    //console.log("Illegal option '"+options+"' passed to rebuildBlock. Options are: 'clean', 'showall', 'suggest' or 'original'");
-    options = 'clean';
+     options = 'clean';
   }
 
   // allow passing in raw text strings for simplified use, including dictionary
@@ -428,7 +429,8 @@ Parseblock.prototype.rebuildBlock = function(tokens, options, dictionary) {
           else if ((options != 'clean')) newword = "<mark class='term correct'>"+ token.word + "</mark>";
         }
       } else if (token.info.isPossibleTerm) {
-        if (options ==='spanwords') newword = "<span class='wrd term unknown' data-phoneme='"+token.info.phoneme+"'>"+token.word+"</span>";
+        if (options ==='spanwords') newword = "<span class='wrd term unknown' data-phoneme='"+
+           token.info.phoneme+"'>"+token.word+"</span>";
          else if (options != 'clean') newword = "<mark class='term unknown'>"+ token.word + "</mark>";
       } else if (options ==='spanwords') newword = "<span class='wrd'>"+token.word+"</span>";
 
@@ -488,3 +490,7 @@ Parseblock.prototype.soundex = function(s) {
 
   return (r + '000').slice(0, 4).toUpperCase();
 };
+
+
+
+module.exports = Parseblock;

@@ -14,7 +14,7 @@
 * ocntools>import (source|type)
        * queries whatever data is missing
        * creates a work version with a checklist
-* ocntools>validateterms (bookid)
+* ocntools>accents (bookid)
        * runs a book against the accents db and generates a report
        * includes a 'all terms' list for this book
 * ocntools>validateHTML (bookid)
