@@ -1,0 +1,27 @@
+{
+  "base_url": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/",
+
+  "paths": {
+    "base": "/Users/chad/Dropbox/Public/ocean2.0/",
+
+    "library": "Library/",
+    "audio": "Audio/",
+
+    "library_books" : "Library/library_books.json",
+
+    "published": "Library/published/",
+
+    "books-work": "Library/books-work/",
+
+    "books_work1": "Library/books-work/1. raw-notproofed/",
+    "books_work2": "Library/books-work/2. formatted-notproofed/",
+    "books_work3": "Library/books-work/3. terms-corrected/",
+    "books_work4": "Library/books-work/4. proofed-done/",
+
+    "work_assets": "Library/books-work/assets/",
+    "reading_guides": "Library/books-work/assets/reading-guides/",
+    "translation_alignment": "Library/books-work/assets/translation-alignment/"
+  }
+
+}
+

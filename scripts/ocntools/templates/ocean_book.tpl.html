@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang='{{meta.language|downcase}}' dir='{{meta.langinfo.direction}}'>
+<head>
+  <meta charset='utf-8'>
+  <title>{{meta.author}}, {{meta.title}}</title>
+  <meta name='description' content='{{meta.description}}'
+
+     data-bookid='{{meta.bookid}}'
+
+     data-title='{{meta.title}}'
+     data-author='{{meta.author}}'
+     data-title_short='{{meta.titleShort}}'
+     data-subtitle='{{meta.subtitle}}'
+     data-subject='{{meta.subject}}'
+{{if meta.weight}}     data-weight='{{meta.weight}}' {{/if}}
+
+     data-publisher='{{meta.publisher}}'
+     data-published_source='{{meta.publishedSource}}'
+
+     data-original_bookid='{{meta.originalBookid}}'
+     data-translator='{{meta.translator}}'
+     data-author_english='{{meta.authorEnglish}}'
+     data-title_english='{{meta.titleEnglish}}'
+  >
+  <base href="{{config.base_url}}{{config.paths.books-work}}">
+  <link rel="stylesheet" type="text/css" href="assets/common/base.min.css">
+  <link rel="shortcut icon" href="assets/common/{{meta.brand|downcase}}-logo.png"/>
+  <!-- JQuery & Plugins -->
+  <script src='assets/common/jquery-2.1.3.min.js'></script>
+    <script src='assets/common/scrollintoview.js'></script>
+  <script src='assets/common/fn.js'></script>
+  <!-- temporary control panel -->
+  <script src='assets/common/panel.js'></script>
+</head>
+<body class='ocean'>
+
+<!-- *************************************** -->
+<section class='titlepage'>
+  <img class='cover' src='assets/covers/{{meta.cover}}' alt='Cover Art'/>
+  <h2 class='title'>{{meta.title}}</h2>  {{if meta.subtitle}}<h3 class='subtitle'>{{meta.subtitle}}</h3>{{/if}}
+  <h3 class='author'>{{meta.author}}</h3>
+</section>
+
+<!-- *************************************** -->
+<section class='titlepage pagebreak-before pad-above'>
+  <hr />
+  <h3 class='copyright'>{{meta.source}} - http://{{meta.sourceUrl}}</h3>
+  <a href='http://{{meta.publisherUrl}}'><img class='logo' src='assets/common/{{meta.brand|downcase}}-logo.svg' alt='logo'  /></a>
+  <h3 class='logo-label'>eBook Edited and Prepared for {{meta.brand}}</h3>
+  <hr />
+</section>
+
+{{if toc}}<!-- *************************************** -->
+<section id='section_toc' class='contents pagebreak-before' data-title='Table of Contents'>
+  {{toc}}
+</section>{{/if}}
+
+<!-- *************************************** -->
+<!-- **********    Book Content    ********* -->
+<!-- *************************************** -->
+
+
+{{bookcontent}}
+
+</body>
+</html>

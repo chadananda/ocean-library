@@ -1,0 +1,15 @@
+{
+  "name": "ocnparse",
+  "version": "1.0.0",
+  "description": "Simple unicode and Baha'i term compatible parser",
+  "main": "lib/ocnparse.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ocean",
+    "parser"
+  ],
+  "author": "Chad Jones <chadananda@gmail.com> (http://bahai-education.org/)",
+  "license": "ISC"
+}
