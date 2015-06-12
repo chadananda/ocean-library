@@ -12,12 +12,136 @@ var inquirer = require("inquirer");
 var cheerio = require('cheerio');
 var mark = require('markup-js');
 var fs = require('fs-sync'); fs.defaultEncoding = 'utf-8';
+    var fs_node = require('fs');
 var lang = require('languages');
 var ocnparse = require('./ocnparse');
+var httpsync = require('httpsync');
+var _ = require('lodash');
 
 
-//console.log("ocnparse: ", ocnparse);
+var accents_url = 'http://diacritics.iriscouch.com/accents/_design/terms_list/_view/terms_list';
 
+/*
+
+TODO:
+
+ * load and save dictionary of terms
+ * during word parsing, mark each term with: .trm, data-arpabet='', data.ipa='', data.orig='', data.note=''
+ * during word parsing, mark each pos with: .n .v .av .etc, data-pos=''
+
+Notes:
+ * remove "Word" from dictionary. How did it get there?
+
+ */
+
+function stripTags (str) {
+ return str.replace(/<\/?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)\/?>/g, '').trim();
+}
+
+function ocnAccentsDictionary() {
+// load config data
+
+  //var config = load_library_config();
+  var res, cachefile = './accents_dictionary.json', cache_fresh = false;
+
+  // if cache file exists, check to see if it's fresh (about one hour or less)
+  if (fs.exists(cachefile)) {
+    var modified = fs_node.statSync(cachefile).mtime;
+    var hours_since_modified = Math.round((Date.now() - Date.parse(modified)) / (1000 * 60 * 60));
+    cache_fresh = (hours_since_modified < 1);
+  }
+  if (cache_fresh) {
+    res = fs.readJSON(cachefile);
+    console.log('Using recently cached dictionary.');
+  } else {
+    console.log('Downloading new copy of dictionary.');
+    res = JSON.parse(httpsync.get(accents_url).end().data);
+    fs.write(cachefile, JSON.stringify(res)); // save to cached file
+  }
+  console.log('Current dictionary contains '+ (res.rows).red + ' entries.');
+  return res;
+
+
+
+  res = res.rows;
+  var dic = {};
+  var i=1;
+  var newTerm, instance, variantlist, variants, variant, stripped, key, max, index, verified, ambiguous;
+  res.map(function(item) {
+    var obj = {
+      ref: item.value.ref[0]?item.value.ref[0]:'',
+      verified: item.value.verified,
+      original: item.value.original,
+      notes: stripTags(item.value.definition),
+      term: item.key
+    };
+    if (item.value['ambiguous']) {
+      item.value.verified = false;
+      item.value.ambiguous = true;
+    } else item.value.ambiguous = false;
+    if (dic[item.key]) {
+      var found = false;
+      dic[item.key].forEach(function(item){
+        if (_.isEqual(item, obj)) found = true;
+      });
+      if (!found) dic[item.key].push(obj);
+    } else dic[item.key] = [obj];
+  });
+  // remove absolute duplicates
+  for(key in dic) if (dic.hasOwnProperty(key)) {
+    newTerm = {term: key, count: 0, ref: [], notes: '', original: '', verified: false, ambiguous: false};
+    for (i=0; i < dic[key].length; i++){
+      instance = dic[key][i];
+      if (instance.verified) newTerm.verified = true;
+      if (instance.ambiguous) newTerm.ambiguous = true;
+      if (instance.ref) newTerm.ref.push(instance.ref);
+      if (instance.notes) newTerm.notes = instance.notes;
+      if (instance.original) newTerm.original = instance.original;
+      newTerm.count++;
+    }
+    if (newTerm.ambiguous) newTerm.verified = false; // ambiguous overrides verified
+    newTerm.ref = newTerm.ref.join(', '); // back into a string
+    dic[key] = newTerm; // replace old array with new compressed item
+  }
+  // remove unverified where a verified version exists
+  // first gather together all variants
+  variantlist = {};
+  for(key in dic) if (dic.hasOwnProperty(key)) {
+    stripped = ocnparse.term_strip_alpha(key);
+    if (variantlist[stripped]) variantlist[stripped].push(dic[key]);
+     else variantlist[stripped] = [dic[key]];
+  }
+
+  // next, loop through them all, keeping only the verified or highest number
+  // loop through each if number is > highest or
+  for(key in variantlist) if (variantlist.hasOwnProperty(key)) {
+    variants = variantlist[key];
+    if (variants.length === 1) variantlist[key] = variants[0];
+    else {
+      verified = false; ambiguous = false; index =0; max=0;
+      for (i=0; i < variants.length; i++){
+        item = variants[i];
+        if (item.ambiguous) ambiguous = true;
+        if (item.verified) {
+          verified = true; index = i;
+        } else if (!verified && item.count>max) {
+          max = item.count; index = i;
+        }
+      }
+      // now index should be set to the highest count item or the verified item
+      if (!ambiguous) variantlist[key] = variants[index];
+       else for (i=0; i < variantlist[key].length; i++){
+         variantlist[key][i]['ambiguous'] = true;
+         variantlist[key][i]['verified'] = false;
+       }
+    }
+  }
+  // now reformat dictionary to be the expected input format
+
+  // now save dictionary to cached file location
+
+  //console.log(variantlist);
+}
 
 function ocnImport(filename, opTargetDir) {
   if (!opTargetDir) opTargetDir = 'Library/books-work/1. raw-notproofed/';
@@ -25,11 +149,23 @@ function ocnImport(filename, opTargetDir) {
 
 }
 function ocnBuildBook(bookid) {
-  if (bookid.split('-').length===2) bookid+='-en';
-  log("Building completed book".green +' '+bookid.red);
+  console.log('ocnBuildBook: '+bookid.red);
 
   // load config data
   var config = load_library_config();
+
+  if (bookid === 'all') {
+    fs.expand(config.paths.base+config.paths.books_work4 + "/*.html").forEach(function(item, index) {
+      bookid = item.split('/').pop().split('.html').shift();
+      ocnBuildBook(bookid);
+    });
+    return '';
+  }
+
+  if (bookid.split('-').length===2) bookid+='-en';
+  log("Building completed book".green +' '+bookid.red);
+
+
   var book =  (config.books[bookid]? config.books[bookid] : {});
   //if (!book) {console.log("Warning! ".red+ "book "+bookid+" not found in library list! Aborting. "); return;}
   book.filename = bookid+'.html';
@@ -116,6 +252,8 @@ program.command('build <bookid>')
   .description('Generate translation from textfile or Google Translate').action(ocnBuildBook);
 program.command('translate <bookid> [transfile]')
   .description('Publish with span-wraped words and sentences').action(ocnTranslate);
+program.command('getdictionary')
+  .description('Update Accents Dictionary').action(ocnAccentsDictionary);
 program.command('report [filename]')
   .description('Rebuild progress report').action(ocnReport);
 program.command('progresslog <entry>')
@@ -162,6 +300,12 @@ function parse_final_book_html(bookdata, config){
   if (!meta.description.length) console.log("Warning: ".red + "book does not have a description, see: ".green +
      "<meta name='description' content=''... ".white );
   if (!meta.language) meta.language='en';
+
+  // meta data for Alignment and Terms
+  if (!meta.alignmentURL) meta.alignmentURL='';
+  if (!meta.termsDictionary) meta.termsDictionary='';
+
+  meta.documentStage='Published';
 
   // fix: se>shoghi on old ocean books
   if (/se\-(.*?\-.*?)/.test(meta.bookid)) meta.bookid = meta.bookid.replace(/se\-(.*?\-.*?)/, 'shoghi-$1');
@@ -492,7 +636,7 @@ function build_languageblock(text, id, config, meta) {
   text = decodeEntities(text);
 
   // span-id wrap all words
-  if (id && text.split(' ').length>3) text = spanidwrapwords(text, id);
+  if (id /*&& text.split(' ').length>3*/) text = spanidwrapwords(text, id);
 
   var context = {
     langinfo: meta.langinfo,
@@ -505,6 +649,9 @@ function build_languageblock(text, id, config, meta) {
   return mark.up(config.templates.language_content, context);
 }
 
+/*
+  Tokenize words and wrap each in a span
+ */
 function spanidwrapwords(text, id) {
   var tokens = ocnparse.tokenizeString(text);
   var word_count = 0;
@@ -529,6 +676,26 @@ function spanidwrapwords(text, id) {
   return words.join('');
 }
 
+
+
+/*
+   Load object containing all templtes in the ./templates folder
+ */
+function loadTemplates() {
+  // load all templates in the templates folder
+  var templates = {};
+  fs.expand("templates/*.tpl.html").forEach(function(item, index) {
+    var name = item.replace(/templates\/(.*?)\.tpl\.html/, '$1');
+    templates[name] = fs.read(item);
+  });
+  return templates;
+}
+
+
+
+/*
+   Given two tokens, determine if the token is likely the first word of a new sentence.
+ */
 function isNewSentence(token, prev) {
   if (!prev) return true;
   var isCaps = token.word.slice(0,1)===token.word.slice(0,1).toUpperCase();
@@ -540,17 +707,9 @@ function isNewSentence(token, prev) {
   if (isCaps && endPeriod && (prevLength>1 && !prevAbbr)) return true;
   return false;
 }
-
-function loadTemplates() {
-  // load all templates in the templates folder
-  var templates = {};
-  fs.expand("templates/*.tpl.html").forEach(function(item, index) {
-    var name = item.replace(/templates\/(.*?)\.tpl\.html/, '$1');
-    templates[name] = fs.read(item);
-  });
-  return templates;
-}
-
+/*
+    Match word agaisnt large list of English common abbreviations. Helpful for determining if a full stop is a sentence ender.
+ */
 function isAbbrv(word) {
   var abbv = "^(abbr|abr|acad|adj|adm|adv|agr|agri|agric|anon|app|approx|assn|bact|bap|bib|bibliog|biog|biol|bk|bkg"+
     "|bldg|blvd|bot|bp|brig|gen|bro|bur|cal|cap|capt|cath|cc|cent|cf|ch|chap|chem|chm|chron|cir|circ|cit"+

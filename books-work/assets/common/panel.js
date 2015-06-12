@@ -295,7 +295,7 @@ function  _insert_play_button() {
 }
 
 function _insert_reading_instructions(){
-  var wpm = 180;
+  var wpm = 140;
   var count = _word_count(), time;
   var minutes_total = Math.floor(count / wpm) + 1;
    if ((minutes_total % 60) > 55) minutes_total += (60-(minutes_total % 60));

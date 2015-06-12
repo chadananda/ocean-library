@@ -3,6 +3,8 @@
 // these tools are extracted from the diacritical.js library
 //
 
+// where is:
+//  self.addTermSuggestions
 
 var parser = {};
 
@@ -65,7 +67,7 @@ parser.term_strip_alpha = function(word) {
     .replace(/<\/?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)\/?>/g, '')
 
     // delete quotes and line unders
-    .replace(/[\’\‘\'\`\_]/g, '')
+    .replace(/[\’\‘\'\`\_\ʼ]/g, '')
 
     // delete dashes
     .replace(/[\-]/g, '')
@@ -159,7 +161,120 @@ parser.splitTokens = function(tokens, delimeter_regex_str) {
     }
     return tokens;
   }
-}
+};
+
+parser.prepareDictionary = function(wordList) {
+  // exit is this is already a prepared dictionary object
+  if (('terms' in wordList) && ('total' in wordList)) return wordList;
+  var self = this,
+      dictionary = {terms: {}, total: 0};
+  // remove duplicates keeing the verified or most frequent version of each term
+  var terms = removeDuplicateTerms(wordList);
+  // now add each word to the replacelist. If word has known mispellings, add each seperately
+  terms.forEach(function(term) {
+    addToDictionary(term.base, term, dictionary);
+    if (term.known_mispellings.length>0) term.known_mispellings.forEach(function(known_misspelling) {
+      addToDictionary(self.term_strip_alpha(known_misspelling), term, dictionary);
+    });
+  });
+  return dictionary;
+
+  // =============================
+
+  function addToDictionary(base, term, replList) {
+    if (!base || !term) {
+      //console.log('Added bad word to dictionary: '+ base +', '+JSON.stringify(term));
+      return;
+    }
+    var lookup = base.toLowerCase();
+    // here is where we want to add in our new fields
+    // [ref], original, definition, [alternates], [known_mispellings] and verified
+    var obj = {
+      'glyph'     : term.word,
+      'html'      : self.glyph2HTML(term.word),
+      'stripped'  : base,
+      'lookup'    : lookup,
+      'ansi'      : self.glyph2ANSI(term.word),
+      'ref'       : term.ref,
+      'original'  : term.original,
+      'definition': term.definition,
+      'verified'  : term.verified,
+      'ambiguous' : term.ambiguous
+    };
+    // add to list
+    if (!replList.terms[lookup]) replList.terms[lookup] = {};
+    if (!replList.terms[lookup][base]) {
+      replList.terms[lookup][base] = obj;
+      replList.total++;
+    }
+    //console.log(obj);
+  }
+
+  // ----------------------------------------
+  function removeDuplicateTerms(words) {
+    // given an array of terms, return a de-duplicated array
+    // but in this case, it is unique to the base (stripped) version
+    // and the one unique version returned for each base is the most frequent one
+    // create an obect list by stripped base version and count of full version
+    var is_accents_json = ('offset' in words);
+    if (is_accents_json) words = words.rows;
+    var word ='', stripped ='', list= {}, word_data = {};
+
+    words.forEach(function(word) {
+      if (is_accents_json) {
+        word_data = word.value;
+        word = word.key;
+        word_data.word = word;
+        word_data.base = self.term_strip_alpha(word);
+      } else {
+        word_data = {word: word, ref:[], original: '', definition:'', alternates:[], known_mispellings:[], verified: false, base: self.term_strip_alpha(word)};
+      }
+      var base = word_data.base;
+      if (!(base in list)) list[base] = {};
+      if (word in list[base]) { // increment existing item
+        list[base][word]['count']++;
+        // concat items from this word onto the cumulative list
+        list[base][word]['data']['ref'] = list[base][word]['data']['ref'].concat(word_data.ref);
+        list[base][word]['data']['ref'] = uniqueArray(list[base][word]['data']['ref']);
+        list[base][word]['data']['original'] =  word_data.original?word_data.original:list[base][word]['data']['original'];
+        list[base][word]['data']['definition'] =  word_data.definition?word_data.definition:list[base][word]['data']['definition'];
+        list[base][word]['data']['alternates'] = list[base][word]['data']['alternates'].concat(word_data.alternates);
+        list[base][word]['data']['known_mispellings'] = list[base][word]['data']['known_mispellings'].concat(word_data.known_mispellings);
+        if (word_data.verified) list[base][word]['verified'] = true;
+      } else { // create new entry
+        list[base][word] = {word: word, count: 1};
+        list[base][word]['data'] = word_data;
+        list[base][word].verified = list[base][word].verified || word_data.verified;
+
+      }
+    });
+
+    // iterate through each list and locate the version with the max, create newlist
+    var newList = [], max, topword, has_verified;
+    words = {};
+    for (var index in list) {
+      words = list[index];
+      max=0; topword=''; has_verified=false;
+      for (var index2 in words) {
+        word = words[index2];
+        if ((word.count>max && !has_verified) || word.verified) {
+          topword = word.word;
+          max = word.count;
+          has_verified = true;
+        }
+      }
+       //newList.push(topword);
+       newList.push(list[index][topword]['data']);
+    }
+    return newList;
+  }
+
+  function uniqueArray(a) {
+    return a.sort().filter(function(item, pos) {
+        return !pos || item != a[pos - 1];
+    })
+  }
+};
 
 parser.tokenizeString = function(str, type) {
   if (!str) return [];
@@ -308,10 +423,6 @@ parser.term2phoneme = function(term) {
 
   // apostrophe l can drop the pause
   term = term.replace(/’[l]/, 'l');
-
-
-
-
 
 
   var vowels = {
