@@ -549,7 +549,7 @@ function build_toc(html) {
     if (isSectionHeader) title = $(this).find('.title').html();
      else title = $(this).html().trim() ? $(this).html().trim() : $(this).data('title').trim();
 
-    // some .section headers will have section numnbers, like chapter number
+    // some .section headers will have section numbers, like chapter number
     section_num = '';
     if (isSectionHeader) section_num = $('#'+$(this).attr('id').slice(0, - 1)).data('sectionnum');
      else section_num = $(this).data('sectionnum') ? $(this).data('sectionnum') : '';
@@ -652,7 +652,7 @@ function build_languageblock(text, id, config, meta) {
 /*
   Tokenize words and wrap each in a span
  */
-function spanidwrapwords(text, id) {
+function spanidwrapwords(text, id, totalcount) {
   var tokens = ocnparse.tokenizeString(text);
   var word_count = 0;
   var sent_count = 1;
@@ -664,7 +664,7 @@ function spanidwrapwords(text, id) {
         //console.log("New Sentence: ", prev, token);
       }
        else word_count++;
-      token.id = id +'-'+ sent_count +'.'+ word_count;
+      token.id = 'w' + id +'-'+ sent_count +'.'+ word_count;
       prev = token;
     }
   });

@@ -161,7 +161,7 @@ function _show_as_audioreading(){
   _insert_reading_instructions();
   _insert_new_section_titles();
   // _insert_play_button();
-  _insert_pronunciation_buttons();
+  // _insert_pronunciation_buttons();
 
   $('html').show();
 }
@@ -295,7 +295,7 @@ function  _insert_play_button() {
 }
 
 function _insert_reading_instructions(){
-  var wpm = 140;
+  var wpm = 160;
   var count = _word_count(), time;
   var minutes_total = Math.floor(count / wpm) + 1;
    if ((minutes_total % 60) > 55) minutes_total += (60-(minutes_total % 60));
@@ -317,15 +317,15 @@ function _insert_reading_instructions(){
 
   instructions += ' Please consider the following reading conventions: </p> <ul>';
   instructions += '<li> Do not read paragraph numbers, these are only for location reference';
-  instructions += '<li> Markers between phrases and breaks after sentences sentences are pause suggestions for your convenience.';
-  instructions += '<li> If you make a mistake while reading, just clap your hands in front of the mic and then re-read the phrase. '+
+  instructions += '<li> Markers between phrases and breaks after sentences are pause suggestions for your convenience.';
+ /*  instructions += '<li> If you make a mistake while reading, just clap your hands in front of the mic and then re-read the phrase. '+
   ' This will help the audio engineer to locate the mistakes and remove the mistaken portion';
-  instructions += '<li> Some foreign words will be followed with a bracketed pronunciation suggestion. '+
+ instructions += '<li> Some foreign words will be followed with a bracketed pronunciation suggestion. '+
   ' If you have trouble with a foreign word, just clap in front of the mic and then repeat the word several times '+
   ' until you are satisfied with the reading. The audio engineer will then remove all but the last reading.';
-
-  instructions += '<li> Before attempting your first reading, take 30 minutes to complete this video '+
-    ' training for pronunciation of Bahá’í transliterated terms: '+
+*/
+  instructions += '<li> Before attempting your first reading, take an hour to repeatedly go through this  '+
+    ' ten minute training for pronunciation of Bahá’í transliterated terms: '+
     '  &nbsp; <a href="http://bit.ly/bahai-pronunciation">http://bit.ly/bahai-pronunciation</a> ';
 
 
