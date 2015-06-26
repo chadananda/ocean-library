@@ -459,6 +459,22 @@ function parse_final_book_html(bookdata, config){
   return bookobj;
 }
 
+function renumber_word_ids(html) {
+  var number = 0;
+
+  /*
+  $ = cheerio.load(html);
+  $('.w').each(function() {
+    id = $(this).attr('id');
+    number++;
+    html = html.replace("'"+id+"'", "'w"+ number +"'");
+  });*/
+
+  html = html.replace(/'_word_id_'/gi, function (){return "'_"+ (number++).toString(36) +"'" ;});
+
+  return html;
+}
+
 function build_html(book, config) {
   var content = [];
   book.sections.forEach(function(section){
@@ -472,6 +488,10 @@ function build_html(book, config) {
   book.toc = '';
   // apply to book template
   var html = mark.up(config.templates.ocean_book, book);
+
+  // run entire content through re-numbering routine for expiremental numbering
+  html = renumber_word_ids(html);
+
   return html;
 }
 //context.bookcontent = decodeEntities(content);
@@ -664,13 +684,14 @@ function spanidwrapwords(text, id, totalcount) {
         //console.log("New Sentence: ", prev, token);
       }
        else word_count++;
-      token.id = 'w' + id +'-'+ sent_count +'.'+ word_count;
+      //token.id = id +'-'+ sent_count +'.'+ word_count;
+      token.id = '_word_id_'; // test: replacing all out later with a single regex
       prev = token;
     }
   });
   // step through tokens with and add any other fields
   tokens.forEach(function(token) {
-    if (token.id) token.word = "<span class='w' id='"+token.id+"'>"+token.word+"</span>";
+    if (token.id) token.word = "<w id='"+token.id+"'>"+token.word+"</w>";
     words.push(token.prefix + token.word + token.suffix);
   });
   return words.join('');
