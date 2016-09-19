@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Vocabulary Assessment Test</title>
+    <link rel="stylesheet" type="text/css" href="base.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js" ></script>
+    <script src="//rawgit.com/jeresig/jquery.hotkeys/master/jquery.hotkeys.js" ></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.4.0/annyang.min.js"></script>
+    <script src="vocab_assess.js" ></script>
+
+<script>
+$(function() {
+
+  //console.log('ready');
+
+  // load flashcards, then enable assessment button
+  $.getJSON('word_flashcards.json')
+    .done(function(json) {
+      CARDS = format_cards(json);
+      $('.summary .status').text('Loaded '+ Object.keys(CARDS.words).length +' Flashcards').show();
+      $('.retest').text('Take Vocab Assessment').show().click(function(){
+        ASSESS = {}; // clear old object
+        advanceCard();
+      });
+      setupVoiceCommandsAndShortcuts();
+
+    })
+    .fail(function() {console.log('Error loading flashcards file!'); });
+
+  function setupVoiceCommandsAndShortcuts() {
+    $(document).bind('keydown', 1, function(){ clickButton(1); });
+    $(document).bind('keydown', 2, function(){ clickButton(2); });
+    $(document).bind('keydown', 3, function(){ clickButton(3); });
+    $(document).bind('keydown', 4, function(){ clickButton(4); });
+    $(document).bind('keydown', 5, function(){ clickButton(5); });
+    $(document).bind('keydown', 6, function(){ clickButton(6); });
+
+    var voiceCommands = {
+     '1': function() { clickButton(1); }, 'one': function() { clickButton(1); },
+     '2': function() { clickButton(2); }, 'two': function() { clickButton(2); },
+     '3': function() { clickButton(3); }, 'three': function() { clickButton(3); },
+     '4': function() { clickButton(4); }, 'four': function() { clickButton(4); },
+     '5': function() { clickButton(5); }, 'five': function() { clickButton(5); },
+     '6': function() { clickButton(6); }, 'six': function() { clickButton(6); },
+     'start': function() { clickButton('start'); }, 'restart': function() { clickButton('start'); },
+     'stop': function() { clickButton('cancel'); }, 'quit': function() { clickButton('cancel'); },
+       'cancel': function() { clickButton('cancel'); },
+    };
+    annyang.addCommands(voiceCommands);
+    // Start listening.
+    annyang.start();
+  }
+
+  function clickButton(item) {
+    console.log('clickButton: '+item);
+    if (item=='start') {
+      showSummary();
+      initializeTest();
+    } else if (item=='cancel') {
+      cardMessage('Cancelled');
+      showSummary();
+    } else $('div[data-selid="'+item+'"]').trigger('click');
+  };
+
+  function initializeTest() {
+    showFeedback(); // hide feedback message
+    $('.card .progress').text('');
+    $('.card .level').text('');
+    $('.options .option').hide();
+
+    cardMessage('Choose closest words...');
+    ASSESS = { complete: false,
+               level: 50,  // current level testing
+               round: 1, // number of levels tested
+               totalCards: 0, // total cards tested
+               levelCardNum: 0, // card tested in this level
+               correct: 0, incorrect: 0, // for this level
+               ceiling: 100, floor: 0,
+               cards: [],
+               starttime: new Date().getTime(),
+               finished: false,
+               currentWord: '',
+               currentCard: {},
+               currentWords: []
+             };
+    newCardSet(_INITIAL_CARDCOUNT);
+    setTimeout(advanceCard, 3000);
+  }
+
+
+  // get all the necessary new card data
+  function advanceCard(){
+    if (!ASSESS.hasOwnProperty('cards')) return initializeTest();
+
+    var finished = false;
+    // if level is complete, try to advance to next level
+    var levelComplete = checkLevelComplete(ASSESS.cards.length, ASSESS.correct, ASSESS.incorrect);
+    if (levelComplete) finished = advanceLevel(levelComplete);
+
+// TODO: we are not advancing totalCards when advancing level
+
+    if (!finished) {
+      // get and show next card
+      ASSESS.totalCards++;
+      ASSESS.levelCardNum++;
+      //ASSESS.percentComplete = Math.floor(ASSESS.totalCards/20*100);
+      // need to change current card here
+      ASSESS.currentCard = ASSESS.cards[ASSESS.levelCardNum-1];
+      ASSESS.currentWords = Object.keys(ASSESS.currentCard);
+      ASSESS.currentWord = ASSESS.currentWords[Math.floor(Math.random()*ASSESS.currentWords.length)];
+      showCard();
+    } else {
+      ASSESS.finished = true;
+      showSummary();
+    }
+  }
+
+  function newCardSet(cardcount) {
+    ASSESS.cards = fetchNewQueryCards(ASSESS.level, cardcount, _WORDS_PER_CARD);
+    ASSESS.currentCard = ASSESS.cards[ASSESS.levelCardNum];
+    ASSESS.currentWords = Object.keys(ASSESS.currentCard);
+    ASSESS.currentWord = ASSESS.currentWords[Math.floor(Math.random()*ASSESS.currentWords.length)];
+  }
+
+
+  function advanceLevel(levelComplete) {
+    //console.log('! AdvanceLevel');
+    var finished = false;
+    // calculate new level
+    if (levelComplete == 'pass') {
+      ASSESS.floor = ASSESS.level;
+    } else {
+      ASSESS.ceiling=ASSESS.level-1;
+      ASSESS.level = ASSESS.ceiling; // this will only matter when user fails the final round
+    }
+    finished = (ASSESS.ceiling<=ASSESS.floor);
+    if (!finished) { // reset level variables, go on to the next round
+      ASSESS.level = Math.round((ASSESS.ceiling - ASSESS.floor)/2)+ASSESS.floor;
+      ASSESS.round++;
+console.log('Advanced to round '+ ASSESS.round +', level: '+ ASSESS.level);
+      ASSESS.levelCardNum = 0; ASSESS.correct = 0; ASSESS.incorrect = 0;
+      //var cardcount = _INITIAL_CARDS - (ASSESS.round * 2);
+      newCardSet(_INITIAL_CARDCOUNT - ASSESS.round*2);
+      //ASSESS.cards = fetchNewQueryCards(ASSESS.level, cardcount, _WORDS_PER_CARD);
+    }
+    return finished;
+  }
+
+
+
+  function showSummary(){
+    $('.card').hide(); $('.summary').show();
+    $('.summary .status').text('You assessed at level: '+ASSESS.level);
+  }
+
+  function showCard() {
+    $('.summary').hide(); $('.card').show();
+    stopBackgroundAnimation('.gradientAnimation span.gradient');
+    // get this logic out of the display code
+    //ASSESS.currentCard = ASSESS.cards[ASSESS.levelCards];
+    //var words = Object.keys(ASSESS.currentCard);
+    //ASSESS.currentWord = words[Math.floor(Math.random()*words.length)];
+
+    // set up card words, buttons, click handlers
+    $('.correctWord').text(ASSESS.currentWord);
+    var buttons = [];
+    ASSESS.currentWords.forEach(function(word){
+      var selid = buttons.length+1;
+      buttons.push("         <div class='option button' data-selid='"+selid+"' id='"+quickHash(word)+
+        "'>" + "<span class='sel'>"+(selid)+"</span><span class='optionwords'>" +ASSESS.currentCard[word].join(', ')+ "</div></div>");
+    });
+    buttons = buttons.join('\n');
+    $('.card .options').html(buttons);
+    $('.card .options .option.button').on('click', function() {
+      onCardSubmission($(this).attr('id'), ASSESS.currentWord);
+    });
+
+
+
+    //  start animation
+    startBackgroundAnimation(_TIME_PER_CARD, '.gradientAnimation span.gradient', ASSESS.currentWord, onCardSubmission, updateStatus);
+  }
+
+  function updateStatus(){
+    // update time elapsed status
+    var end = new Date().getTime();
+    var seconds = Math.round((end - ASSESS.starttime)/1000);
+    if (seconds) $('.card .status .progress').text(seconds+'s');
+     else $('.card .status .progress').text('');
+    $('.card .status .level').text('Round: '+ASSESS.round+', Level: '+ASSESS.level);
+  }
+
+  function onCardSubmission(hitID, word) {
+    if (ASSESS.finished) return;
+    if (word != ASSESS.currentWord) return; // exit if correctWord has changed
+
+    // stop animation if active
+    stopBackgroundAnimation('.gradientAnimation span.gradient');
+
+    var correct = (hitID && (hitID==quickHash(ASSESS.currentWord)));
+    if (correct) ASSESS.correct++; else ASSESS.incorrect++;
+
+    // here is where we add some Correct/Incorrect feedback!
+    $('.card .options').html('');
+    //if (hitID)
+    showFeedback(correct ? 'correct' : 'incorrect');
+    setTimeout(advanceCard, 1000);
+  }
+
+  function showFeedback(type) {
+    if (type=='correct') {
+      $('#feedback').removeClass('incorrect').text('Correct').show().fadeIn(600).fadeOut(600);
+    } else if (type=='incorrect')  {
+      $('#feedback').addClass('incorrect').text('Wrong!!').show().fadeIn(600).fadeOut(600);
+    } else $('#feedback').hide();
+  }
+
+  function cardMessage(message) {
+    $('.summary').hide(); $('.card').show();
+    stopBackgroundAnimation('.gradientAnimation span.gradient');
+    $('.correctWord').text(message).show().fadeOut(300).fadeIn(600).fadeOut(300).fadeIn(600);
+  }
+
+
+
+
+
+
+
+
+});
+</script>
+
+  </head>
+<body>
+
+<style>
+ .gradientAnimation {position:relative}
+ .gradientAnimation .gradient {position: absolute}
+
+ .summary .style, .summary .retest, .card {display: none;}
+ .card {position: relative;}
+  #feedback {
+    position:absolute; top:40%; left: 0; width:100%; text-align:center; font-size:80px;
+    color: green; z-order: 1000; /*background-color: rgba(255, 255, 255, .7); padding-top:.5em; padding-bottom:.5em;*/
+    /*display: none;*/
+  }
+  #feedback.incorrect {color: red;}
+  .card .options {min-height: 250px;}
+</style>
+
+ <div class="flashcards">
+   <div class="header">Vocabulary Assessment Test</div>
+   <div class="fcbody">
+
+     <div class='summary'>
+       <div class='status'> Your Assessed Level: 52%</div>
+       <div class='retest button'>New Assessment</div>
+     </div>
+
+
+
+     <div class='card'>
+       <div class='status'><div class='progress'>20%</div> <div class='level'>Level: 52</div></div>
+
+       <div class='testword gradientAnimation'><span class='gradient'></span><span class='correctWord'>testword</span></div>
+
+       <div class='options'>
+         <div class='option button' data-selid='1' id='6465373'><span class='sel'>1</span>
+           <span class='optionwords'>option, option, option</span></div>
+         <div class='option button' data-selid='2' id='6465373'><span class='sel'>2</span>
+           <span class='optionwords'>option, option, option</span></div>
+         <div class='option button' data-selid='3' id='6465373'><span class='sel'>3</span>
+           <span class='optionwords'>option, option, option</span></div>
+         <div class='option button' data-selid='4' id='6465373'><span class='sel'>4</span>
+           <span class='optionwords'>option, option, option</span></div>
+         <div class='option button' data-selid='5' id='6465373'><span class='sel'>5</span>
+           <span class='optionwords'>option, option, option</span></div>
+       </div>
+
+       <div id='feedback' class='correct'>Correct</div>
+
+     </div>
+
+   </div>
+ </div>
+
+
+</body>
+
+</html>

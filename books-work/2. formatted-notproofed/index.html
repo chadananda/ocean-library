@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html ng-app="ocntoolsSearchApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Ocntools Search App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <style>#search-box{margin-top:20px;margin-bottom:10px}.fixed-height{height:600px;overflow-y:scroll}.found-file{margin-bottom:7px}.found-file span{font-size:18px}.found-sentence{padding-left:40px;padding-bottom:5px}[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak{display:none !important}</style>
+</head>
+<body ng-controller="SearchCtrl" ng-cloak>
+<div class="container-fluid">
+    <div class="row">
+        <h2 class="col-md-5">{{ contents.count }} Documents, {{ contents.totalSize }}mb</h2>
+        <div class="col-md-7">
+            <div class="input-group" id="search-box">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="search()">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </span>
+                <input type="text" class="form-control" placeholder="search"
+                       ng-model="fulltextSearch" ng-keyup="$event.keyCode == 13 && search()">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5" id="menu">
+            <div class="panel panel-default list-group fixed-height">
+                <div class="panel-body">
+                    <div ng-include="'filesTree'"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="panel panel-default fixed-height">
+                <div class="panel-body">
+                    <div ng-show="nothingFound">
+                        <h3>No results</h3>
+                        <div>Documents containing given sentence are not found</div>
+                    </div>
+                    <div ng-repeat="r in searchResults" class="form-group">
+                        <div class="found-file">
+                            <i class="glyphicon glyphicon-file"></i>
+                            <span>
+                                <a ng-href="{{ r.doc.url }}" target="_blank">{{ r.doc.name }}</a> -
+                                (<ng-pluralize count="r.sentences.length"
+                                               when="{'one': '1 hit', 'other': '{} hits'}"></ng-pluralize>)
+                            </span>
+                        </div>
+                        <div ng-repeat="s in r.sentences|orderBy:blockIdNumeric">
+                            <div class="found-sentence row">
+                                <div class="col-sm-2"><span ng-if="s.blockId">block: {{ s.blockId }}</span></div>
+                                <div class="col-sm-10">{{ s.text }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="filesTree">
+    <div ng-repeat="file in contents.files">
+        <a class="list-group-item" ng-href="{{ file.url }}" target="_blank">
+            <i class="glyphicon glyphicon-file" style="margin-left: {{ indent * 15 }}px"></i> {{ file.name }}
+        </a>
+    </div>
+    <div ng-repeat="dir in contents.directories">
+        <a class="list-group-item" data-toggle="collapse" data-target="#l{{ indent }}{{ $index }}" data-parent="#menu">
+            <i class="glyphicon glyphicon-folder-open" style="margin-left: {{ (indent - 1) * 15 }}px"></i> {{ dir.name }}
+        </a>
+        <div id="l{{ indent }}{{ $index }}" class="sublinks collapse">
+            <div ng-include="'filesTree'" ng-init="contents = dir.contents; indent = indent + 1;"></div>
+        </div>
+    </div>
+</script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pouchdb/4.0.3/pouchdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/0.5.12/lunr.min.js"></script>
+    <script>angular.module("ocntoolsSearchApp",[]);var app=angular.module("ocntoolsSearchApp");String.prototype.endsWith=function(t){return-1!==this.indexOf(t,this.length-t.length)},String.prototype.getSentences=function(){return this.replace(/([a-z])[.!?]\s*['"‘“]?([A-Z])/g,"$1|$2").split("|")},app.controller("SearchCtrl",["$scope","$q","$http",function(t,e,n){n.get("books.json").then(function(o){t.contents=o.data,t.indent=0;var c=new PouchDB("documents"),r=new PouchDB("sentences"),s=lunr(function(){this.field("text",{boost:10}),this.ref("_id")}),i=function a(t,e){e=e||"";var o=e+(e?"/":""),i=[];return t.files.forEach(function(t){var e=o+t.name;t.url=e,e.endsWith(".pdf")||e.endsWith(".docx")||i.push(n.get(e,{transformResponse:void 0}).then(function(n){var o=n.data,i=t.id.toString(),a=$("<div>"+o+"</div>").find("title").text();if(!a){var d=e.split("/");a=d[d.length-1]}c.put({_id:i,url:e,name:a,timestamp:t.modified});var u=[],l=function(t,e){return{_id:i+":"+e,text:t,docId:i,blockId:void 0}};e.endsWith(".html")?$(o).find("p").each(function(){var t=this;$.merge(u,$(t).text().getSentences().map(l).map(function(e){return e.blockId=$(t).attr("id"),e._id+=":"+e.blockId,e}))}):$.merge(u,o.getSentences().map(l)),r.bulkDocs(u),u.forEach(function(t){s.add(t)})}))}),t.directories.forEach(function(t){$.merge(i,a(t.contents,o+t.name))}),i}(t.contents,".");e.all(i).then(function(){t.nothingFound=!1,t.search=function(){if(t.fulltextSearch){var e=s.search(t.fulltextSearch);t.searchResults={},r.allDocs({include_docs:!0,keys:e.map(function(t){return t.ref})}).then(function(e){e.rows.forEach(function(e){var n=e.doc;t.searchResults[n.docId]||(t.searchResults[n.docId]={sentences:[]},c.get(n.docId).then(function(e){t.searchResults[n.docId].doc=e,t.$apply()})),t.searchResults[n.docId].sentences.push(n)}),t.nothingFound=$.isEmptyObject(t.searchResults),t.$apply()})}}}),t.blockIdNumeric=function(t){return parseInt(t.blockId)}})}]);</script>
+</body>
+</html>

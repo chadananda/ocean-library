@@ -1,0 +1,384 @@
+{
+  "files": [
+    {
+      "id": 1,
+      "name": ".DS_Store",
+      "modified": "2015-11-17T03:39:59.000Z"
+    },
+    {
+      "id": 2,
+      "name": "Abdu'l-Baha,Memorials-of-the-Faithful,en.html",
+      "modified": "2015-11-06T01:30:25.000Z"
+    },
+    {
+      "id": 3,
+      "name": "Baha'u'llah,Summons-of-the-Lord-of-Hosts-(non-mubin),en.html",
+      "modified": "2015-07-26T04:57:18.000Z"
+    },
+    {
+      "id": 4,
+      "name": "Shoghi-Effendi,God-Passes-By,en.html",
+      "modified": "2015-07-26T04:58:04.000Z"
+    },
+    {
+      "id": 5,
+      "name": "Shoghi-Effendi,Special UN Committee on Palestine - 1947 copy.html",
+      "modified": "2015-11-05T22:35:01.000Z"
+    },
+    {
+      "id": 6,
+      "name": "Shoghi-Effendi,Summary Statement - The World Religion.html",
+      "modified": "2015-11-05T22:34:23.000Z"
+    },
+    {
+      "id": 7,
+      "name": "Shoghi-Effendi,The-Dispensation-of-Bahaullah,en.html",
+      "modified": "2015-05-14T05:19:25.000Z"
+    },
+    {
+      "id": 8,
+      "name": "abd-bahai-world-faith.html",
+      "modified": "2015-11-06T01:30:12.000Z"
+    },
+    {
+      "id": 9,
+      "name": "abd-rosenberg-tablet.html",
+      "modified": "2015-11-06T00:55:54.000Z"
+    },
+    {
+      "id": 10,
+      "name": "abd-tab-v1.html",
+      "modified": "2015-11-17T04:51:07.000Z"
+    }
+  ],
+  "directories": [
+    {
+      "name": "cleaned",
+      "contents": {
+        "files": [
+          {
+            "id": 11,
+            "name": ".DS_Store",
+            "modified": "2015-11-17T03:39:59.000Z"
+          }
+        ],
+        "directories": []
+      }
+    },
+    {
+      "name": "compilations v1",
+      "contents": {
+        "files": [
+          {
+            "id": 12,
+            "name": ".DS_Store",
+            "modified": "2015-11-12T16:58:22.000Z"
+          },
+          {
+            "id": 13,
+            "name": "A Chaste and Holy Life.html",
+            "modified": "2015-11-11T01:33:34.000Z"
+          },
+          {
+            "id": 14,
+            "name": "Arts and Crafts.txt",
+            "modified": "2015-10-30T03:51:10.000Z"
+          },
+          {
+            "id": 15,
+            "name": "Bahá'í Burial.txt",
+            "modified": "2015-10-30T03:51:10.000Z"
+          },
+          {
+            "id": 16,
+            "name": "Bahá'í Education.txt",
+            "modified": "2015-10-30T03:51:10.000Z"
+          },
+          {
+            "id": 17,
+            "name": "Bahá'í Elections.txt",
+            "modified": "2015-10-30T03:51:10.000Z"
+          },
+          {
+            "id": 18,
+            "name": "Buddha, Krishna, Zoroaster and Related Subjects.txt",
+            "modified": "2015-10-30T03:51:10.000Z"
+          },
+          {
+            "id": 19,
+            "name": "Centres of Bahá'í Learning.txt",
+            "modified": "2015-10-30T03:51:10.000Z"
+          },
+          {
+            "id": 20,
+            "name": "Conservation of the Earth's Resources.txt",
+            "modified": "2015-10-30T03:51:10.000Z"
+          },
+          {
+            "id": 21,
+            "name": "Consultation -- A Compilation.txt",
+            "modified": "2015-10-30T03:51:10.000Z"
+          },
+          {
+            "id": 22,
+            "name": "Crisis and Victory.txt",
+            "modified": "2015-10-30T03:51:10.000Z"
+          },
+          {
+            "id": 23,
+            "name": "Deepening.html",
+            "modified": "2015-11-15T04:28:54.000Z"
+          },
+          {
+            "id": 24,
+            "name": "Deepening.txt",
+            "modified": "2015-11-12T16:19:18.000Z"
+          },
+          {
+            "id": 25,
+            "name": "Divorce.txt",
+            "modified": "2015-10-30T03:51:10.000Z"
+          },
+          {
+            "id": 26,
+            "name": "Establishment of the Universal House of Justice.txt",
+            "modified": "2015-10-30T03:51:12.000Z"
+          },
+          {
+            "id": 27,
+            "name": "Excellence in All Things.txt",
+            "modified": "2015-10-30T03:51:12.000Z"
+          },
+          {
+            "id": 28,
+            "name": "Family Life.txt",
+            "modified": "2015-10-30T03:51:12.000Z"
+          },
+          {
+            "id": 29,
+            "name": "Feast.txt",
+            "modified": "2015-10-30T03:51:12.000Z"
+          },
+          {
+            "id": 30,
+            "name": "Health and Healing.txt",
+            "modified": "2015-10-30T03:51:12.000Z"
+          },
+          {
+            "id": 31,
+            "name": "Huqúqu'llah.txt",
+            "modified": "2015-10-30T03:51:12.000Z"
+          },
+          {
+            "id": 32,
+            "name": "Lifeblood of the Cause (Funds).txt",
+            "modified": "2015-10-30T03:51:12.000Z"
+          },
+          {
+            "id": 33,
+            "name": "The Covenant.txt",
+            "modified": "2015-10-30T03:51:12.000Z"
+          }
+        ],
+        "directories": [
+          {
+            "name": "cleaned",
+            "contents": {
+              "files": [
+                {
+                  "id": 34,
+                  "name": ".DS_Store",
+                  "modified": "2015-11-12T16:58:22.000Z"
+                }
+              ],
+              "directories": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "compilations v2",
+      "contents": {
+        "files": [
+          {
+            "id": 35,
+            "name": ".DS_Store",
+            "modified": "2015-11-10T05:13:15.000Z"
+          },
+          {
+            "id": 36,
+            "name": "Guidelines for Teaching.html",
+            "modified": "2015-11-10T05:33:29.000Z"
+          },
+          {
+            "id": 37,
+            "name": "Living the Life.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 38,
+            "name": "Local Spiritual Assemblies.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 39,
+            "name": "Music.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 40,
+            "name": "Opposition.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 41,
+            "name": "Peace.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 42,
+            "name": "Prayer, Meditation and the Devotional Attitude.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 43,
+            "name": "Preserving Bahá'í Marriages.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 44,
+            "name": "Prohibition of Intixicating Drinks.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 45,
+            "name": "Prominent People.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 46,
+            "name": "Radio [Use of Radio and Television in Teaching].txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 47,
+            "name": "Significance of the Formative Age.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 48,
+            "name": "Teaching the Masses.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 49,
+            "name": "The Local Spiritual Assembly.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 50,
+            "name": "The National Spiritual Assembly.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 51,
+            "name": "The Power of Divine Assistance.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 52,
+            "name": "Trustworthiness.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 53,
+            "name": "Women.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 54,
+            "name": "Writers and Writing.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          },
+          {
+            "id": 55,
+            "name": "Youth.txt",
+            "modified": "2015-11-10T04:08:00.000Z"
+          }
+        ],
+        "directories": []
+      }
+    },
+    {
+      "name": "compilations v3",
+      "contents": {
+        "files": [
+          {
+            "id": 56,
+            "name": "Agriculture and Related Subjects.txt",
+            "modified": "2015-10-29T14:28:02.000Z"
+          },
+          {
+            "id": 57,
+            "name": "Bibliography of books for Comp. of Comps. v3.txt",
+            "modified": "2015-10-29T14:28:02.000Z"
+          },
+          {
+            "id": 58,
+            "name": "Community Functioning.txt",
+            "modified": "2015-10-29T14:28:02.000Z"
+          },
+          {
+            "id": 59,
+            "name": "Cultural Diversity in the Age of Maturity.txt",
+            "modified": "2015-10-29T14:28:02.000Z"
+          },
+          {
+            "id": 60,
+            "name": "Entry By Troops.txt",
+            "modified": "2015-10-29T14:28:02.000Z"
+          },
+          {
+            "id": 61,
+            "name": "Scholarship.txt",
+            "modified": "2015-10-29T14:28:02.000Z"
+          },
+          {
+            "id": 62,
+            "name": "Service in Bahá'í Temples.txt",
+            "modified": "2015-10-29T14:28:02.000Z"
+          },
+          {
+            "id": 63,
+            "name": "Social and Economic Development.txt",
+            "modified": "2015-10-29T14:28:02.000Z"
+          },
+          {
+            "id": 64,
+            "name": "Teaching Among Aboriginal and Indigenous People.txt",
+            "modified": "2015-10-29T14:28:02.000Z"
+          },
+          {
+            "id": 65,
+            "name": "The Importance of Arts in Promoting the Faith.txt",
+            "modified": "2015-10-29T14:28:02.000Z"
+          },
+          {
+            "id": 66,
+            "name": "The National Convention.txt",
+            "modified": "2015-10-29T14:28:02.000Z"
+          },
+          {
+            "id": 67,
+            "name": "The Sanctity and Nature of Bahá'í Elections.txt",
+            "modified": "2015-10-29T14:28:02.000Z"
+          }
+        ],
+        "directories": []
+      }
+    }
+  ],
+  "count": 67,
+  "totalSize": 6.4
+}

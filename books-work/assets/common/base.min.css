@@ -83,6 +83,12 @@
 }
 /**********************************/
 @font-face {
+  font-family: Typewriter;
+  src: url(fonts/SpecialElite-Typewriter/SpecialElite-webfont.woff) format('woff');
+  letter-spacing: .2px !important;
+}
+/**********************************/
+@font-face {
   font-family: Romantik;
   src: url(fonts/Initials/Romantik.otf) format('opentype');
 }
@@ -92,24 +98,24 @@
 }
 /**********************************/
 @font-face {
-  font-family: 'Font Awesome';
+  font-family: 'FontAwesome';
   font-weight: normal;
   font-style: normal;
   src: url(fonts/fontawesome/fonts/fontawesome-webfont.woff2) format('woff2'), url(fonts/fontawesome/fonts/fontawesome-webfont.woff) format('woff');
 }
 .fa {
-  font-family: 'Font Awesome';
+  font-family: 'FontAwesome';
 }
 /*!
- *  Font Awesome 4.3.0 by @davegandy - http://fontawesome.io - @fontawesome
+ *  Font Awesome 4.6.3 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
  */
 /* FONT PATH
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('fonts/fontawesome/fonts//fontawesome-webfont.eot?v=4.3.0');
-  src: url('fonts/fontawesome/fonts//fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('fonts/fontawesome/fonts//fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('fonts/fontawesome/fonts//fontawesome-webfont.woff?v=4.3.0') format('woff'), url('fonts/fontawesome/fonts//fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('fonts/fontawesome/fonts//fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
+  src: url('../fonts/fontawesome-webfont.eot?v=4.6.3');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.6.3') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.6.3') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.6.3') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.6.3') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.6.3#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -120,7 +126,6 @@
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transform: translate(0, 0);
 }
 /* makes the font 33% larger relative to the icon container */
 .fa-lg {
@@ -164,9 +169,22 @@
 }
 .fa-border {
   padding: .2em .25em .15em;
-  border: solid 0.08em #eeeeee;
+  border: solid 0.08em #eee;
   border-radius: .1em;
 }
+.fa-pull-left {
+  float: left;
+}
+.fa-pull-right {
+  float: right;
+}
+.fa.fa-pull-left {
+  margin-right: .3em;
+}
+.fa.fa-pull-right {
+  margin-left: .3em;
+}
+/* Deprecated as of 4.4.0 */
 .pull-right {
   float: right;
 }
@@ -208,31 +226,31 @@
   }
 }
 .fa-rotate-90 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
 }
 .fa-rotate-180 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 .fa-rotate-270 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
   -webkit-transform: rotate(270deg);
   -ms-transform: rotate(270deg);
   transform: rotate(270deg);
 }
 .fa-flip-horizontal {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
   -webkit-transform: scale(-1, 1);
   -ms-transform: scale(-1, 1);
   transform: scale(-1, 1);
 }
 .fa-flip-vertical {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
   -webkit-transform: scale(1, -1);
   -ms-transform: scale(1, -1);
   transform: scale(1, -1);
@@ -266,7 +284,7 @@
   font-size: 2em;
 }
 .fa-inverse {
-  color: #ffffff;
+  color: #fff;
 }
 /* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
    readers do not read off random characters that represent icons */
@@ -730,6 +748,7 @@
 .fa-credit-card:before {
   content: "\f09d";
 }
+.fa-feed:before,
 .fa-rss:before {
   content: "\f09e";
 }
@@ -1472,7 +1491,7 @@
 .fa-digg:before {
   content: "\f1a6";
 }
-.fa-pied-piper:before {
+.fa-pied-piper-pp:before {
   content: "\f1a7";
 }
 .fa-pied-piper-alt:before {
@@ -1598,6 +1617,7 @@
   content: "\f1ce";
 }
 .fa-ra:before,
+.fa-resistance:before,
 .fa-rebel:before {
   content: "\f1d0";
 }
@@ -1611,6 +1631,8 @@
 .fa-git:before {
   content: "\f1d3";
 }
+.fa-y-combinator-square:before,
+.fa-yc-square:before,
 .fa-hacker-news:before {
   content: "\f1d4";
 }
@@ -1635,7 +1657,6 @@
 .fa-history:before {
   content: "\f1da";
 }
-.fa-genderless:before,
 .fa-circle-thin:before {
   content: "\f1db";
 }
@@ -1840,6 +1861,7 @@
 .fa-mercury:before {
   content: "\f223";
 }
+.fa-intersex:before,
 .fa-transgender:before {
   content: "\f224";
 }
@@ -1866,6 +1888,9 @@
 }
 .fa-neuter:before {
   content: "\f22c";
+}
+.fa-genderless:before {
+  content: "\f22d";
 }
 .fa-facebook-official:before {
   content: "\f230";
@@ -1901,11 +1926,388 @@
 .fa-medium:before {
   content: "\f23a";
 }
+.fa-yc:before,
+.fa-y-combinator:before {
+  content: "\f23b";
+}
+.fa-optin-monster:before {
+  content: "\f23c";
+}
+.fa-opencart:before {
+  content: "\f23d";
+}
+.fa-expeditedssl:before {
+  content: "\f23e";
+}
+.fa-battery-4:before,
+.fa-battery-full:before {
+  content: "\f240";
+}
+.fa-battery-3:before,
+.fa-battery-three-quarters:before {
+  content: "\f241";
+}
+.fa-battery-2:before,
+.fa-battery-half:before {
+  content: "\f242";
+}
+.fa-battery-1:before,
+.fa-battery-quarter:before {
+  content: "\f243";
+}
+.fa-battery-0:before,
+.fa-battery-empty:before {
+  content: "\f244";
+}
+.fa-mouse-pointer:before {
+  content: "\f245";
+}
+.fa-i-cursor:before {
+  content: "\f246";
+}
+.fa-object-group:before {
+  content: "\f247";
+}
+.fa-object-ungroup:before {
+  content: "\f248";
+}
+.fa-sticky-note:before {
+  content: "\f249";
+}
+.fa-sticky-note-o:before {
+  content: "\f24a";
+}
+.fa-cc-jcb:before {
+  content: "\f24b";
+}
+.fa-cc-diners-club:before {
+  content: "\f24c";
+}
+.fa-clone:before {
+  content: "\f24d";
+}
+.fa-balance-scale:before {
+  content: "\f24e";
+}
+.fa-hourglass-o:before {
+  content: "\f250";
+}
+.fa-hourglass-1:before,
+.fa-hourglass-start:before {
+  content: "\f251";
+}
+.fa-hourglass-2:before,
+.fa-hourglass-half:before {
+  content: "\f252";
+}
+.fa-hourglass-3:before,
+.fa-hourglass-end:before {
+  content: "\f253";
+}
+.fa-hourglass:before {
+  content: "\f254";
+}
+.fa-hand-grab-o:before,
+.fa-hand-rock-o:before {
+  content: "\f255";
+}
+.fa-hand-stop-o:before,
+.fa-hand-paper-o:before {
+  content: "\f256";
+}
+.fa-hand-scissors-o:before {
+  content: "\f257";
+}
+.fa-hand-lizard-o:before {
+  content: "\f258";
+}
+.fa-hand-spock-o:before {
+  content: "\f259";
+}
+.fa-hand-pointer-o:before {
+  content: "\f25a";
+}
+.fa-hand-peace-o:before {
+  content: "\f25b";
+}
+.fa-trademark:before {
+  content: "\f25c";
+}
+.fa-registered:before {
+  content: "\f25d";
+}
+.fa-creative-commons:before {
+  content: "\f25e";
+}
+.fa-gg:before {
+  content: "\f260";
+}
+.fa-gg-circle:before {
+  content: "\f261";
+}
+.fa-tripadvisor:before {
+  content: "\f262";
+}
+.fa-odnoklassniki:before {
+  content: "\f263";
+}
+.fa-odnoklassniki-square:before {
+  content: "\f264";
+}
+.fa-get-pocket:before {
+  content: "\f265";
+}
+.fa-wikipedia-w:before {
+  content: "\f266";
+}
+.fa-safari:before {
+  content: "\f267";
+}
+.fa-chrome:before {
+  content: "\f268";
+}
+.fa-firefox:before {
+  content: "\f269";
+}
+.fa-opera:before {
+  content: "\f26a";
+}
+.fa-internet-explorer:before {
+  content: "\f26b";
+}
+.fa-tv:before,
+.fa-television:before {
+  content: "\f26c";
+}
+.fa-contao:before {
+  content: "\f26d";
+}
+.fa-500px:before {
+  content: "\f26e";
+}
+.fa-amazon:before {
+  content: "\f270";
+}
+.fa-calendar-plus-o:before {
+  content: "\f271";
+}
+.fa-calendar-minus-o:before {
+  content: "\f272";
+}
+.fa-calendar-times-o:before {
+  content: "\f273";
+}
+.fa-calendar-check-o:before {
+  content: "\f274";
+}
+.fa-industry:before {
+  content: "\f275";
+}
+.fa-map-pin:before {
+  content: "\f276";
+}
+.fa-map-signs:before {
+  content: "\f277";
+}
+.fa-map-o:before {
+  content: "\f278";
+}
+.fa-map:before {
+  content: "\f279";
+}
+.fa-commenting:before {
+  content: "\f27a";
+}
+.fa-commenting-o:before {
+  content: "\f27b";
+}
+.fa-houzz:before {
+  content: "\f27c";
+}
+.fa-vimeo:before {
+  content: "\f27d";
+}
+.fa-black-tie:before {
+  content: "\f27e";
+}
+.fa-fonticons:before {
+  content: "\f280";
+}
+.fa-reddit-alien:before {
+  content: "\f281";
+}
+.fa-edge:before {
+  content: "\f282";
+}
+.fa-credit-card-alt:before {
+  content: "\f283";
+}
+.fa-codiepie:before {
+  content: "\f284";
+}
+.fa-modx:before {
+  content: "\f285";
+}
+.fa-fort-awesome:before {
+  content: "\f286";
+}
+.fa-usb:before {
+  content: "\f287";
+}
+.fa-product-hunt:before {
+  content: "\f288";
+}
+.fa-mixcloud:before {
+  content: "\f289";
+}
+.fa-scribd:before {
+  content: "\f28a";
+}
+.fa-pause-circle:before {
+  content: "\f28b";
+}
+.fa-pause-circle-o:before {
+  content: "\f28c";
+}
+.fa-stop-circle:before {
+  content: "\f28d";
+}
+.fa-stop-circle-o:before {
+  content: "\f28e";
+}
+.fa-shopping-bag:before {
+  content: "\f290";
+}
+.fa-shopping-basket:before {
+  content: "\f291";
+}
+.fa-hashtag:before {
+  content: "\f292";
+}
+.fa-bluetooth:before {
+  content: "\f293";
+}
+.fa-bluetooth-b:before {
+  content: "\f294";
+}
+.fa-percent:before {
+  content: "\f295";
+}
+.fa-gitlab:before {
+  content: "\f296";
+}
+.fa-wpbeginner:before {
+  content: "\f297";
+}
+.fa-wpforms:before {
+  content: "\f298";
+}
+.fa-envira:before {
+  content: "\f299";
+}
+.fa-universal-access:before {
+  content: "\f29a";
+}
+.fa-wheelchair-alt:before {
+  content: "\f29b";
+}
+.fa-question-circle-o:before {
+  content: "\f29c";
+}
+.fa-blind:before {
+  content: "\f29d";
+}
+.fa-audio-description:before {
+  content: "\f29e";
+}
+.fa-volume-control-phone:before {
+  content: "\f2a0";
+}
+.fa-braille:before {
+  content: "\f2a1";
+}
+.fa-assistive-listening-systems:before {
+  content: "\f2a2";
+}
+.fa-asl-interpreting:before,
+.fa-american-sign-language-interpreting:before {
+  content: "\f2a3";
+}
+.fa-deafness:before,
+.fa-hard-of-hearing:before,
+.fa-deaf:before {
+  content: "\f2a4";
+}
+.fa-glide:before {
+  content: "\f2a5";
+}
+.fa-glide-g:before {
+  content: "\f2a6";
+}
+.fa-signing:before,
+.fa-sign-language:before {
+  content: "\f2a7";
+}
+.fa-low-vision:before {
+  content: "\f2a8";
+}
+.fa-viadeo:before {
+  content: "\f2a9";
+}
+.fa-viadeo-square:before {
+  content: "\f2aa";
+}
+.fa-snapchat:before {
+  content: "\f2ab";
+}
+.fa-snapchat-ghost:before {
+  content: "\f2ac";
+}
+.fa-snapchat-square:before {
+  content: "\f2ad";
+}
+.fa-pied-piper:before {
+  content: "\f2ae";
+}
+.fa-first-order:before {
+  content: "\f2b0";
+}
+.fa-yoast:before {
+  content: "\f2b1";
+}
+.fa-themeisle:before {
+  content: "\f2b2";
+}
+.fa-google-plus-circle:before,
+.fa-google-plus-official:before {
+  content: "\f2b3";
+}
+.fa-fa:before,
+.fa-font-awesome:before {
+  content: "\f2b4";
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+}
 /* global for all Ocean content */
 body.ocean {
   font-size: 16pt;
-  background-color: #f7f7f7;
-  color: #1a1a1a;
   padding-right: 1em;
 }
 body.ocean div {
@@ -1923,6 +2325,12 @@ body.ocean a:visited {
 body.ocean a:hover {
   text-decoration: underline;
 }
+body.ocean .fullwidth img,
+body.ocean img.fullwidth {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
 body.ocean hr {
   display: block;
   border: 0;
@@ -1938,6 +2346,78 @@ body.ocean hr.small {
 }
 body.ocean hr.compact {
   margin: 1em;
+}
+body.ocean pre {
+  font-size: 10.4pt;
+}
+body.ocean h1,
+body.ocean h2,
+body.ocean h3,
+body.ocean h4 {
+  margin-left: 60px;
+  margin-right: 60px;
+}
+body.ocean h1 {
+  font-size: 40pt !important;
+}
+body.ocean h2 {
+  font-size: 32pt !important;
+}
+body.ocean h3 {
+  font-size: 24pt;
+}
+body.ocean h4 {
+  font-size: 20pt;
+}
+body.ocean .allcaps {
+  text-transform: uppercase;
+}
+body.ocean .smallcaps {
+  font-variant: small-caps;
+}
+body.ocean .illustration {
+  text-align: center !important;
+}
+body.ocean .illustration img {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-bottom: .75em;
+  display: block;
+  width: 80%;
+  max-width: 400pt;
+  max-height: 600pt;
+}
+body.ocean .illustration .med img {
+  width: 60%;
+}
+body.ocean .illustration .small img {
+  width: 40%;
+}
+body.ocean .illustration .full img {
+  width: 96%;
+}
+body.ocean .centerquote {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 20em;
+}
+body.ocean .list {
+  padding-left: 3em !important;
+  white-space: pre-line;
+  line-height: 1.5em !important;
+}
+body.ocean .list .blockquote {
+  padding-left: 6em !important;
+}
+body.ocean .nomargin-bottom {
+  margin-bottom: 0 !important;
+}
+body.ocean .nomargin-top {
+  margin-top: 0 !important;
+}
+body.ocean .nomargin {
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
 }
 body.ocean table.basic {
   font-family: Garamond1689;
@@ -1964,7 +2444,7 @@ body.ocean table.basic.center {
 body.ocean section.titlepage {
   font-family: GoudyHandtooled;
   margin: 0;
-  margin-bottom: 10em;
+  margin-bottom: 14em;
   text-align: center;
 }
 body.ocean section.titlepage div,
@@ -1981,14 +2461,9 @@ body.ocean section.titlepage h3 {
 }
 body.ocean section.titlepage .cover {
   width: 80%;
-  max-width: 30em;
+  max-width: 10em !important;
   opacity: 0.8;
   z-index: -100;
-}
-@media only screen {
-  body.ocean section.titlepage .cover {
-    -webkit-box-reflect: below -43px -webkit-gradient(linear, center top, center bottom, from(transparent), color-stop(80%, transparent), to(#f7f7f7));
-  }
 }
 body.ocean section.titlepage .title {
   font-size: 2em;
@@ -2044,6 +2519,12 @@ body.ocean section.contents li.toc_third {
   margin-left: 50pt;
   text-indent: -10pt;
 }
+body.ocean section.contents li.toc_fourth {
+  font-size: 12pt;
+  line-height: 1.25em;
+  margin-left: 70pt;
+  text-indent: -10pt;
+}
 body.ocean section.contents .date {
   font-style: italic;
   font-variant: normal;
@@ -2053,6 +2534,24 @@ body.ocean section.contents .date {
 body.ocean section.contents .ref {
   font-size: 10pt;
   color: rgba(26, 26, 26, 0.7);
+}
+body.ocean section.copyright {
+  font-size: 8pt;
+  margin: 5em;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3em;
+  padding-bottom: 1em;
+  /*border: 1px solid gray;*/
+  box-shadow: 1px 1px 8px #bbb;
+  background-color: #EFEEEE;
+  border-radius: 10px;
+  color: rgba(26, 26, 26, 0.7);
+  width: 60%;
+  overflow-x: hidden;
+}
+body.ocean section.copyright .section_header {
+  margin-top: 0;
 }
 body.ocean p,
 body.ocean div.par {
@@ -2174,7 +2673,7 @@ body.ocean p .reference,
 body.ocean div.par .reference,
 body.ocean p.reference,
 body.ocean div.par.reference {
-  margin-top: 0;
+  margin-top: -0.25em !important;
   margin-bottom: 2em;
 }
 body.ocean p .ref,
@@ -2183,8 +2682,8 @@ body.ocean p .reference,
 body.ocean div.par .reference,
 body.ocean p.reference,
 body.ocean div.par.reference {
-  font-style: italic;
   color: rgba(26, 26, 26, 0.7) !important;
+  font-size: 75% !important;
 }
 body.ocean p a[data-fnid]:before,
 body.ocean div.par a[data-fnid]:before {
@@ -2208,7 +2707,7 @@ body.ocean p .audio_highlight,
 body.ocean div.par .audio_highlight,
 body.ocean p .hl,
 body.ocean div.par .hl {
-  text-shadow: 0 0 0.1em #f7f7f7, 0 0 1.5em rgba(255, 230, 0, 0.5), 0 0 1.5em rgba(255, 230, 0, 0.5), 0 0 1.5em rgba(255, 230, 0, 0.5), 0 0 1.5em rgba(255, 230, 0, 0.5);
+  text-shadow: 0 0 0.1em #fcfcfc, 0 0 1.5em rgba(255, 230, 0, 0.5), 0 0 1.5em rgba(255, 230, 0, 0.5), 0 0 1.5em rgba(255, 230, 0, 0.5), 0 0 1.5em rgba(255, 230, 0, 0.5);
 }
 body.ocean p .audio_highlight2,
 body.ocean div.par .audio_highlight2,
@@ -2216,54 +2715,305 @@ body.ocean p .hl2,
 body.ocean div.par .hl2 {
   text-shadow: 0 0 1.5em rgba(255, 230, 0, 0.5), 0 0 1.5em rgba(255, 230, 0, 0.5);
 }
+body.ocean p,
+body.ocean div.par,
 body.ocean p q,
-body.ocean div.par q {
+body.ocean div.par q,
+body.ocean pq,
+body.ocean div.parq,
+body.ocean p aside q,
+body.ocean div.par aside q,
+body.ocean p h3 q,
+body.ocean div.par h3 q,
+body.ocean p h2 q,
+body.ocean div.par h2 q,
+body.ocean pbody.ocean p,
+body.ocean pbody.ocean div.par,
+body.ocean div.parbody.ocean p,
+body.ocean div.parbody.ocean div.par {
   padding: .15em;
-  color: #1a1a1a;
 }
+body.ocean p.baha,
+body.ocean div.par.baha,
 body.ocean p q.baha,
 body.ocean div.par q.baha,
+body.ocean pq.baha,
+body.ocean div.parq.baha,
+body.ocean p aside q.baha,
+body.ocean div.par aside q.baha,
+body.ocean p h3 q.baha,
+body.ocean div.par h3 q.baha,
+body.ocean p h2 q.baha,
+body.ocean div.par h2 q.baha,
+body.ocean pbody.ocean p.baha,
+body.ocean pbody.ocean div.par.baha,
+body.ocean div.parbody.ocean p.baha,
+body.ocean div.parbody.ocean div.par.baha,
+body.ocean p.bab,
+body.ocean div.par.bab,
 body.ocean p q.bab,
 body.ocean div.par q.bab,
+body.ocean pq.bab,
+body.ocean div.parq.bab,
+body.ocean p aside q.bab,
+body.ocean div.par aside q.bab,
+body.ocean p h3 q.bab,
+body.ocean div.par h3 q.bab,
+body.ocean p h2 q.bab,
+body.ocean div.par h2 q.bab,
+body.ocean pbody.ocean p.bab,
+body.ocean pbody.ocean div.par.bab,
+body.ocean div.parbody.ocean p.bab,
+body.ocean div.parbody.ocean div.par.bab,
+body.ocean p.abd,
+body.ocean div.par.abd,
 body.ocean p q.abd,
 body.ocean div.par q.abd,
+body.ocean pq.abd,
+body.ocean div.parq.abd,
+body.ocean p aside q.abd,
+body.ocean div.par aside q.abd,
+body.ocean p h3 q.abd,
+body.ocean div.par h3 q.abd,
+body.ocean p h2 q.abd,
+body.ocean div.par h2 q.abd,
+body.ocean pbody.ocean p.abd,
+body.ocean pbody.ocean div.par.abd,
+body.ocean div.parbody.ocean p.abd,
+body.ocean div.parbody.ocean div.par.abd,
+body.ocean p.sacred,
+body.ocean div.par.sacred,
 body.ocean p q.sacred,
 body.ocean div.par q.sacred,
+body.ocean pq.sacred,
+body.ocean div.parq.sacred,
+body.ocean p aside q.sacred,
+body.ocean div.par aside q.sacred,
+body.ocean p h3 q.sacred,
+body.ocean div.par h3 q.sacred,
+body.ocean p h2 q.sacred,
+body.ocean div.par h2 q.sacred,
+body.ocean pbody.ocean p.sacred,
+body.ocean pbody.ocean div.par.sacred,
+body.ocean div.parbody.ocean p.sacred,
+body.ocean div.parbody.ocean div.par.sacred,
+body.ocean p.bible,
+body.ocean div.par.bible,
 body.ocean p q.bible,
 body.ocean div.par q.bible,
+body.ocean pq.bible,
+body.ocean div.parq.bible,
+body.ocean p aside q.bible,
+body.ocean div.par aside q.bible,
+body.ocean p h3 q.bible,
+body.ocean div.par h3 q.bible,
+body.ocean p h2 q.bible,
+body.ocean div.par h2 q.bible,
+body.ocean pbody.ocean p.bible,
+body.ocean pbody.ocean div.par.bible,
+body.ocean div.parbody.ocean p.bible,
+body.ocean div.parbody.ocean div.par.bible,
+body.ocean p.muhammad,
+body.ocean div.par.muhammad,
 body.ocean p q.muhammad,
 body.ocean div.par q.muhammad,
+body.ocean pq.muhammad,
+body.ocean div.parq.muhammad,
+body.ocean p aside q.muhammad,
+body.ocean div.par aside q.muhammad,
+body.ocean p h3 q.muhammad,
+body.ocean div.par h3 q.muhammad,
+body.ocean p h2 q.muhammad,
+body.ocean div.par h2 q.muhammad,
+body.ocean pbody.ocean p.muhammad,
+body.ocean pbody.ocean div.par.muhammad,
+body.ocean div.parbody.ocean p.muhammad,
+body.ocean div.parbody.ocean div.par.muhammad,
+body.ocean p.quran,
+body.ocean div.par.quran,
 body.ocean p q.quran,
 body.ocean div.par q.quran,
+body.ocean pq.quran,
+body.ocean div.parq.quran,
+body.ocean p aside q.quran,
+body.ocean div.par aside q.quran,
+body.ocean p h3 q.quran,
+body.ocean div.par h3 q.quran,
+body.ocean p h2 q.quran,
+body.ocean div.par h2 q.quran,
+body.ocean pbody.ocean p.quran,
+body.ocean pbody.ocean div.par.quran,
+body.ocean div.parbody.ocean p.quran,
+body.ocean div.parbody.ocean div.par.quran,
+body.ocean p.jesus,
+body.ocean div.par.jesus,
 body.ocean p q.jesus,
 body.ocean div.par q.jesus,
+body.ocean pq.jesus,
+body.ocean div.parq.jesus,
+body.ocean p aside q.jesus,
+body.ocean div.par aside q.jesus,
+body.ocean p h3 q.jesus,
+body.ocean div.par h3 q.jesus,
+body.ocean p h2 q.jesus,
+body.ocean div.par h2 q.jesus,
+body.ocean pbody.ocean p.jesus,
+body.ocean pbody.ocean div.par.jesus,
+body.ocean div.parbody.ocean p.jesus,
+body.ocean div.parbody.ocean div.par.jesus,
+body.ocean p.ali,
+body.ocean div.par.ali,
 body.ocean p q.ali,
 body.ocean div.par q.ali,
+body.ocean pq.ali,
+body.ocean div.parq.ali,
+body.ocean p aside q.ali,
+body.ocean div.par aside q.ali,
+body.ocean p h3 q.ali,
+body.ocean div.par h3 q.ali,
+body.ocean p h2 q.ali,
+body.ocean div.par h2 q.ali,
+body.ocean pbody.ocean p.ali,
+body.ocean pbody.ocean div.par.ali,
+body.ocean div.parbody.ocean p.ali,
+body.ocean div.parbody.ocean div.par.ali,
+body.ocean p.tradition,
+body.ocean div.par.tradition,
 body.ocean p q.tradition,
 body.ocean div.par q.tradition,
+body.ocean pq.tradition,
+body.ocean div.parq.tradition,
+body.ocean p aside q.tradition,
+body.ocean div.par aside q.tradition,
+body.ocean p h3 q.tradition,
+body.ocean div.par h3 q.tradition,
+body.ocean p h2 q.tradition,
+body.ocean div.par h2 q.tradition,
+body.ocean pbody.ocean p.tradition,
+body.ocean pbody.ocean div.par.tradition,
+body.ocean div.parbody.ocean p.tradition,
+body.ocean div.parbody.ocean div.par.tradition,
+body.ocean p.husayn,
+body.ocean div.par.husayn,
 body.ocean p q.husayn,
 body.ocean div.par q.husayn,
+body.ocean pq.husayn,
+body.ocean div.parq.husayn,
+body.ocean p aside q.husayn,
+body.ocean div.par aside q.husayn,
+body.ocean p h3 q.husayn,
+body.ocean div.par h3 q.husayn,
+body.ocean p h2 q.husayn,
+body.ocean div.par h2 q.husayn,
+body.ocean pbody.ocean p.husayn,
+body.ocean pbody.ocean div.par.husayn,
+body.ocean div.parbody.ocean p.husayn,
+body.ocean div.parbody.ocean div.par.husayn,
+body.ocean p.muh,
+body.ocean div.par.muh,
 body.ocean p q.muh,
-body.ocean div.par q.muh {
+body.ocean div.par q.muh,
+body.ocean pq.muh,
+body.ocean div.parq.muh,
+body.ocean p aside q.muh,
+body.ocean div.par aside q.muh,
+body.ocean p h3 q.muh,
+body.ocean div.par h3 q.muh,
+body.ocean p h2 q.muh,
+body.ocean div.par h2 q.muh,
+body.ocean pbody.ocean p.muh,
+body.ocean pbody.ocean div.par.muh,
+body.ocean div.parbody.ocean p.muh,
+body.ocean div.parbody.ocean div.par.muh {
   font-style: italic;
 }
+body.ocean p:before,
+body.ocean div.par:before,
 body.ocean p q:before,
 body.ocean div.par q:before,
+body.ocean pq:before,
+body.ocean div.parq:before,
+body.ocean p aside q:before,
+body.ocean div.par aside q:before,
+body.ocean p h3 q:before,
+body.ocean div.par h3 q:before,
+body.ocean p h2 q:before,
+body.ocean div.par h2 q:before,
+body.ocean pbody.ocean p:before,
+body.ocean pbody.ocean div.par:before,
+body.ocean div.parbody.ocean p:before,
+body.ocean div.parbody.ocean div.par:before,
+body.ocean p:after,
+body.ocean div.par:after,
 body.ocean p q:after,
-body.ocean div.par q:after {
+body.ocean div.par q:after,
+body.ocean pq:after,
+body.ocean div.parq:after,
+body.ocean p aside q:after,
+body.ocean div.par aside q:after,
+body.ocean p h3 q:after,
+body.ocean div.par h3 q:after,
+body.ocean p h2 q:after,
+body.ocean div.par h2 q:after,
+body.ocean pbody.ocean p:after,
+body.ocean pbody.ocean div.par:after,
+body.ocean div.parbody.ocean p:after,
+body.ocean div.parbody.ocean div.par:after {
   content: '';
 }
+body.ocean p.baha,
+body.ocean div.par.baha,
 body.ocean p q.baha,
-body.ocean div.par q.baha {
+body.ocean div.par q.baha,
+body.ocean pq.baha,
+body.ocean div.parq.baha,
+body.ocean p aside q.baha,
+body.ocean div.par aside q.baha,
+body.ocean p h3 q.baha,
+body.ocean div.par h3 q.baha,
+body.ocean p h2 q.baha,
+body.ocean div.par h2 q.baha,
+body.ocean pbody.ocean p.baha,
+body.ocean pbody.ocean div.par.baha,
+body.ocean div.parbody.ocean p.baha,
+body.ocean div.parbody.ocean div.par.baha {
   color: #804040;
 }
+body.ocean p.bab,
+body.ocean div.par.bab,
 body.ocean p q.bab,
-body.ocean div.par q.bab {
+body.ocean div.par q.bab,
+body.ocean pq.bab,
+body.ocean div.parq.bab,
+body.ocean p aside q.bab,
+body.ocean div.par aside q.bab,
+body.ocean p h3 q.bab,
+body.ocean div.par h3 q.bab,
+body.ocean p h2 q.bab,
+body.ocean div.par h2 q.bab,
+body.ocean pbody.ocean p.bab,
+body.ocean pbody.ocean div.par.bab,
+body.ocean div.parbody.ocean p.bab,
+body.ocean div.parbody.ocean div.par.bab {
   color: #466446;
 }
+body.ocean p.abd,
+body.ocean div.par.abd,
 body.ocean p q.abd,
-body.ocean div.par q.abd {
-  color: #294e66;
+body.ocean div.par q.abd,
+body.ocean pq.abd,
+body.ocean div.parq.abd,
+body.ocean p aside q.abd,
+body.ocean div.par aside q.abd,
+body.ocean p h3 q.abd,
+body.ocean div.par h3 q.abd,
+body.ocean p h2 q.abd,
+body.ocean div.par h2 q.abd,
+body.ocean pbody.ocean p.abd,
+body.ocean pbody.ocean div.par.abd,
+body.ocean div.parbody.ocean p.abd,
+body.ocean div.parbody.ocean div.par.abd {
+  color: #294E66;
 }
 body.ocean p span[data-pg]:before,
 body.ocean div.par span[data-pg]:before {
@@ -2322,8 +3072,8 @@ body.ocean div.par .alt_lang.fa q {
   font-style: inherit;
 }
 body.ocean .dropcap:first-letter,
-body.ocean .section_header + p[id]:not(.nodropcap):first-letter,
-body.ocean .subhead + p[id]:not(.nodropcap):first-letter {
+body.ocean:not(.nodropcap) .section_header + p[id]:not(.nodropcap):first-letter,
+body.ocean:not(.nodropcap) .subhead + p[id]:not(.nodropcap):first-letter {
   float: left;
   padding-left: 0;
   font-style: normal;
@@ -2345,11 +3095,11 @@ body.ocean blockquote:after {
 }
 body.ocean .fn[id] {
   margin: 1em;
-  margin-left: 130px;
+  margin-left: 150px;
   text-align: justify;
   text-justify: distribute;
   position: relative;
-  font-size: 80% !important;
+  font-size: 95% !important;
   display: none;
   color: rgba(26, 26, 26, 0.7);
 }
@@ -2357,7 +3107,7 @@ body.ocean .fn[id]:before {
   display: block;
   margin-right: 1em;
   font-style: italic;
-  font-size: 80% !important;
+  font-size: 70% !important;
   content: '[' attr(id) ']';
   vertical-align: top;
   position: absolute;
@@ -2368,16 +3118,24 @@ body.ocean .fn[id]:before {
 body.ocean .fn[id] p {
   margin-left: 0;
   margin-right: 1em;
+  margin-top: 0;
+  margin-bottom: 1em;
+  text-align: justify;
+  text-justify: distribute;
+  font-size: 95% !important;
+  color: rgba(26, 26, 26, 0.7);
 }
 body.ocean .subhead,
 body.ocean .section,
-body.ocean .section_header {
-  margin: 0;
+body.ocean .section_header,
+body.ocean .header {
+  margin-top: 0;
+  margin-bottom: 0;
   padding: 0;
   margin-top: 2em;
   color: DarkOliveGreen;
   text-align: center;
-  font-size: 22pt;
+  /*font-size: 22pt;*/
   font-weight: normal;
   font-family: Garamond1689;
   page-break-after: avoid !important;
@@ -2444,21 +3202,25 @@ body.ocean .section + div.par,
 body.ocean .section_header + div.par {
   page-break-before: avoid;
 }
-body.ocean section.content,
+body.ocean section.content.chapter,
 body.ocean .section {
   page-break-before: always !important;
 }
+body.ocean:not(.theme_sepia):not(.theme_night) {
+  background-color: #fcfcfc;
+  color: #1a1a1a;
+}
 body.ocean.theme_sepia {
-  background-color: #f6eee5;
-  color: black;
+  background-color: #F6EEE5 !important;
+  color: black !important;
 }
 body.ocean.theme_night {
   background-color: black;
-  color: #e6e6e6;
+  color: #e6e6e6 !important;
 }
 body.ocean.theme_night a,
 body.ocean.theme_night a:visited {
-  color: #9c9cc9;
+  color: #9c9cc9 !important;
 }
 body.ocean.theme_night section.titlepage .author,
 body.ocean.theme_night .subhead,
@@ -2502,11 +3264,11 @@ body.ocean.theme_night .audio_highlight {
 body.ocean.theme_night .audio_highlight2 {
   text-shadow: 0 0 1.5em #ffe600, 0 0 1.5em #ffe600 !important;
 }
-body.ocean:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo) p,
+body.ocean:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter) p,
 body.ocean.font_gentium p,
-body.ocean:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo) aside,
+body.ocean:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter) aside,
 body.ocean.font_gentium aside,
-body.ocean:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo) div.par,
+body.ocean:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter) div.par,
 body.ocean.font_gentium div.par {
   font-family: GentiumPlus, 'Georgia', 'serif';
   font-size: 16pt;
@@ -2535,11 +3297,18 @@ body.ocean.font_dyslexic div.par {
   font-family: Dyslexic, 'arial', 'sans-serif';
   font-size: 12.4pt;
 }
-body.ocean:not(.line-height_2):not(.line-height_3):not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo) p,
+body.ocean.font_typewriter p,
+body.ocean.font_typewriter aside,
+body.ocean.font_typewriter div.par {
+  font-family: Typewriter, 'Courier', 'mono';
+  font-size: 13pt;
+  letter-spacing: .5px;
+}
+body.ocean:not(.line-height_2):not(.line-height_3):not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter) p,
 body.ocean:not(.line-height_2):not(.line-height_3).font_gentium p,
-body.ocean:not(.line-height_2):not(.line-height_3):not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo) aside,
+body.ocean:not(.line-height_2):not(.line-height_3):not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter) aside,
 body.ocean:not(.line-height_2):not(.line-height_3).font_gentium aside,
-body.ocean:not(.line-height_2):not(.line-height_3):not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo) div.par,
+body.ocean:not(.line-height_2):not(.line-height_3):not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter) div.par,
 body.ocean:not(.line-height_2):not(.line-height_3).font_gentium div.par {
   line-height: 1.45em;
 }
@@ -2563,9 +3332,14 @@ body.ocean:not(.line-height_2):not(.line-height_3).font_dyslexic aside,
 body.ocean:not(.line-height_2):not(.line-height_3).font_dyslexic div.par {
   line-height: 1.81em;
 }
+body.ocean:not(.line-height_2):not(.line-height_3).font_typewriter p,
+body.ocean:not(.line-height_2):not(.line-height_3).font_typewriter aside,
+body.ocean:not(.line-height_2):not(.line-height_3).font_typewriter div.par {
+  line-height: 1.81em;
+}
 body.ocean:not(.line-height_2):not(.line-height_3) .dropcap:first-letter,
-body.ocean:not(.line-height_2):not(.line-height_3) .section_header + p[id]:not(.nodropcap):first-letter,
-body.ocean:not(.line-height_2):not(.line-height_3) .subhead + p[id]:not(.nodropcap):first-letter {
+body.ocean:not(.line-height_2):not(.line-height_3):not(.nodropcap) .section_header + p[id]:not(.nodropcap):first-letter,
+body.ocean:not(.line-height_2):not(.line-height_3):not(.nodropcap) .subhead + p[id]:not(.nodropcap):first-letter {
   font-size: 49pt;
   margin-top: 17pt;
 }
@@ -2573,11 +3347,11 @@ body.ocean:not(.line-height_2):not(.line-height_3) .dropcap.acorn:first-letter {
   font-size: 50pt;
   margin-top: 12pt;
 }
-body.ocean.line-height_2:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo) p,
+body.ocean.line-height_2:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter) p,
 body.ocean.line-height_2.font_gentium p,
-body.ocean.line-height_2:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo) aside,
+body.ocean.line-height_2:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter) aside,
 body.ocean.line-height_2.font_gentium aside,
-body.ocean.line-height_2:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo) div.par,
+body.ocean.line-height_2:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter) div.par,
 body.ocean.line-height_2.font_gentium div.par {
   line-height: 1.6675em;
 }
@@ -2601,9 +3375,14 @@ body.ocean.line-height_2.font_dyslexic aside,
 body.ocean.line-height_2.font_dyslexic div.par {
   line-height: 2.0815em;
 }
+body.ocean.line-height_2.font_typewriter p,
+body.ocean.line-height_2.font_typewriter aside,
+body.ocean.line-height_2.font_typewriter div.par {
+  line-height: 2.0815em;
+}
 body.ocean.line-height_2 .dropcap:first-letter,
-body.ocean.line-height_2 .section_header + p[id]:not(.nodropcap):first-letter,
-body.ocean.line-height_2 .subhead + p[id]:not(.nodropcap):first-letter {
+body.ocean.line-height_2:not(.nodropcap) .section_header + p[id]:not(.nodropcap):first-letter,
+body.ocean.line-height_2:not(.nodropcap) .subhead + p[id]:not(.nodropcap):first-letter {
   font-size: 54pt;
   margin-top: 14pt;
 }
@@ -2611,11 +3390,11 @@ body.ocean.line-height_2 .dropcap.acorn:first-letter {
   font-size: 52pt;
   margin-top: 14pt;
 }
-body.ocean.line-height_3:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo) p,
+body.ocean.line-height_3:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter) p,
 body.ocean.line-height_3.font_gentium p,
-body.ocean.line-height_3:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo) aside,
+body.ocean.line-height_3:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter) aside,
 body.ocean.line-height_3.font_gentium aside,
-body.ocean.line-height_3:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo) div.par,
+body.ocean.line-height_3:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter) div.par,
 body.ocean.line-height_3.font_gentium div.par {
   line-height: 1.885em;
 }
@@ -2639,9 +3418,14 @@ body.ocean.line-height_3.font_dyslexic aside,
 body.ocean.line-height_3.font_dyslexic div.par {
   line-height: 2.353em;
 }
+body.ocean.line-height_3.font_typewriter p,
+body.ocean.line-height_3.font_typewriter aside,
+body.ocean.line-height_3.font_typewriter div.par {
+  line-height: 2.353em;
+}
 body.ocean.line-height_3 .dropcap:first-letter,
-body.ocean.line-height_3 .section_header + p[id]:not(.nodropcap):first-letter,
-body.ocean.line-height_3 .subhead + p[id]:not(.nodropcap):first-letter {
+body.ocean.line-height_3:not(.nodropcap) .section_header + p[id]:not(.nodropcap):first-letter,
+body.ocean.line-height_3:not(.nodropcap) .subhead + p[id]:not(.nodropcap):first-letter {
   font-size: 63pt;
   margin-top: 13pt;
 }
@@ -2654,6 +3438,20 @@ body.ocean .printonly {
 }
 body.ocean .screenonly {
   display: block;
+}
+body.ocean .no-pad-above {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+body.ocean .no-pad-below {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+body.ocean .no-pad {
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 body.ocean .pad-above {
   padding-top: 4em !important;
@@ -2685,6 +3483,12 @@ body.ocean .larger {
 body.ocean .smaller {
   font-size: 80% !important;
 }
+body.ocean .editor_note,
+body.ocean.editor_note,
+body.ocean [data-author='editor'] {
+  color: #525252;
+  font-size: 14.4pt !important;
+}
 @media only print {
   body.ocean {
     zoom: 80%;
@@ -2707,7 +3511,7 @@ body.ocean .smaller {
     color: #466446 !important;
   }
   body.ocean q.abd {
-    color: #294e66 !important;
+    color: #294E66 !important;
   }
   body.ocean #control_panel {
     display: none !important;
@@ -2727,9 +3531,12 @@ body.ocean .smaller {
     page-break-after: always !important;
   }
   body.ocean .section {
+    padding-top: 4em !important;
+    margin-left: 1em !important;
+    margin-right: 1em !important;
+  }
+  body.ocean .section.chapter {
     padding-top: 10em !important;
-    margin-left: 5em !important;
-    margin-right: 5em !important;
   }
   body.ocean section.contents {
     margin-left: 0pt;

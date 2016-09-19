@@ -1,0 +1,2466 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app_ver = '0.0.3';
+var program = require('commander');
+var title_case = require('to-title-case');
+//var fs = require('fs');
+var colors = require('colors');
+var inquirer = require("inquirer");
+var cheerio = require('cheerio');
+var mark = require('markup-js');
+var fs = require('fs-sync'); fs.defaultEncoding = 'utf-8';
+    var fs_node = require('fs');
+var lang = require('languages');
+var ocnparse = require('./ocnparse');
+var httpsync = require('urllib-sync').request;
+var _ = require('lodash');
+// var ts = require("thesaurus-service");
+//var Synonymator = require("synonymator");
+var request = require('request');
+var readlineSync = require('readline-sync');
+var levenshtein = require('levenshtein-edit-distance');
+var Filter = require('bad-words'), filter = new Filter();
+
+
+var accents_url = 'http://diacritics.iriscouch.com/accents/_design/terms_list/_view/terms_list';
+
+/*
+
+TODO:
+
+ * load and save dictionary of terms
+ * during word parsing, mark each term with: .trm, data-arpabet='', data.ipa='', data.orig='', data.note=''
+ * during word parsing, mark each pos with: .n .v .av .etc, data-pos=''
+
+Notes:
+ * remove "Word" from dictionary. How did it get there?
+
+ */
+
+function stripTags (str) {
+ return str.replace(/<\/?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)\/?>/g, '').trim();
+}
+
+function ocnAccentsDictionary() {
+  // load config data
+
+  //var config = load_library_config();
+  var res, cachefile = './accents_dictionary.json', cache_fresh = false;
+
+  // if cache file exists, check to see if it's fresh (about one hour or less)
+  if (fs.exists(cachefile)) {
+    var modified = fs_node.statSync(cachefile).mtime;
+    var hours_since_modified = Math.round((Date.now() - Date.parse(modified)) / (1000 * 60 * 60));
+    cache_fresh = (hours_since_modified < 1);
+  }
+  if (cache_fresh) {
+    res = fs.readJSON(cachefile);
+    console.log('Using recently cached dictionary.');
+  } else {
+    console.log('Downloading new copy of dictionary.');
+    res = JSON.parse(httpsync.get(accents_url).end().data);
+    fs.write(cachefile, JSON.stringify(res)); // save to cached file
+  }
+  console.log('Current dictionary contains '+ (res.rows).red + ' entries.');
+  return res;
+
+  res = res.rows;
+  var dic = {};
+  var i=1;
+  var newTerm, instance, variantlist, variants, variant, stripped, key, max, index, verified, ambiguous;
+  res.map(function(item) {
+    var obj = {
+      ref: item.value.ref[0]?item.value.ref[0]:'',
+      verified: item.value.verified,
+      original: item.value.original,
+      notes: stripTags(item.value.definition),
+      term: item.key
+    };
+    if (item.value['ambiguous']) {
+      item.value.verified = false;
+      item.value.ambiguous = true;
+    } else item.value.ambiguous = false;
+    if (dic[item.key]) {
+      var found = false;
+      dic[item.key].forEach(function(item){
+        if (_.isEqual(item, obj)) found = true;
+      });
+      if (!found) dic[item.key].push(obj);
+    } else dic[item.key] = [obj];
+  });
+  // remove absolute duplicates
+  for(key in dic) if (dic.hasOwnProperty(key)) {
+    newTerm = {term: key, count: 0, ref: [], notes: '', original: '', verified: false, ambiguous: false};
+    for (i=0; i < dic[key].length; i++){
+      instance = dic[key][i];
+      if (instance.verified) newTerm.verified = true;
+      if (instance.ambiguous) newTerm.ambiguous = true;
+      if (instance.ref) newTerm.ref.push(instance.ref);
+      if (instance.notes) newTerm.notes = instance.notes;
+      if (instance.original) newTerm.original = instance.original;
+      newTerm.count++;
+    }
+    if (newTerm.ambiguous) newTerm.verified = false; // ambiguous overrides verified
+    newTerm.ref = newTerm.ref.join(', '); // back into a string
+    dic[key] = newTerm; // replace old array with new compressed item
+  }
+  // remove unverified where a verified version exists
+  // first gather together all variants
+  variantlist = {};
+  for(key in dic) if (dic.hasOwnProperty(key)) {
+    stripped = ocnparse.term_strip_alpha(key);
+    if (variantlist[stripped]) variantlist[stripped].push(dic[key]);
+     else variantlist[stripped] = [dic[key]];
+  }
+
+  // next, loop through them all, keeping only the verified or highest number
+  // loop through each if number is > highest or
+  for(key in variantlist) if (variantlist.hasOwnProperty(key)) {
+    variants = variantlist[key];
+    if (variants.length === 1) variantlist[key] = variants[0];
+    else {
+      verified = false; ambiguous = false; index =0; max=0;
+      for (i=0; i < variants.length; i++){
+        item = variants[i];
+        if (item.ambiguous) ambiguous = true;
+        if (item.verified) {
+          verified = true; index = i;
+        } else if (!verified && item.count>max) {
+          max = item.count; index = i;
+        }
+      }
+      // now index should be set to the highest count item or the verified item
+      if (!ambiguous) variantlist[key] = variants[index];
+       else for (i=0; i < variantlist[key].length; i++){
+         variantlist[key][i]['ambiguous'] = true;
+         variantlist[key][i]['verified'] = false;
+       }
+    }
+  }
+  // now reformat dictionary to be the expected input format
+
+  // now save dictionary to cached file location
+
+  //console.log(variantlist);
+}
+
+function ocnImport(filename, opTargetDir) {
+  if (!opTargetDir) opTargetDir = 'Library/books-work/1. raw-notproofed/';
+  log("Importing book".green +' '+filename.red+ ' to '.green + opTargetDir.red);
+
+}
+function ocnBuildBook(bookid) {
+  console.log('ocnBuildBook: '+bookid.red);
+
+  // load config data
+  var config = load_library_config();
+
+  if (bookid === 'all') {
+    fs.expand(config.paths.base+config.paths.books_work4 + "/*.html").forEach(function(item, index) {
+      bookid = item.split('/').pop().split('.html').shift();
+      ocnBuildBook(bookid);
+    });
+    return '';
+  }
+
+  if (bookid.split('-').length===2) bookid+='-en';
+  log("Building completed book".green +' '+bookid.red);
+
+
+  var book =  (config.books[bookid]? config.books[bookid] : {});
+  //if (!book) {console.log("Warning! ".red+ "book "+bookid+" not found in library list! Aborting. "); return;}
+  book.filename = bookid+'.html';
+  var book_src = config.paths.base+config.paths.books_work4+book.filename;
+
+
+  // verify that source file exists
+  if (!fs.exists(book_src)) {console.log('Error, expecting book file at: '.red + book_src.green); return;}
+
+  // parse source file into data object
+  var bookobj = parse_final_book_html(fs.read(book_src), config);
+  bookid = bookobj.meta.bookid;
+  // do this later because we might have modified the bookid
+  var book_dest   = config.paths.base+config.paths.published+bookid.split('-').slice(0,2).join('-') +'/'+bookid+'.html';
+
+  // render data into new html
+  var bookHTML = build_html(bookobj, config);
+  // output HTML to published folder
+  fs.write(book_dest, bookHTML);
+
+  // compile, minify and copy over CSS files
+  processCSS(config);
+
+  // copy over cover
+  var cover_src = config.paths.base+config.paths.work_assets + 'covers/' + bookid.replace(/-en$/, '')+'.png';
+  var cover_dest = config.paths.base+config.paths.completed_assets + 'covers/' + bookid.replace(/-en$/, '')+'.png';
+  if (fs.exists(cover_src)) fs.copy(cover_src, cover_dest);
+}
+function ocnTranslate(bookid, opTransFile) {
+  if (!opTransFile) opTransFile = 'Google Translate';
+  log('Translating file '.green+ bookid.red +' using '.green+ opTransFile.red);
+}
+function ocnReport(opFilename) {
+  log('Generating new report '.green+ (opFilename? 'to '.green + opFilename.red:''));
+
+}
+function ocnProgressLog(entry) {
+  log('Adding progress log entry: '.green+ entry.red);
+
+}
+function ocnAccentsLog(bookid) {
+  log('Generate Accents report for book: '.green+ bookid.red);
+
+}
+function ocnEditLibraryBook(bookid, opTitle, opAuthor, opPriority) {
+  function editLibrary(bookid, opTitle, opAuthor, opPriority) {
+    //opPriority = String(opPriority);
+    log("Editing book entry".green +' '+bookid.red+ ' author: '.green + opAuthor.red +
+      ' title: '.green + opTitle.red+ ' priority: '.green+ opPriority.red);
+  }
+  var questions = [];
+  if (!opTitle) questions.push({type: "input", name: "opTitle", message: "What is the book title?"});
+  if (!opAuthor) questions.push({type: "input", name: "opAuthor", message: "Who is the Book's Author (short form)?"});
+  if (!opPriority) questions.push({type: "input", name: "opPriority", message: "What is the book's priority?"});
+  if (questions.length===0) {
+    editLibrary(bookid, opTitle, opAuthor, opPriority);
+  } else inquirer.prompt(questions, function( answer ) {
+    if (answer.opTitle) opTitle=answer.opTitle;
+    if (answer.opPriority) opPriority=answer.opPriority;
+    if (answer.opAuthor) opAuthor=answer.opAuthor;
+    editLibrary(bookid, opTitle, opAuthor, opPriority);
+  });
+}
+
+function ocnTextCleanupStr(str) {
+
+
+    // process
+    // Change straight quotes to curly and double hyphens to em-dashes.
+
+    // just in case of html, let's put a space between text and paragraph tags
+    str = str.replace(/(<p .*?>)\s?/g, "$1 ");
+    str = str.replace(/\s?(<\/p>)/g, " $1");
+    str = str.replace(/(<h[1234] .*?>)\s?/g, "$1 ");
+    str = str.replace(/\s?(<\/h[1234]>)/g, " $1");
+    // and make sure attributes are tight
+    str = str.replace(/\s?=\s?(['"])/g, "=$1");
+
+    // remove curlys
+    str = str.replace(/[`’‘]/g, "'").replace(/[“”]/g, '"');
+    str = str.replace(/\s+[“”"]\s?<\/p>/g, '" </p>');
+
+    // opening singles
+    str = str.replace(/(^|[-\u2014\s(\["])'/g, "$1\u2018");
+    // closing singles & apostrophes
+    str = str.replace(/'/g, "\u2019");
+    // opening doubles
+    str = str.replace(/(^|[-\u2014/\[(\u2018\s])"/g, '$1\u201c');
+    // closing doubles
+    str = str.replace(/"/g, "\u201d");
+
+    // fix for <q>
+    str = str.replace(/<q(.*?)>”/g, '<q$1>“').replace(/<\/q>”/g, '”</q>');
+    str = str.replace(/<q(.*?)>’/g, '<q$1>‘').replace(/<\/q>’/g, '‘</q>');
+    //
+    // em-dashes
+    // spaces around a dash makes it an 'm-dash'
+    // double dash is an em-dash
+    str = str.replace(/([^-])- /g, "$1 - ").replace(/ -([^-])/g, " - $1").replace(/[-–]{2,3}/g, " - ");
+    str = str.replace(/\s+[-–]{1,2}\s+/g, " \u2014 ");
+    //str = str.replace(/\s+––\s+/g, " \u2014 ")
+    // two dashes without spaces is also an m-dash
+    str = str.replace(/([a-zA-ZáííÁÍÚḥḍẓ>])--([a-zA-ZáííÁÍÚḥḍẓ>])/g, "$1 \u2014 $2");
+    // m-dash with lower letters and no spaces should be an n-dash
+    str = str.replace(/([a-zA-ZáííÁÍÚḥḍẓ>])\u2014([a-zA-ZáííÁÍÚḥḍẓ>])/g, "$1-$2");
+
+    // fix HTML goofs
+    str = str.replace (/([a-z])=[’‘](.*?)[’‘]([\s>\/])/g , "$1='$2'$3");
+    str = str.replace (/([a-z])=[“”](.*?)[“”]([\s>\/])/g , "$1='$2'$3");
+    // messed up comments from m-dash replacement
+    str = str.replace (/<! —/g , "<!--").replace (/— >/g , "-->");
+
+    // fix excess spaces in text
+    str = str.replace(/[ ]*?([.?!,;:\)\]>’”])[ ]+/g, '$1 ');
+    str = str.replace(/([a-zA-ZáííÁÍÚḥḍẓ>\:’”])[ ]{2,5}([a-zA-ZáííÁÍÚḥḍẓ‘“])/g, '$1 $2');
+
+    // space html terms nicely
+    // first, remove multiple lines
+    str = str.replace(/\n\s+\n/g, "\n\n").replace(/[\n]{3,10}/g, "\n\n");
+    // <h3 class='subhead
+    str = str.replace(/\s+(<h3\s+class='subhead.*?>)/g, "\n\n\n\n$1");
+    str = str.replace(/(<\/h[324]>)\n+([ ]*<h[34])/g, '$1\n$2');
+    // <p id
+    str = str.replace(/\s+(<p .*?>)/g, "\n\n$1");
+    // opening and closing of doc
+    str = str.replace(/\s+(<!doctype)/, '$1');
+    str = str.replace(/(<\/html>)\s+/, '$1');
+    // footnote markers should have a space on either side unless preceded by a letter
+    str = str.replace(/[\s]*<a data-fnid='([0-9]+)'[\/]?><\/a>[\s]*/g, "<a data-fnid='$1'></a> ");
+    str = str.replace(/([a-zA-ZáííÁÍÚḥḍẓ>])<a data-fnid/g, '$1 <a data-fnid');
+    // page marker should have space on either side
+    str = str.replace(/\s*<span dat[ae][ ]?[- ]id[ ]?=[ ]?'([0-9]+)'[ ]?[\/]?>\s*/g, " <span data-pg='$1'/> "); //
+    str = str.replace(/\s*<span dat[ae]-pg='([0-9]+)'[ ]?[\/]?>\s*/g, " <span data-pg='$1'/> ");
+    str = str.replace(/<span dat[ae]-pg='([0-9]+)'[ ]?[\/]?>\s*<\/p>/g, "<span data-pg='$1'/></p>");
+
+    // str = str.replace(/letter-spacing:[\.]?[0-9]px/g, "letter-spacing:3px");
+    // <style>h2,h3,h4{font-family:Typewriter !important; letter-spacing:1px !important;}</style>
+    str = str.replace(/<style>h2,h3.*?<\/style>/g,
+      "<style>h2,h3,h4{font-family:Typewriter !important; letter-spacing:3px !important;}</style>");
+
+    // replace out autocorrectable terms - for now this only does a few
+    str = fixCommonBahaiWords(str, true);
+
+    // replace quotes with <q class=''>" // “  ->  <q class=''>“    // ”  ->  ”</q>
+    if (str.indexOf('<q')===-1) {
+      str = str.replace(/“/g, "<q class=''>“").replace(/”/g, "”</q>");
+    }
+    return str;
+}
+
+function ocnTextCleanup(cmd, env) {
+  // loop through files matching filename but not containing '-cleaned.'
+  // modify file text
+  var files = env.parent.rawArgs.slice(3);
+  console.log(' Processing files ', files);
+
+  files.forEach(function(file){
+    //if (file.indexOf('-clean.')>-1) return console.log('Skipping file: '.green, file.red);
+    console.log(' Processing file '.green, file.red);
+
+    // load file text
+    var str = fs.read(file, 'utf8');
+    str = ocnTextCleanupStr(str);
+
+    // output
+    fs.write('cleaned/'+file, str);
+    console.log(' Output cleaned text to: '.green + 'cleaned/'+file);
+  });
+
+  // build an index file
+  if (files.length>2) fs.write('cleaned/index.html', quickIndex(files, process.cwd().split('/').pop().trim()));
+
+}
+
+
+// build a quick index file for this folder
+function buildIndex() {
+ // var files = env.parent.rawArgs.slice(3);
+  var files = [];
+  fs.expand("*.html").forEach(function(item, index) {
+    if (item === 'index.html' || item === 'wrapper.html') return;
+    files.push(item);
+  });
+    // build an index file
+  if (files.length>2) {
+    var title = process.cwd().split('/').pop().trim();
+    var indexfile = quickIndex(files, title);
+    fs.write('index.html', indexfile);
+    console.log('Created index.html file for ', files.length , ' files');
+  }
+}
+
+function quickIndex(files, title) {
+  var content, title;
+  var replace = {
+    booklist: '',
+    count: files.length,
+    title: title || 'Documents'
+  };
+  files.sort();
+  files.forEach(function(file){
+    if (file.indexOf('wrapper.html')>-1) return replace.count--;
+    content = fs.read(file);
+    title = content.substring(content.indexOf('<title>')+7, content.indexOf('</title>')).trim();
+    replace.booklist += "<li class='book'>"+ '<a href="'+encodeURI(file.replace(/\'/g, "\'"))+
+    '" target="_blank">'+ title +"</a> <br>"+
+      " &nbsp; &nbsp; <span class='small filename'>"+file+"</span> \n\n\n";
+  });
+  return mark.up(fs.read(__dirname+"/templates/index.tpl.html"), replace);
+}
+
+function ocnAutocorrect(cmd, env) {
+  // loop through files matching filename but not containing '-cleaned.'
+  // modify file text
+  var files = env.parent.rawArgs.slice(3);
+  console.log(' Processing files ', files);
+
+  files.forEach(function(file){
+    //if (file.indexOf('-clean.')>-1) return console.log('Skipping file: '.green, file.red);
+    console.log(' Processing file '.green, file.red);
+
+    // load file text
+    var str = fs.read(file, 'utf8');
+    str = fixCommonBahaiWords(str, true);
+
+    // output
+    fs.write('cleaned/'+file, str);
+    console.log(' Output cleaned text to: '.green + 'cleaned/'+file);
+  });
+
+  // build an index file
+  if (files.length>2) fs.write('cleaned/index.html', quickIndex(files, process.cwd().split('/').pop().trim()));
+
+}
+
+function fixCommonBahaiWords(str, forceHTML) {
+
+  var isHTML = (str.indexOf('<html')>-1 || str.indexOf('<head')>-1 || forceHTML)
+
+  str = str.replace(/Bah[aá]['’‘]?[ií]s/g, 'Bahá’ís')
+
+
+           .replace(/Bah[aá]['’‘]?[ií]/g, 'Bahá’í')
+           .replace(/BAH[AÁ]['’‘]?[IÍ]/g, 'BAHÁ’Í')
+           .replace(/['’‘]?Abd[uoe]['’‘]?l[-]?[ ]?B[ea]h[aá]/g, '‘Abdu’l-Bahá')
+           .replace(/['’‘]?ABD[UOE]['’‘]?L[-]?[ ]?B[AE]H[AÁ]/g, '‘ABDU’L-BAHÁ')
+           // Abdul
+           .replace(/['’‘]?Abd[uo]['’‘]?l/g, '‘Abdu’l').replace(/['’‘]?ABD[UO]['’‘]?L/g, '‘ABDU’L')
+
+           .replace(/['’‘]?Abb[aá]s/g, '‘Abbás').replace(/['’‘]?ABB[AÁ]S/g, '‘ABBÁS')
+           .replace(/All[aá]h[–-]?[uoOU][–-][Aa]bh[aá]/g, 'Alláh–u–Abhá')
+           .replace(/ALL[AÁ]H[–-]?[UuOo][–-]?ABH[AÁ]/g, 'ALLÁH–U–ABHÁ')
+           // Baha-Ullah
+           .replace(/Bah[aá][ -]?['’‘]?[UOuo0]['’‘]?[lL]+[aá]h/g, 'Bahá’u’lláh')
+           .replace(/BAH[AÁ][ -]?['’‘]?[UO0]['’‘]?LL[AÁ]H/g, 'BAHÁ’U’LLÁH')
+           .replace(/B[aá]b[ií]([ <\.\?\!\,\]\)\'’‘\s])/g, 'Bábí$1').replace(/B[AÁ]B[IÍ]([ <\.\?\!\,\]\)\'’‘])/g, 'BÁBÍ$1')
+           .replace(/B[aá]b([ <\.\?\!\,\]\)\'’‘s])/g, 'Báb$1').replace(/B[AÁ]B([ <\.\?\!\,\]\)\'’‘S])/g, 'BÁB$1')
+
+           .replace(/['‘’]?A[kc][kc]a/g, '‘Akká').replace(/['‘’]?A[KC][KC]A/g, '‘AKKÁ')
+           .replace(/K[h]?[aá]n[n]?[uo]m/g, '<u>Kh</u>ánum').replace(/K[H]?[AÁ]N[N]?[UO]M/g, '<U>KH</U>ÁNUM')
+           .replace(/Bah[ií]y[y]?[ia]h/g, 'Bahíyyih').replace(/BAH[IÍ]Y[Y]?[IA]H/g, 'BAHÍYYIH')
+           .replace(/Dia[’']iyyih/g, 'Ḍíyá’íyyih')
+           .replace(/Mirza/g, 'Mírzá').replace(/MIRZA/g, 'MÍRZÁ')
+           .replace(/H[áa]d[íi]/g, 'Hádí')
+           .replace(/Sh[íi]r[áa]z[íi]/g, '<u>Sh</u>írází')
+           .replace(/Shog[h]i[e]?/g, 'Shoghi').replace(/SHOG[H]I[E]?/g, 'SHOGHI')
+           .replace(/Effendi[e]?/g, 'Effendi').replace(/EFFENDI[E]?/g, 'EFFENDI')
+           .replace(/Ahmad/g, 'Aḥmad').replace(/AHMAD/g, 'AḤMAD')
+           .replace(/[HḤ]as[s]?an/g, 'Ḥasan').replace(/[HḤ]AS[S]?AN/g, 'ḤASAN')
+           // Hossein
+           .replace(/[HḤ][uo]s[s]?[ea][yi]n/g, 'Ḥusayn').replace(/[HḤ][UO]SAYN/g, 'ḤUSAYN')
+           .replace(/Sh[aá]h([^a-z])/g, '<u>Sh</u>áh$1').replace(/SH[AÁ]H([^A-Z])/g, '<U>SH</U>ÁH$1')
+           .replace(/B[úu]shi[h]?r/g, 'Bú<u>sh</u>ihr')
+           .replace(/Sh[íie]r[áa]z/g, '<u>Sh</u>íráz')
+           .replace(/Nouri([^a-z])/g, 'Núrí$1').replace(/NOURI([^a-z])/g, 'NÚRÍ$1')
+           .replace(/Yazdi/g, 'Yazdí').replace(/YAZDI/g, 'YAZDÍ')
+           .replace(/[QK][uo][‘'’]?r[‘'’]?[aá][aá]?n/g, 'Qur’án').replace(/[QK][UO]R[‘'’]?[AÁ][AÁ]?N/g, 'QUR’ÁN')
+           .replace(/Abha/g, 'Abhá').replace(/ABHA/g, 'ABHÁ')
+
+           .replace(/M[ao]h[h]?[oa]met/g, 'Muḥammad').replace(/M[AO]H[OA]MET/g, 'MUḤAMMAD')
+           .replace(/M[uo]h[h]?am[m]?[aeá]d/g, 'Muḥammad').replace(/M[UO]HAM[M]?[AE]D/g, 'MUḤAMMAD')
+           .replace(/Muḥammad[ea]n/g, 'Muḥammadan')
+
+           .replace(/Kuly /g, 'Qulí ')
+
+           .replace(/[‘’']?Ali([ -\.\!\?<])/g, '‘Alí$1').replace(/[‘’']?ALI([ -\.\!\?<])/g, '‘ALÍ$1')
+           .replace(/Kitab/g, 'Kitáb').replace(/KITAB/g, 'KITÁB')
+           .replace(/[IE][qkg][hu]?[aá]n/g, 'Íqán').replace(/[IE][QK][H]?[AÁ]N/g, 'ÍQÁN')
+           .replace(/Ruhangiz/g, 'Rúhangíz')
+           .replace(/R[o]?[uú][hḥ][aá]/g, 'Rúḥá')
+           .replace(/R[o]?[uú][ḥh][iíy]/g, 'Rúḥí')
+           .replace(/Jalal/g, 'Jalál')
+           .replace(/Fa[zd][ei]l/g, 'Faḍil')
+           .replace(/Fa[zd]l/g, 'Faḍl')
+           .replace(/Ri[dḍz][h]?[vw][áa][a]?n/g, 'Riḍván').replace(/RI[DḌZ][VW][ÁA][A]?N/g, 'RIḌVÁN')
+           // Mash-rak-ul-azkar   // Mashrak-el-Azcar
+           .replace(/Mash[\-]?r[iea][qk][\-]?[uoe][’'‘]?l[\–\- ]?[Aa][zd][h]?[kc][aá]r/g, 'Ma<u>sh</u>riqu’l-A<u>dh</u>kár')
+
+           .replace(/MASHR[IE]Q[UO][’'‘]L[\–\- ]?[ ]?[AA][ZD][H]?K[AÁ]R/g, 'MA<U>SH</U>RIQU’L-A<U>DH</U>KÁR')
+           .replace(/Tamad[d]?[uo]n[ ]?[uoa]['’‘]?l[ -][Mm][uo]lk/g, 'Tamaddunu’l-Mulk')
+
+           //
+           //
+           // Shaykh Ahmad Kazim
+           .replace(/Shaykh/g, '<u>Sh</u>ay<u>kh</u>').replace(/SHAYKH/g, '<u>SH</u>AY<u>KH</u>')
+           .replace(/K[aá][ẓz]im/g, 'Káẓim').replace(/K[AÁ][ẒZ]IM/g, 'KÁẒIM')
+           .replace(/R[ea]sht/g, 'Ra<u>sh</u>t').replace(/R[EA]SHT/g, 'RA<u>SH</u>T')
+           // Kamál Páshá
+           .replace(/Kam[áa]l/g, 'Kamál').replace(/KAM[ÁA]L/g, 'KAMÁL')
+           .replace(/P[aá]sh[aá]/g, 'Pá<u>sh</u>á')
+           //Moneer
+           .replace(/M[uo]n[iíe][e]?r/g, 'Munír')
+           .replace(/M[uo]n[iíe][e]?r[ai][h]?/g, 'Munírih')
+           //Muḥyiddin
+           //Moheyddin
+           .replace(/M[ou][hḥ][e]?y[ie]?d[-]?[dD][ií]n/g, 'Muḥyi’d-Dín')
+           // Teheran
+           .replace(/[TṬ][ie]h[e]?r[aá]n/g, 'Ṭihrán').replace(/T[IE]HR[AÁ]N/g, 'ṬIHRÁN')
+           // Nouraddin Zaine
+           .replace(/Zaine/g, 'Zayn').replace(/ZAINE/g, 'ZAYN')
+           // Nourredin
+           .replace(/N[o]?ur[r]?[aie]d[- ]?[dD]?[ií]n/g, 'Núri’d-Dín').replace(/N[O]?UR[AIE]D[D]?IN/g, 'NÚRI’D-DÍN')
+           // Suleyman Khan Lutfullah Hakim
+           .replace(/S[uo]l[ea]ym[aá]n/g, 'Sulaymán')
+           .replace(/Kh[aá]n([^a-záí\-])/g, '<u>Kh</u>án$1')
+           .replace(/L[uo][tṭ]f[’'‘]?[uoUO][’'‘]?[-]?[ ]?ll[aá]h/g, 'Luṭfu’lláh')
+           .replace(/[HḤ][aá]k[ií]m/g, 'Ḥakím')
+           // Taki
+           .replace(/Ta[qkg][íi]([^a-z])/g, 'Taqí$1')
+           // Said
+           .replace(/(Port\s+)Said/g, "$1Sa‘íd").replace(/(PORT\s+)SAID/g, "$1SA‘ÍD")
+           .replace(/([a-z]) Sa['‘’][ií]d/g, '$1 Sa‘íd').replace(/([A-Z]) SA['‘’][IÍ]D/g, '$1 SA‘ÍD')
+           // Abul Faḍl
+           .replace(/Abu[’‘']?l[- ]Fa[ḍz]l/g, 'Abu’l-Faḍl').replace(/ABU[’‘']?L[ -]FA[ḌZ]L/g, 'ABU’L-FAḌL')
+           // Násiri’d-Dín
+           .replace(/N[aá][sṣ]iri[’'‘]d[-]?D[ií]n/g, 'Náṣiri’d-Dín')
+           // Hayder-‘Alí
+           .replace(/[ḤH]a[yi]d[ae]r[- ][‘']?Al[íi]/g, 'Ḥaydar-‘Alí')
+           // Moneera <u>Kh</u>ánum
+           .replace(/M[ou]n[ei][e]?r[aie][h]?/g, 'Munírih')
+           // Khorassani  Khorassan
+           .replace(/Kh[uo]r[aá]s[s]?[aá]n[íi]/g,'<u>Kh</u>urasání').replace(/Kh[uo]r[aá]s[s]?[aá]n/g,'<u>Kh</u>urasán')
+           // Jenabi Haji
+           .replace(/J[ie]n[aá]b[ií]/g, 'Jinábí')
+           .replace(/[HḤ][aá][d]?[j]?j[ií]/g, 'Ḥájí').replace(/[HḤ][AÁ][D]?[J]?J[IÍ]/g, 'ḤÁJÍ')
+
+           // Abdul
+           .replace(/[‘'’]?Abd[uo][‘'’]?l /g, '‘Abdu’l ').replace(/[‘'’]?ABD[UO][‘'’]?L /g, '‘ABDU’L ')
+           // Nour
+           .replace(/N[o]?[uú]r[ií] /g, 'Núrí ').replace(/N[o]?[uú]r /g, 'Núr ')
+
+
+           // Assad’Ullah  Enya’Ullah  Enyat’Ullah Enya’Ullah Nurullah
+           // Assad-Ullah
+           .replace(/As[s]?ad[’'‘\- ]?[uoOU][’'‘]?ll[aá]h?/g, 'Asadu’lláh')
+           .replace(/[’'‘]?[IE]n[áa]?y[aá]?t?[’'‘]?[uOUo][’'‘]?ll[áa]h/g, '‘Ináyatu’lláh')
+           .replace(/N[uú]r[’'‘]?[uoOU][’'‘]?ll[aá]h?/g, 'Núru’lláh')
+           .replace(/[‘’']?Az[ieí][e]?z[’'‘]?[uoOU][’'‘]?ll[aá]h?/g, '‘Azízu’lláh')
+           // Ruollah Rúḥu’lláh
+           .replace(/R[úu][ḥh]?[uo][’'‘]?ll[áa]h/g, 'Rúḥu’lláh')
+           // Kharullah
+           .replace(/K[h]?[ae][yi]?r[’'‘]?[uoOU][’'‘]?ll[aá]h?/g, '<u>Kh</u>ayru’lláh')
+           // Abu'l-Qasim
+           .replace(/Ab[úu][’'‘]?l[- ]Q[áa]sim/g, 'Abú’l-Qásim')
+           // Bahje
+           .replace(/B[ae][h]?j[íei]/g, 'Bahjí')
+           .replace(/M[ae][ḥh]m[úo][o]?d/g, 'Maḥmúd')
+           // Subh-i-Azal  Subi-Azel
+           .replace(/[ṢS][uo]b[ḥh]?[- ]?[ie][- ][AE]z[ae]l/g, 'Ṣubḥ-i-Azal')
+           .replace(/Y[ae][ḥh]y[áa]/g, 'Yaḥyá')
+           // Naw Ruz
+           .replace(/N[ao][w]?[- ][Rr][uú]z/g, 'Naw-Rúz')
+           // Naurooz
+           .replace(/N[a][uw]?[ \-]?[Rr][uoú][uo]?z/g, 'Naw-Rúz')
+
+           // Mazindaran
+           .replace(/M[áa]z[ie]nd[ae]r[aá]n/g, 'Mázindarán')
+           .replace(/B[ae]y[aáe]n/g, 'Bayán')
+           // Tahirih
+           .replace(/[ṬT][aá]h[ie]r[ai][hy]?[y]?/g, 'Ṭáhirih')
+           // Shiahs  Shi’ih
+           .replace(/Sh[ií][ií]?[’'‘]?[aei]h/g, '<u>Sh</u>í‘ah') // 54 in GPB
+           //.replace(/Sh[ií][ií]?[’'‘]?[i]h/g, '<u>Sh</u>í‘ih') // 0 in GPB
+           .replace(/S[uo]nn[ií]/g, 'Sunní')
+           // Siyah-Chal
+           .replace(/S[íi]y[aá][h]?[- ]Ch[aá]l/g, 'Síyáh-<u>Ch</u>ál')
+           // Sullimaniyyeh - Sulimaniyih
+           .replace(/S[uo]l[eia][y]?m[aá]n[ií]y[y]?[ai][h]?/g, 'Sulaymáníyyih')
+           // Afnan Aghsan
+           .replace(/Afn[aá]n/g, 'Afnán')
+           .replace(/Aghs[aá]n/g, 'A<u>gh</u>ṣán')
+           .replace(/Isl[aá]m/g, 'Islám').replace(/ISL[AÁ]M/g, 'ISLÁM')
+           .replace(/Jam[aá]l/g, 'Jamál')
+           // Samandari
+           .replace(/Samandar[ií]/g, 'Samandarí')
+           // Huquk
+           .replace(/[ḤH][uo][qqk][uú][kgq]/g, 'Ḥuqúq')
+
+           //Majid
+           .replace(/Maj[ií]d/g, 'Majíd')
+           // Qajar
+           .replace(/[QG][aá]j[aá]r/g, 'Qájár')
+           // Tabarsi
+           .replace(/[ṬT]ab[áa]rs[íi]/g, 'Ṭabarsí')
+           // Navvab
+           .replace(/Nav[v]?[aá]b/g, 'Navváb')
+           // Nabil
+           .replace(/Nab[ií]l/g, 'Nabíl')
+           // `Alí-Akbar Furútan
+           .replace(/[‘'’]?Al[íi][- ]Akb[aá]r/g, '‘Alí-Akbar')
+           .replace(/Fur[úu]t[áa]n/g, 'Furútan')
+           .replace(/Yaz[ií]d/g, 'Yazíd')
+           // Surah
+           .replace(/S[úu]r[aei]h/g, 'Súrah')
+           .replace(/All[áa]h/g, 'Alláh')
+           // Haziratu’l-Quds
+           .replace(/[ḤH]a[zẓ][íi]ratu[’'‘]?l[- ][QGK][uo]ds/g, 'Ḥaẓíratu’l-Quds')  //
+           .replace(/[ḤH]a[zẓ][íi]ra[h]?/g, 'Ḥaẓíra')  //
+           // Mashad
+           .replace(/Mashad/g, 'Ma<u>sh</u>had')
+           // Baghdad
+           .replace(/Bag[h]?d[aá]d/g, 'Ba<u>gh</u>dád')
+           // Babylon
+           .replace(/B[aá]b([^a-zá\-])/g, 'Bab$1')
+           // Masra’íh // Madrih
+           .replace(/Ma[sd]r[aá]?[‘'’]?[ií][h]?([^a-z])/g, 'Masra‘ih$1')
+           // Imam
+           .replace(/Im[aá]m/g, 'Imám')
+           // Surayt’ul-Haykl  Suratu'l-Haykal
+           .replace(/S[úu]ra[y]?[t]?[‘'’]?[uo][‘'’]?l[- ]Hayk[a]?l/g, 'Súratu’l-Haykal')
+           // Hamíd
+           .replace(/[ḤH]am[ií]d/g, 'Ḥamíd')
+           // Hafiz
+           .replace(/[ḤH][áa]f[ie][zẓ]/g, 'Ḥáfiẓ')
+           // Hádíth
+           .replace(/[ḤH][áa]d[ií][i]?th/g, 'Ḥadí<u>th</u>')
+           // Zaman
+           .replace(/Zaman/g, 'Zamán')
+           // Paran
+           .replace(/P[áa]r[áa]n/g, 'Paran')
+           // Rabbani
+           .replace(/Rabb[aá]n[ií]/g, 'Rabbání')
+           // Banani
+           .replace(/Ban[aá]n[ií]/g, 'Banání')
+           // Banani
+           .replace(/Abb[uú]d/g, 'Abbúd')
+           // Banani
+           .replace(/Bah[áa]([^a-záí\-])/g, 'Bahá$1')
+           // Muḥammad Ali
+           .replace(/Muḥammad[- ][‘'’]?Al[íi]/g, 'Muḥammad-‘Alí')
+           // Muḥammad Ali
+           .replace(/[AE]zal[íi]s/g, 'Azalís')
+           // Quddus
+           .replace(/Qudd[uú]s/g, 'Quddús')
+           // Quddus
+           .replace(/M[uo]ll[áa][h]?/g, 'Mullá')
+
+           // Insha’allah
+           .replace(/Insh[áa][‘'’]?all[áa]h/g, 'In<u>sh</u>á’alláh')
+
+
+
+           // Fatimih
+           .replace(/F[áa][ṭt][ie]m[ia]h/g, 'Fáṭimih')
+           // Iṣfahán
+           .replace(/[IE][ṣs][fp][h]?[aá]h[áa]n/g, 'Iṣfahán')
+           // Ásíyih
+           .replace(/[ÁA]s[í][i]?yih/g, 'Ásíyih')
+           // Qayyumu’l-Asma: note, we cannot fix the end of a single-quote phrase
+           .replace(/Qayy[uú]m[uo][‘'’]?l[- ][Aa]sm[aá][‘'’]?/g, 'Qayyúmu’l-Asmá’')
+           // misspellings
+           //Graudian
+           .replace(/G[r]?[a]?u[a]?[r]?dian/g, 'Guardian')
+           .replace(/A[kqh][h]?d[aá]s/g, 'Aqdas').replace(/A[KQH][H]?D[AÁ]S/g, 'AQDAS')
+           .replace(/Administraiton/g, 'Administration')
+
+           // Rahim
+           .replace(/Ra[ḥh][ií]m/g, 'Raḥím')
+           .replace(/[ÁA]q[aá]/g, 'Áqá')
+           .replace(/Mihd[ií]/g, 'Mihdí')
+           .replace(/Sul[ṭt][aá]n/g, 'Sulṭán')
+           .replace(/K[aá]sh[aá]n/g, 'Ká<u>sh</u>án')
+
+          // Naqiz
+           .replace(/N[áa][qgk][ai][ḍzd][z]?[ieí][e]?n/g, 'Náqiḍín')
+           .replace(/N[áa][qgk][ai][ḍzd][z]?/g, 'Náqiḍ')
+
+           // Sayad
+           .replace(/S[ia]y[y]?[ia]d/g, 'Siyyid')
+
+
+
+           // fix the Ayn in case is shows up at the beginning of an attribute value
+           .replace(/([a-z])=‘A/ig, "$1='‘A").replace(/([a-z])=‘I/ig, "$1='‘I")
+
+
+  var CommonMispellings = [
+    'Ja[vw][aá]d, Javád',
+    'Mir, Mír',
+    'Golam, Qulam',
+    'Hasssan, Ḥasan',
+    'Ma[hḥ]m[o]?[uú]d, Maḥmúd',
+    'Kh[ou]sr[aou][w]?, <u>Kh</u>usraw',
+    'Bah[aá][ \'’‘]?[EUO]l[ \'’‘]?Abh[aá], Bahá’u’l-Abhá',
+    'Sabz[ei]v[aá]r, Sabzivár',
+    '‘Abdu’l\\s+Ḥasan, ‘Abdu’l-Ḥasan',
+    '‘Abdu’l\\s+Ḥamíd, ‘Abdu’l-Ḥamíd',
+    'Aflat[o]?un, Aflatún',
+    'Gh[uo]ds[e]?[ei], Qudsí',
+    'As[s]?ad[’\'‘\\- ]?[uoOU][’\'‘]?ll[aá]h?, Asadu’lláh',
+    'S[ií]n[aá], Síná',
+    'N[ií][aá]z, Níáz',
+    'M[ea]nsh[aá]d[ií], Man<u>sh</u>ádí',
+    'Aga, Áqá',
+    '[’\'‘]?A[z]?z[ií]z[’\'‘]?[ou][’\'‘]?ll[aá]h, ‘Azíz’u’lláh',
+    '‘Alí Muḥammad, ‘Alí-Muḥammad',
+    '[’\'‘]?Abd[uo]l, ‘Abdu’l',
+    '‘Abdu’l Ḥusayn, ‘Abdu’l-Ḥusayn',
+    'Hamadan, Hamadán',
+    'Ab[u]?l, Abu’l',
+    'Abu’l\\s+Faḍl, Abu’l-Faḍl',
+    'Rama[ḍd][aá]n, Ramaḍán',
+    'Sheik, <u>Sh</u>ay<u>kh</u>',
+    'sheik, <u>sh</u>ay<u>kh</u>',
+    'R[ei][zdḍ][aá], Riḍá',
+    'Hajeb-ed-Doulet, Ḥájibu’d-Dawlih',
+    'Nayeb-us-Saltaneh, Ná’ibu’s-Sulṭánih',
+    'El Qur’án, the Qur’án',
+    'Sadek, Sádiq',
+    '[’\'‘]?Al[ií], ‘Alí',
+    'Nur, Núr',
+    'Rasheed, Ra<u>sh</u>íd',
+    'Motosarraf, Mutaṣarrif',
+    '[’\'‘]?[EI]zzat, ‘Izzat',
+    'Abu[’\'‘]?l\\s+Gasem, Abu’l-Qásim',
+    // Habbibollah
+    'Hab[b]?ib[uo]ll[aá]h, Ḥabíb’u’lláh',
+    'Khodabakshi, <u>Kh</u>udabak<u>sh</u>í',
+    'B[oa]shr[o]?u[a]?y[ea]h, Bu<u>sh</u>rúyyih',    // Boshrouyah
+    'Tarazollah, Taraz’u’lláh',
+    'Faḍlollah, Faḍl’u’lláh',
+    'Nourallah, Nur’u’lláh',
+    'Vakil, Vakíl',
+    'Masnavi, Ma<u>th</u>naví',
+    'Ulema, ‘Ulamá',
+    'Bab, Báb',
+    'B[aá]b[ií], Bábí',
+    'Bushruyieh, Bu<u>sh</u>rú’í',
+    'Tarbiat, Tarbíyát',
+    'Suleiman, Sulaymán',
+    'Khorsheed, <u>Kh</u>ur<u>sh</u>íd',
+    'Vali, Valí',
+    'Touba, Túbá',
+    'Bagher, Báqir',
+    'Beyrout, Beruit',
+    '[’\'‘]?Abd[uo][’\'‘]?llah, ‘Abdu’lláh',
+    'Kurrat-[Uu]l-Ayn[e]?, Qurratu’l-Ayn', // Kurrat-ul-ayne
+    '[’\'‘]?Az[ií]z, ‘Azíz',
+    'Pasha, Pá<u>sh</u>á',
+    'Faran, Fárán',
+    'Viz[iíe][e]?r, Vizír',
+    'Hashem, Há<u>sh</u>im',
+    'Majn[ou][o]?n, Majnún',
+    'Badi, Badi‘',
+    'Mazandaran, Mazindárán',
+    'Dein, Dín',
+    'Foad, Fu‘ad',
+    'Basheer, Ba<u>sh</u>ír',
+    'Heydar, Haydar',
+    'Jameeleh, Jamílih',
+    '[‘\'’]?[IE]sh[qk]ab[aá][dt], ‘I<u>sh</u>qábád',    // Ishqabad
+    '[’\'‘]?A[ck][ck][aá], ‘Akká',
+    'B[ea]h[aá], Bahá',
+    'Marhaba, Marḥabá',
+    'Q[aá][y]?[‘\'’\\-]?[ie]m, Qá’im',
+    // Ishraghat
+    'Ishra[qg][h]?at, I<u>sh</u>ráqát',
+    'Tajalliat, Tajallíyát',
+    'Tarazat, Ṭarázát',
+    'Darab, Dáráb',
+    'Darabi, Dárábí',
+    'B[aá]b[‘\'’\\-]?[uo]l[‘\'’\\-]?B[aá]b, Bábu’l-Báb',
+    'H[ae][zdḍ]r[aá]t[ií], Haḍráti',
+    'Qur[r]?at[‘\'’\\-]?[uo]l[‘\'’\\-]?[‘\'’\\-]?Ayn, Qurratu’l-‘Ayn',
+    'Nur, Núr',
+    'Karb[ie]la, Karbilá',
+    'Khosroe, <u>Kh</u>usraw',
+    'Kirman, Kirmán',
+    'Muslem, Muslim',
+    'n[aá][kqg][ai][zd]e[ei]n, náqiḍín',
+    'Dhikr, <u>Dh</u>ikr',
+    'T[ie][h]?r[áa]n, Ṭihrán',
+    'Mozaffar, Muḍaffar', //
+    'Manshadi, Man<u>sh</u>ádí',
+    'Hijaz, Ḥijáz',
+    'K[ei]rm[aá]n, Kirmán',
+    'Sheikh, <u>Sh</u>ay<u>kh</u>',
+    'Seyed, Siyyid',
+    'Mushkin, Mi<u>sh</u>kín',
+    'Mushkin, Mi<u>sh</u>kín',
+    'Ahmed, Aḥmad',
+    'R[uú][hḥ][‘\'’\\-]?[Uuo][‘\'’\\-]?ll[aá]h, Rúḥu’lláh',
+    '[ḤH][uo][qk][uo][‘\'’\\-]?ll[aá]h, Ḥuqúqu’llah',
+    'Kit[aá]b[‘\'’\\-]?i[‘\'’\\-]{0,2}Ahd[ií], Kitáb-i-‘Ahdí',
+    'Zaqqum, Zaqqúm',
+    'Hamadan, Hamadán',
+    'Ta[‘\'’]?yid, Ta’yíd',
+    'Tarbiyat, Tarbíyat',
+    'Mihd[íi]y[aá]b[aá]d, Mihdíyábád',
+    //
+    '[SṢ]adru[\'’]?[ṣs][\'’\\-]?[ṢS]ud[uú]r, Ṣadru’ṣ-Ṣudúr',
+    'Afghanistan, Af<u>gh</u>ánistán',
+    'Khalq, <u>Kh</u>alq',
+    'Taraz, Ṭaráz',
+    'Tajalli, Tajallí',
+    'Bahram, Bahrám',
+    '[‘\'’]?Ir[áa]q, ‘Iráq',
+    '[ÍI]r[aá]n, Írán',
+    '[‘\'’]?Ab[d]?u[‘\'’]?l-[‘\'’]?A[zẓ][ií]m, ‘Abdu’l-‘Aẓím',
+    '[HḤ]u[qk][úu]qu[‘\'’]?ll[aá]h, Ḥuqúqu’lláh',
+    '[HḤ]u[qk][úu]q, Ḥuqúq',
+    '[hḥ]u[qk][úu]q, ḥuqúq',
+    'mithq[aá]l, mi<u>th</u>qál',
+    'Mithq[aá]l, Mi<u>th</u>qál',
+    'Zaynu[‘\'’]?l[\\- ]Muqarrabin, Zaynu’l-Muqarrabín',
+    'Jin[aá]b[\\- ]i[\\- ]Zaynu[‘\'’]?l[\\- ]Muqarrabin, Jináb-i-Zaynu’l-Muqarrabín',
+    'Hadba[‘\'’]?, Ḥadbá’',
+    'Jin[aá]b[\\- ]i[\\- ]Am[ií]n, Jináb-i-Amín',
+    'Kit[aá]b[\\- ]i[\\- ][‘\'’]?Ahd[iÍ], Kitáb-i-‘Ahdí',
+    'Kit[aá]b[\\- ]i[\\- ][‘\'’]?Ahd, Kitáb-i-‘Ahd',
+    'Varq[aá], Varqá',
+    't[uú]m[aá]n, túmán',
+    'zina, ziná',
+    'Tajalliyat, Tajallíyát',
+    'Kalimat, Kalimát',
+    'Bisharat, Bi<u>sh</u>árát',
+    '[TṬ]ar[aá]z[áa]t, Ṭarázát',
+    'Adh[íi]rb[áa]yj[áa]n, A<u>dh</u>irbáyján',
+    'Saadi, Sa‘dí',
+    '[\']?Umar, ‘Umar',
+    'Khayyam, <u>Kh</u>ayyám',
+    'Lawh-i-Maqsud, Lawh-i-Maqsúd',
+    'Rudaki, Rúdakí',
+    'Farabi, Fárábí',
+    'Parviz, Parvíz',
+    'Sasani, Sásání',
+    'Barbud, Bárbud',
+    'Shahnaz, <u>Sh</u>ahnáz',
+    'Qazvin, Qazvín',
+    'Ba<u>gh</u>d[aá]di, Ba<u>gh</u>dádí',
+
+    // Kheir-ol-Gara
+    // Khodabaksh
+
+    ''
+  ];
+
+  CommonMispellings.forEach(function(item){
+    if (item.split(',').length == 2) {
+      var find = item.split(',').shift().trim();
+      var repl = item.split(',').pop().trim();
+      // replace normal case version
+      var reg = new RegExp(find +'([^a-záíú])', 'g');
+      str = str.replace(reg, repl +'$1');
+      // replace plural version
+      reg = new RegExp(find +'s([^a-záíú])', 'g');
+      str = str.replace(reg, repl +'s$1');
+
+      // uppercase version
+      find = find.toUpperCase().replace(/<u>/ig,'<u>').replace(/<\/u>/ig,'</u>').replace(/\\S/g,'\\s');
+      repl = repl.toUpperCase().replace(/<u>/ig,'<u>').replace(/<\/u>/ig,'</u>').replace(/\\S/g,'\\s');
+      reg = new RegExp(find +'([^A-ZÁÍÚ])', 'g');
+      str = str.replace(reg, repl +'$1');
+    }
+  });
+
+
+
+
+
+   // remove underscores if not HTML
+   if (!isHTML) str = str.replace(/<[\/]?u>/g, '');
+
+   //console.log('isHTML: ', isHTML)
+
+
+
+    // names
+    // ‘Abdu’l- Baha[]
+    // ‘Abdu’l- Baha’s
+    // Bab
+    // Baha‘u‘llah
+    // Mirza Assad’Ullah
+    // RIDVAN
+    // MIRZA ABUL FAZL
+    //  Mirza Abul Fazl was Abdul Hosein
+    //  Tamaddun ul Molk
+    //  Mirza Hassan Khorassani
+    //  Mullah Muhammad ‘Ali and wife of Mullah Hassan
+    //  Enyat’Ullah
+
+
+  return str;
+}
+
+
+function ocnRenumberSections(file) {
+  console.log(' RenumberSections -- Processing file '.green, file.red);
+  var str = fs.read(file);
+  str = ocnRenumberSectionsStr(str);
+  fs.write('cleaned/'+file, str);
+}
+function ocnRenumberSectionsStr(str){
+  var sections = [];
+  var pars = {};
+
+  // first gather section data and number of each section
+  var re = /data-sectionnum=['"](.*?)['"]/g;
+  while ((match = re.exec(str)) !== null) {
+    var section = {id: '', block: '', start: 0, end: 0};
+    section.id = match[1];
+    section.start = str.indexOf('<p', match.index);
+    section.end = str.indexOf('</section', match.index);
+    if ((section.end>-1) && (section.start>-1) && (section.end>section.start)){
+      section.block = str.substring(section.start, section.end);
+      sections.push(section);
+    }
+  }
+
+  // next, gather paragraph data for each section
+  sections.forEach(function(section) {
+    section.pars = [];
+    var str = section.block;
+    var i=1;
+    var re = /<p [^>]?id=['"](.*?)['"]/g;
+    while ((match = re.exec(str)) !== null) {
+      var par = {id: section.id +'.'+ i++,
+                 start: str.indexOf('id=', match.index)+4,
+                 end: match.index+match[0].length -1,
+                 previd: str.substring(str.indexOf('id=', match.index)+4, match.index+match[0].length -1)};
+      section.pars.push(par);
+      //console.log(par);
+    }
+    /**/
+    if (section.pars[0])  section.pars[0].id = section.id;
+  });
+
+  // step backwards through sections applying paragraph replacements
+  sections.reverse();
+
+  sections.forEach(function(section){
+    // apply the changes to the paragraph level in reverse
+    section.pars.reverse();
+    section.pars.forEach(function(par){
+      section.block = section.block.slice(0, par.start) + par.id + section.block.slice(par.end);
+    });
+    // now write modified section block back into the file
+    str = str.slice(0, section.start) + section.block + str.slice(section.end);
+  });
+
+  return str;
+}
+function ocnRenumber(file) {
+  console.log(' Renumber Paragraphs -- Processing file '.green, file.red);
+  var str = fs.read(file);
+}
+
+// replaces find with incrementing integer
+function ocnReplaceIncrement(str, find) {
+  var reg = new RegExp(find, 'g'); // new RegExp("Hello World","g");
+  var val = 1;
+  return str.replace(reg, function() { return val++; });
+}
+
+function ocnFormatCompilation(file) {
+  console.log(' FormatCompilation -- Processing file '.green, file.red);
+  var str = fs.read(file, 'utf8');
+
+
+  //  some common fixes:
+  // long attrubution
+  // Haifa: Baha'i World Centre, 1982
+  str = str.replace(/Haifa:.*?,\s*([0-9]+)?/g, '');
+  //
+    // long attribution for PUP
+  str = str.replace(/("The Promulgation of Universal Peace): Talks Delivered .*?"/g, '$1"');
+    // "The Light of Divine Guidance: The Messages from the Guardian of the Baha'i Faith to the Baha'is of Germany and Austria"
+  str = str.replace(/("The Light of Divine Guidance):.*?Germany and Austria"/g, '$1"');
+  // "Unfolding Destiny: The Message from the Guardian of the Baha'i Faith to the Baha'i Community of the British Isles"
+  str = str.replace(/("Unfolding Destiny):.*?British Isles"/g, '$1"');
+  // "The World Order of Baha'u'llah: Selected Letters"
+  // "The World Order of Baha'u'llah -- Selected Letters"
+  str = str.replace(/("The World Order of Bah.*?ll[aá]h)[: ][-]?.*?Letters[\,]?[\"][\,]?/gm,'$1"');
+  // "Wellspring of Guidance: Messages 1963-1968"
+  str = str.replace(/("Wellspring of Guidance)[: ][-]?.*?1968[\,]?[\"][\,]?/gm,'$1"');
+  // ("Tablets of the Divine Plan Revealed by 'Abdu'l-Baha to the North American Baha'is"
+  str = str.replace(/\(("Tablets of the Divine Plan).*?[\,]?[\"]([\,]?)/gm,"('Abdu'l-Baha, $1\"$2");
+  // A Synopsis and Codification of the Kitab-i-Aqdas, the Most Holy Book of Baha'u'llah
+  str = str.replace(/("A Synopsis and Codification of the Kitab-i-Aqdas), the Most.*?ll[aá]h"/gm, '$1"');
+  // Abdu'l-Baha in London: Addresses and Notes of Conversations
+  str = str.replace(/("[\']?Abdu'l-Baha in London)[: ].*?[\,]?[\"][\,]?/gm,'$1"');
+
+
+  str = str.replace(/("Gleanings from the Writings of Baha\'u\'llah),/gm, '$1",');
+  str = str.replace(/("Kit[aá]b-i-[ÍI]q[aá]n),/gm,'$1",');
+  str = str.replace(/("The Promulgation of Universal Peace):.*?[\"]?[,]?/gm,'$1",');
+  str = str.replace(/("Paris Talks):.*?"/gm,'$1"');
+  str = str.replace(/("Messages to America):.*?1946[\"]?/gm,'$1"');
+  str = str.replace(/("Messages to America):.*?North America[\"]?,/gm,'$1",');
+  str = str.replace(/("The Light of Divine Guidance)[\"]?,/gm,'$1",');
+  str = str.replace(/[\"]?(Messages to the Baha\'i World 1950-1957)[\"]?/gm,'"$1"');
+  str = str.replace(/[\"]?(Selections from the Writings of [‘']?Abdu[‘']?l-Bah[aá])[\"]?/gm,'"$1"');
+  str = str.replace(/[\"]?(The Advent of Divine Justice)[\"]?/gm,'"$1"');
+  str = str.replace(/("Kit[aá]b-i-[ÍI]q[aá]n),/gm,'$1",');
+  // Citadel of Faith: Messages to America 1947-1957
+  str = str.replace(/("Citadel of Faith):.*?1957[\"]?/gm,'$1"');
+
+
+  str = str.replace(/[\"]?(Star of the West)[\"]?,/gm,'"$1",');
+  str = str.replace(/[\"]?(Tablets of [‘']?Abdu[‘']?l-Bah[aá] [‘']?Abb[aá]s)[\"]?/gm,'"$1"');
+  // "'Abdu'l-Baha in London: Addresses, and Notes of Conversations"
+  str = str.replace(/[\"]?([\']?Abdu[']?l[\-]?Baha in London): Addresses.*?Conversations[\"]?/gm,'"$1"');
+  // Chicago: Bahá’í Publishing Society, 1915
+  // (Chicago: Baha'i Publishing Committee, 1930)
+  // Chicago: Bahá’í Publishing Committee 1930
+  str = str.replace(/[\(]?Chicago:.*?Publishing (Society|Committee)[,]? [0-9]+[\)]?/gm,'');
+  //  (Wilmette: Bahá’í Publishing Trust, 1980),
+  //  Wilmette, Bahá’í Publishing Trust, 1972
+  str = str.replace(/\s?[\(]?Wilmette[:,].*?Publishing (Trust|Committee), [0-9]+[\)]?[,]?/ig, '');
+  str = str.replace(/\s?Wilmette[:,].*?Publishing (Trust|Committee)[,]?/ig, ''); // no date
+  str = str.replace(/\s?[\(]?New Delhi:.*? Publishing Trust, [\[]?[0-9]+[\]?[\)]?[,]?/ig, '');
+  // Boston: Tudor Press, 1918
+  str = str.replace(/\s?[\(]?Boston:.*?Press[,\.]? [\[]?[0-9]+[\]?[\)]?[,]?/ig, '');
+  // (London: Baha'i Publishing Trust. 1981)
+  str = str.replace(/\s?[\(]?London:.*?Publishing Trust[,\.]? [\[]?[0-9]+[\]?[\)]?[,]?/ig, '');
+  // Hofheim-Langenhain: Bahá’í — Verlag 1982,
+  str = str.replace(/\s?[\(]?Hofheim-Langenhain:.*?Verlag[ ,\[]*[0-9]+[\]?[\)]?[,]?/ig, '');
+  // ([Toronto]: National Spiritual Assembly of the Baha'is of Canada, 1965)
+  str = str.replace(/\s?[\(]?[\[]?Toronto[\]]?: National Spiritual Assembly of the Baha'is of Canada, [0-9]+[\)]?/ig, '');
+  // Sydney: National Spiritual Assembly of the Bahá’ís of Australia
+  str = str.replace(/\s?[\(\[]]?Sydney:.*?Assembly.*?Australia[,\. ]*[\[]?[0-9]+[\]?[\)\]?[,]?/ig, '');
+  //
+  str = str.replace(/\s?("Unfolding Destiny):.*?Messages from the Guardian.*?British Isles"?/ig, ' $1"');
+  // "Baha'i World Faith: Selected Writings of Baha'u'llah and 'Abdu'l-Baha"
+  str = str.replace(/\s?("Bah[aá][’'][ií] World Faith):[^"]*Selected Writings[^"]*"/ig, ' $1"');
+  //"Baha'i Administration: Selected Messages 1922-1932"
+  str = str.replace(/\s?("Bah[aá][’'][ií] Administration):\s*Selected Messages 1922-1932"?/ig, ' $1"');
+  str = str.replace(/\(Haifa: Bah[aá][’'][ií] World Centre[,]? [0-9]+\)/ig, '');
+  str = str.replace(/[\(]?New York:.*? Publishing Committee[ ,]*[0-9]*[\)]?/ig, '');
+  // don't need to repeat author for books which include author name
+  str = str.replace(/[']?Abdu'l-Bah[aá],\s*("'Abdu'l-Baha in London")/gm, '$1');
+  str = str.replace(/[']?Abdu'l-Bah[aá],\s*("Tablets of [']?Abdu[']?l-Baha)/gm, '$1');
+  str = str.replace(/[']?Abdu'l-Bah[aá],\s*("Selections from the Writings of [']?Abdu[']?l-Baha)/gm, '$1');
+  str = str.replace(/Bah[aá][’']u[’']ll[aá]h,\s*("Gleanings)/gm, '$1');
+  str = str.replace(/Bah[aá][’']u[’']ll[aá]h,\s*("Prayers and Meditations)/gm, '$1');
+  str = str.replace(/Bah[aá][’']u[’']ll[aá]h,\s*("Tablets of Bah)/gm, '$1');
+
+  // after Baha'i News in reference, we need a comma following the number
+  // "Baha'i News", 143 (date)
+  str = str.replace(/("Baha'i News")[,]? ([0-9]+) \(/g, "$1 $2, (");
+    // dash-indented blockquotes (have to do this before cleanup)
+    // ----- 1.
+  str = str.replace(/^[\-]{5,20}\s+(.*?)$/gmi, "\n\n <p id='' class='blockquote'> $1 </p>");
+
+  str = ocnTextCleanupStr(str);
+
+
+
+  // first, move in page markers
+  str = str.replace(/( [^ ]+ [^ ]+\s+[\.]{5,}.*?)(<p[0-9]+>)/g, ' $2$1');
+  str = str.replace(/(\))\s*(<p[0-9]+>)\s*$/g, '$1$2 ');
+  str = str.replace(/( [^ ]+)( [^ ]+)( [^ ]+)[ ]?(<p[0-9]+>)$/gm, ' $4$1$2$3');
+
+  // next identify references accurately
+  str = str.replace(/^\s*[\.]{5,}\s*\((.*?)\)\s*$/gm, "\n\n     <p class='reference'> $1 </p>\n");
+  // check references for missing closed quotes
+  var matches = str.match(/^\s*?<p class='reference'>.*?<\/p>\s*?/gm);
+  if (matches) matches.forEach(function(match){
+    var openCount = match.split('“').length -1;
+    var closedCount = match.split('”').length -1;
+    if (openCount !== closedCount) console.log('Warning: '.red, 'mismatch quotes: ', match.trim().green);
+    //console.log (openCount, closedCount);
+  });
+  // italicize quotes in references
+  str = str.replace(/(<p class='reference'>.*?)<q class=''>/g, "$1<i>")
+           .replace(/(<p class='reference'>.*?)<q class=''>/g, "$1<i>")
+           .replace(/(<p class='reference'>.*?)<q class=''>/g, "$1<i>")
+           .replace(/(<p class='reference'>.*?)<\/q>/g, "$1</i>")
+           .replace(/(<p class='reference'>.*?)<\/q>/g, "$1</i>")
+           .replace(/(<p class='reference'>.*?)<\/q>/g, "$1</i>")
+           .replace(/(<p class='reference'>.*?)published in/g, "$1")
+            // fix dangling close-quote
+            //.replace(/(<p class='reference'> .*?) \“([^A-Z].*?<\/p>)/g, '$1”</i>$2')  g?
+            // replace glyph bracked and curl-quote references
+           .replace(/\{<i>/g, '')
+           .replace(/<\/i>\}/g, '')
+           // mistakes made around the curly brackets next to quotes
+           .replace(/\{”<\/q>([a-zA-Z])/gi, "<q data-author=''>“$1")
+           .replace(/<\/q>\}/g, '</q>')
+           // <i>“
+           .replace(/ <i>“ /g, '”</i> ')
+           .replace(/\{/g, '').replace(/\}/g, '')
+           ;
+
+
+  // next identify footnotes
+  str = str.replace(/^[\.]{5,}[ ]*\[[0-9]+[\.]?\s*(.*?)\]\s*$/gm, "  <aside class='fn' id='fn_fnid1_'> $1 </aside>");
+
+  // next we can mark all blockquotes by indent marks
+  str = str.replace(/\s+[\.]{5,}\s?(.*?)\s?$/gm, "\n\n        <p id='' class='blockquote' data-author='abd'>   $1 </p>\n");
+
+
+            // same for footnotes
+  str = str.replace(/(<aside class='fn'.*?)<q class=''>/g, "$1<i>")
+           .replace(/(<aside class='fn'.*?)<q class=''>/g, "$1<i>")
+           .replace(/(<aside class='fn'.*?)<\/q>/g, "$1</i>")
+           .replace(/(<aside class='fn'.*?)<\/q>/g, "$1</i>")
+           .replace(/\[<i>/g, '<i>').replace(/<\/i>\]/g, '</i>') // not working, why?
+         //
+           ;
+
+  // mark blockquotes
+  str = str.replace(/\[\.\/\/\]\s?\n+/g, "\n\n<!-- blockquote -->\n");
+  // and end blockquotes
+  str = str.replace(/\s+\[\.\/\/\/\]/g, '\n<!-- end blockquote -->\n\n');
+
+  // just remove all quotes
+  //str = str.replace(/<q class=''>/g, "");
+  //str = str.replace(/<\/q>/g, "");
+
+  // major sections
+  // double lined
+  str = str.replace(/^[=]{10,}\s*$\n^[=]{10,}\s*$\s+^\s*([A-Z\Ú\Á\Í\’\‘].*?)$/gm, '<##>$1</##>');
+  str = str.replace(/^\s*## \s*(.*?)$/gm, '<##>$1</##>');  // double hash
+  str = str.replace(/^[=]{10,}\s+^([\ A-Z\Ú\Á\Í\’\‘\.\:\[\]\-]+)$/gm, '<##>$1</##>');  // single lined but all caps
+  str = str.replace(/^<##>(.*?)<\/##>$/gm, function(str){
+    str = str.replace(/<[\/]?##>/g, '');
+    str = ocnTitleCase(str.replace(/[\]\[]/g, '').trim().replace(/<q .*?>/g, '').replace(/<\/q>/g,''));
+    //console.log(str);
+    return "\n\n</section><hr class='small' />\n\n\n\n<!-- ========================================== -->\n"+
+    //"<section class='title'>\n  "+
+    "<h2 class='toc section nonum' id='section__msectionnum_'> "+ str +" </h2>\n\n\n";
+    //"<!-- ========================================== -->\n\n\n";
+  });
+
+  // subheaders
+  repl = "<###>$1</###>\n\n";
+  str = str.replace(/^\[([\ A-Z\Ú\Á\Í\’\‘\.\:\[\]\-])\]$/gm, repl); // All Caps
+  str = str.replace(/^### (.*?)$/gm, repl); // triple hashed
+
+  str = str.replace(/<###>.*?<\/###>/gm, function(str){
+    str = str.replace(/<[\/]?###>/gm, '');
+    str = ocnTitleCase(str.replace(/[\]\[]/g, '').trim().replace(/<q .*?>/g, '').replace(/<\/q>/g,''));
+    return "\n<h3 class='toc2 subhead margin-above' id='section__msectionnum_'> "+ str +" </h3>\n\n";
+  });
+
+  repl = "<####>$1</####>\n\n";
+  str = str.replace(/^#### (.*?)$/gm, repl); // triple hashed
+    str = str.replace(/<####>.*?<\/####>/gm, function(str){
+    str = str.replace(/<[\/]?####>/gm, '');
+    str = ocnTitleCase(str.replace(/[\]\[]/g, '').trim().replace(/<q .*?>/g, '').replace(/<\/q>/g,''));
+    return "\n<h3 class='toc3 subhead' id='section__msectionnum_'> "+ str +" </h3>\n\n";
+  });
+
+
+  // section numbers
+  repl = //"<hr class='small compact'/>"+"
+  "\n\n</section>\n\n\n\n\n\n\n\n"+
+  "<!-- ========================================== -->\n"+
+    "<section class='content selection no-pad' data-oid='$1' id='comp-_snum1_' data-sectionnum='_snum2_' data-author='abd'>\n"+
+    "  <div class='section_header toc2 no-pad' id='comp-_snum3__'>\n"+
+    "  <h3 class='sectionnum smaller'> — _snum4_ — </h3> \n "+
+    "  </div>\n\n ";
+  str = str.replace(/^([0-9]{1,4})\./gm, repl);
+  // references
+  //
+  // remove revision number
+  // [rev. ed.]
+  // 5th rev. ed.
+  str = str.replace(/(, )?[\[]?(1st|2nd|3rd|[0-9]+th)[ ]?(rev\.)?[ ]?ed\.[\]]?[,]?/ig, '');
+  str = str.replace(/(, )[\[]?(rev[\.]?)[ ]?ed\.[\]]?[,]?/ig, '');
+  str = str.replace(/^Revised (.{5,20}?)$/gm, '');
+  str = str.replace(/[\[]?rev[\.\,]? ed[\.]?[\]]?,/ig, '');
+
+  // get rid of all square quotes
+  str = str.replace(/(<p class='reference'>.*?)[\[\]]/g, "$1")
+           .replace(/(<p class='reference'>.*?)[\[\]]/g, "$1")
+  ;
+  //  rev. ed.,
+  //  [rev, ed.]
+  //  Commemorative ed.
+  //   2nd ed
+  str = str.replace(/[\[]?rev[\.\,] ed[\.]?[\]]?/ig, '');
+  str = str.replace(/\[\]\,/g, '');
+  str = str.replace(/(<p class='reference'>.*?)Commemorative ed./ig, "$1")
+           .replace(/(<p class='reference'>.*?)(1st|2nd|3rd|[0-9]+th)[\.]? ed[\.]?/ig, "$1")
+           ;
+
+  // remove any remaining parenthesis in references
+  str = str.replace(/(<p class='reference'>.*?)\)/g, "$1").replace(/(<p class='reference'>.*?)\)/g, "$1")
+           .replace(/(<p class='reference'>.*?)\(/g, "$1").replace(/(<p class='reference'>.*?)\(/g, "$1")
+            // unecessary word 'dated before date':  , dated 20
+           .replace(/(<p class='reference'>.*?)\s*dated\s*([0-9]+)/g, "$1 $2")
+           .replace(/(<p class='reference'>.*?)From the utterances of (‘Abdu’l-Bahá)/gi, "$1$2")
+           ;
+  // replace sec. 300 with #300
+  str = str.replace(/(<p class='reference'>.*?)[\,]?\s*sec[\.]?\s*([0-9]+)/ig, "$1 #$2");
+  str = str.replace(/(<p class='reference'>.*?)[\,]?\s*section\s*([0-9]+)/ig, "$1 #$2");
+  str = str.replace(/(<p class='reference'>.*?)[\,]?\s*par(a)?(graph)?[\.,]?\s*([0-9]+)/ig, "$1 #$4");
+  str = str.replace(/(<p class='reference'>.*?)[\,]?\s*chapter\s*([0-9]+)/ig, "$1 #$2");
+  str = str.replace(/(<p class='reference'>.*?)[\,]?\s*sec[\.]?\s*([0-9]+)\./ig, "$1 #$2.");
+  str = str.replace(/(<p class='reference'>.*?)[\,]?\s*no[\.]?\s*([0-9]+[\.]?)/ig, "$1 #$2");
+  // remove unneeded break lines
+  str = str.replace(/^[=]{5,}$/gm, '');
+
+  // remove any duplicate italics
+  str = str.replace(/<i><i>/g, '<i>').replace(/<\/i><\/i>/g, '</i>');
+
+
+  // when headers are inside sections, move section close above header
+  str = str.replace(/\s+(<h3.*? class='.*?subhead.*?> .*? <\/h3>)\s+(<\/section>)/gm, '\n\n$2\n\n\n\n$1');
+
+  // remove extra </sections>
+  str = str + '\n\n</section>\n\n';
+  str = str.replace(/(<\/h2>\s+)<\/section>/gm, '$1');
+
+
+  // clean up
+  str = str.replace(/<\/p>\s+<\/section>/gm, '</p>\n\n</section>');
+  str = str.replace(/-->\s+<!--/gm, '-->\n\n\n<!--');
+
+  //
+  // add paragraph wrappers to remaining blocks
+  str = str.replace(/\s+^[ \t]{0,6}([ḤẒḌA-Z\Ú\Á\Í\’\‘\.\“\{].{10,}?)$/gmi, "\n\n <p id=''> $1 </p>");
+  str = str.replace(/\s+^[ \t]{0,6}(<q .{10,}?)$/gmi, "\n\n <p id=''> $1 </p>");
+  str = str.replace(/\s+^[ \t]{0,6}(<i>.{10,}?)$/gmi, "\n\n <p id=''> $1 </p>");
+
+
+  // very short blocks do not get ids
+  str = str.replace(/\s+^[ \t]{0,10}([a-zA-Z\Ú\Á\Í\’\‘\.].*?)$/gm, "\n\n <p class='italic'> $1 </p>");
+  str = str.replace(/\s+^\s*([\[\(].*?)$/gm, "\n\n <p class='italic'> $1 </p>");
+
+  str = str.replace(/(January|February|March|April|May|June|July|August|September|October|November|December) [0-9]+\),/g, '');
+
+
+
+
+  // replace remaining footnote marks
+  str = str.replace(/\[[0-9]+\]/gm, '[fn]').replace(/\s*\[fn\]\s{0,}/gm, ' [fn] ')
+           .replace(/([\,\.\:\”\>])\s*\[fn\]/gm, '$1[fn]')
+           .replace(/\[fn\]/gm, "<a data-fnid='_fnid_'></a>");
+
+  // remove remaining dividers
+  str = str.replace(/^[=]{10,}\s*$/gm, '');
+  str = str.replace(/^[\t \*]*?$/gm, '');
+
+  // remove dangling close sections
+  str = str.replace(/(<\/section>\s+<!--.*?-->)\s+<\/section>/gm, '$1');
+  // move end section marker up to bottom of previous paragraph
+  str = str.replace(/(<\/p>)\s+(<\/section>)/gm, '$1\n\n$2');
+  // what?
+  str = str.replace(/Extract’s/g, "Extracts");
+
+  // replace ocean style page marker with HTML5 marker
+  str = str.replace(/<[pP]([0-9]+)>/gm, "<span data-pg='$1'></span>");
+
+
+
+
+  // now replace the numbers
+  str = ocnReplaceIncrement(str, '_snum1_');
+  str = ocnReplaceIncrement(str, '_snum2_');
+  str = ocnReplaceIncrement(str, '_snum3_');
+  str = ocnReplaceIncrement(str, '_snum4_');
+  str = ocnReplaceIncrement(str, '_msectionnum_');
+  str = ocnReplaceIncrement(str, '_snum_');
+
+  // footnotes
+  var refcount = str.split("_fnid_").length - 1;
+  var fncount = str.split("_fnid1_").length - 1;
+  if (fncount) {
+    str = ocnReplaceIncrement(str, '_fnid_');
+    str = ocnReplaceIncrement(str, '_fnid1_');
+    if (fncount != refcount) console.log('Warning: '.red, 'Note ref count '+refcount+' != footnote count: ', fncount);
+  }
+
+
+  // format footnotes to be right under paragraphs and have no gap between multiple
+  str = str.replace(/\s+<aside/g, '\n\n    <aside');
+  str = str.replace(/<\/aside>\s?[\n]+/g, '</aside>\n\n\n\n');
+  str = str.replace(/<\/aside>\s+<aside/g, '</aside>\n    <aside');
+
+  str = ocnRenumberSectionsStr(str);
+  str = '\n\n\n\n<!-- old header info '+ str.replace(/<\/section>/,' end of old header info -->');
+
+  // remove dropcap if paragraph starts with ...
+  //str = str.replace(/(<p id='[0-9]+')>(\s?\.\.\..*?<\/p>)/g, "$1 class='nodropcap'>$2");
+  // remove dropcap if paragraph too short
+  //str = str.replace(/(<p id='[0-9]+')>(\s?.{0,130}?<\/p>)/g, "$1 class='nodropcap'>$2");
+  // move dropcap if next paragraph is long enough
+  //str = str.replace(/(<p.*?nodropcap'>.{0,110}?<\/p>\s+<p.*?)>(\s?.{150,}?<\/p>)/g, "$1 class='dropcap'>$2");
+
+  // cosmetic stuff, clean up references
+  // remove multiple page numbers  pp. 26-27 ->  p. 26
+  str = str.replace(/p[p]?\. ([0-9]+)\-[0-9]+/g, 'p. $1');
+  // standardize comma before page reference
+  str = str.replace(/[\s]?[,]?[\s]*p[\.]? ([0-9]+)/g, ', p. $1');
+  // except after 'and' and ';'
+  str = str.replace(/(<p class='reference'>.*?)and, /gi, "$1and ");
+  str = str.replace(/(<p class='reference'>.*?);,/gi, "$1;");
+
+  //  (Wilmette: Bahá’í Publishing Trust, 1980),
+  str = str.replace(/\s?[\(]?Wilmette: .*? Publishing (Trust|Committee), [0-9]+[\)]?[,]?/ig, '');
+  // (Haifa: Bahá’í World Centre, 1973)
+  str = str.replace(/\s?\((Haifa: )?Bahá’í World Centre, [0-9]+\)/ig, '');
+  // (Chicago: Bahá’í Publishing Society, 1916)
+
+  str = str.replace(/\s?\(Chicago: Bahá’í Publishing Society, [0-9]+\)/ig, '');
+  // (London: Bahá’í Publishing Trust, 1981)
+  str = str.replace(/\(.*?Bahá’í Publishing.*?\)/ig, '');
+
+  // Letter dated
+  str = str.replace(/(<p class='reference'>.*?)(Letter dated|published in)/gi, "$1");
+  // pocket-sized
+  str = str.replace(/(<p class='reference'>.*?)(pocket[- ]?sized ed[\.]?,)/gi, "$1");
+  // published in
+  str = str.replace(/(<p class='reference'>.*?)(published in)/gi, "$1");
+
+
+  // 2nd. ed.,   ?
+  str = str.replace(/(<p class='reference'>.*?)(2nd|3rd|Indian)[\.]? ed[\.]?[,]?/gi, "$1");
+  str = str.replace(/(<p class='reference'>.*?)(2nd|1st|3rd)[\.]?[,]?/ig, '$1');
+
+  // dangling
+  str = str.replace(/(<p class='reference'>.*?),( 19[0-9]+)\),/g, '$1$2,');
+
+
+  str = str.replace(/\[\],/g, '')
+           .replace(/<\/i>\s*,/g, '</i>,');
+
+
+  // standardize no period at end of page number in reference
+  str = str.replace(/\s+p[\.]?[ ]?([0-9]+)[\.]?\s*<\/p>/ig, ' p. $1 </p>');
+
+  // fix comma problems
+  str = str.replace(/\s?,\s*,/g, ',').replace(/\s?[,]+\s+/g, ', ').replace(/,([^ ])/g, ', $1');
+  str = str.replace(/;,/g, ';');
+  str = str.replace(/(<p class='reference'>.*?)\s*\.,/g, '$1,');
+  str = str.replace(/\s+”/g, '”');
+
+   // split lines where force split marker found
+  str = str.replace(/>>/g, '\n');
+
+  // finally, split references that are just too long at the first quotation mark
+  str = str.replace(/<p class='reference'>.{120,}?<\/p>/ig, function(ref){
+    ref = ref.replace(/<p class='reference'>(.*?)<\/p>/ig, '$1');
+    if (ref.length > 90) {
+      ref = ref.replace(/<i>/, '\n<i>').split('\n');
+      ref.forEach(function(str, i) {
+        if (str.length>90) {
+          var n = str.indexOf(' ', str.length / 2);
+          ref[i] = str.slice(0, n) + "\n" + str.slice(n);
+        }
+      });
+      ref = ref.join('\n').split('\n').join('<br>');
+    }
+    return "<p class='reference'>" + ref + "</p>";
+  });
+
+  // remove extra breaks between h2 and h3
+
+
+
+  // grab each section, attempt to identify author and date then replace
+  str = comp_section_analysis(str);
+
+  // all done, stick it in an ocean template
+  var book = {};
+  var templates = loadTemplates();
+  var book_title = file.replace(/́/g,'');
+  book_title = ocnTextCleanupStr(book_title);
+  book.bookid = 'comp-'+ book_title.toLowerCase().replace(/\.[^\.]+$/m, '').replace(/\ /g, '-')
+      .replace(/\'/g, '').replace(/á/g,'a').replace(/í/g,'i').replace(/ú/g,'u')
+      .replace(/-of-/g, '-').replace(/-a-/g, '-').replace(/-the-/g, '-')
+      .replace(/á/g,'a').replace(/í/g,'i').replace(/ú/g,'u').replace(/’/g,'');
+  book.title = book_title.replace(/\.[^\.]+$/m, '');
+  book.bookcontent = str;
+  var html = mark.up(templates.compilation, book);
+
+
+  // save new file to /cleaned directory
+  fs.write('cleaned/'+file.substr(0, file.lastIndexOf('.')) + '.html', html);
+}
+
+/*
+    Assessment Tools
+    Test, Build, Filter, Status, Assess
+ */
+
+// main command handler
+function ocnAssessment(cmd) {
+  "use strict";
+
+  console.log(' ocnAssessment -- Processing command '.green, cmd.red);
+  if (cmd==='syntest') {
+    var word = _.sample(['rivičre']);
+    var result = fetchSynonymsSync(word);
+    console.log(word.green +': '+ JSON.stringify(result));
+  }
+  else if (cmd==='build') {
+
+    var target = 'word_synonyms.json';
+    var source = 'word_frequency.json';
+    var w;
+    if (!fs.exists(target)) fs.copy(source, target);
+    var dictionary = JSON.parse(fs.read(target));
+    var wordFreq = function(word) {      // return frequency of any word or FALSE if word not found
+      if (dictionary.words.hasOwnProperty(word)) return +dictionary.words[word].freq.trim(); else return 0;
+    };
+    var wordSort = function(w1,w2) { return wordFreq(w2) - wordFreq(w1); };
+    /*
+    var wordcount = Object.keys(dictionary.words).length;
+    var fetched = 0;
+
+    for (w in dictionary.words) {
+      var obj = dictionary.words[w];
+     // if (!obj.hasOwnProperty('freq_ratio')) {
+        //if (!obj.hasOwnProperty('syn') && !dictionary.words[w].hasOwnProperty('err')) {
+        //addWordSynonyms(dictionary, w);
+        //console.log('  '+ JSON.stringify(obj));
+        obj.freq_ratio = obj.freq / dictionary.totals.wordcount * 100000; // per book
+        fetched++;
+        if (fetched % 1000 === 0) { // save periodically
+          console.log('Saving list...');
+          fs.write(target, JSON.stringify(dictionary, null, '\t'), {flag : 'w' });
+        }
+      }*/
+
+
+    // finally, assign each word a level by distribution percentage // sort words by frequency
+    var words = Object.keys(dictionary.words).sort(wordSort);
+    var wordcount = words.length;
+    // give each word a level
+    for (var i = 0; i < wordcount; i++) {
+      var word = words[i];
+      var obj = dictionary.words[word];
+      obj.level = Math.floor((i / wordcount) * 100) + 1;
+    }
+
+
+    fs.write(target, JSON.stringify(dictionary, null, '\t'), {flag : 'w' });
+  }
+    //dictionary.totals.filtered_wordcount = Object.keys(dictionary.words).length;
+  else if (cmd==='filter') {
+    synonymDictionaryFilter();
+  }
+  else if (cmd==='status') {
+
+  }
+  else if (cmd==='assess') {
+    // load flashcards
+    // perform assessment quiz
+    synonymAssessment();
+
+  } else {
+    console.log ("Allowed assessment commands are " +
+      "syntest".green+", "+"build".green+", "+"filter".green+"status".green+", and "+ "assess".green);
+  }
+  //var str = fs.read(file, 'utf8');
+
+
+   // save new file to /cleaned directory
+  //fs.write('cleaned/'+file.substr(0, file.lastIndexOf('.')) + '.html', html);
+}
+
+// given any word, attempt to fetch synonyms from bighugelabs.com api
+function fetchSynonymsSync(word) {
+  //  httpsync
+  //var API_KEY = "c5ecd0eb228221585393ea63161551ff";  //https://words.bighugelabs.com/api.php
+  var API_KEY = "9131691a353bdbce46765bf6f49e9bd9";
+  var synurl = "http://words.bighugelabs.com/api/2/" +API_KEY+ "/" + encodeURIComponent(word) +"/json";
+  var syn = [], err=false, pos=[], options={followRedirect: true, timeout: 15000};
+  var response = httpsync(synurl, options); // status, data, headers
+  if (response.status == 200) {
+    var w = JSON.parse(response.data);
+    if (w.hasOwnProperty('noun')) {
+      pos.push('noun');
+      if (w.noun.hasOwnProperty('syn')) syn = syn.concat(w.noun.syn);
+       if ((syn.length<10) && w.noun.hasOwnProperty('sim')) syn = syn.concat(w.noun.sim);
+       if ((syn.length<10) && w.noun.hasOwnProperty('rel')) syn = syn.concat(w.noun.rel);
+    }
+    if (w.hasOwnProperty('adjective')) {
+      pos.push('adjective');
+      if (w.adjective.hasOwnProperty('syn')) syn = syn.concat(w.adjective.syn);
+       if ((syn.length<10) && w.adjective.hasOwnProperty('sim')) syn = syn.concat(w.adjective.sim);
+       if ((syn.length<10) && w.adjective.hasOwnProperty('rel')) syn = syn.concat(w.adjective.rel);
+    }
+    if (w.hasOwnProperty('verb')) {
+      pos.push('verb');
+      if (w.verb.hasOwnProperty('syn')) syn = syn.concat(w.verb.syn);
+       if ((syn.length<10) && w.verb.hasOwnProperty('sim')) syn = syn.concat(w.verb.sim);
+       if ((syn.length<10) && w.verb.hasOwnProperty('rel')) syn = syn.concat(w.verb.rel);
+    }
+    if (w.hasOwnProperty('adverb')) {
+      pos.push('adverb');
+      if (w.adverb.hasOwnProperty('syn')) syn = syn.concat(w.adverb.syn);
+       if ((syn.length<10) && w.adverb.hasOwnProperty('sim')) syn = syn.concat(w.adverb.sim);
+       if ((syn.length<10) && w.adverb.hasOwnProperty('rel')) syn = syn.concat(w.adverb.rel);
+    }
+
+    // filter out synomyns containing main word
+    var syncount = syn.length;
+    syn = syn.filter(function(synonym){ return (synonym.toLowerCase().indexOf(word)===-1); });
+    if (syncount>0 && syn.length===0) err = 'synonyms_filtered';
+    // remove duplicates
+    syn = uniqueArray(syn);
+
+        // error reporting
+    if (!syncount) {
+      //console.log('Failed to get SYN: '+ word.red);
+      //console.log(w);
+    } else if (!pos.length) {
+      //console.log('Failed to get POS: '+ word.red);
+      //console.log(w);
+    }
+  } else if (response.status == 404) {
+    //console.log('Error'.red+ ' '+ word.green +' not found'); // Show the HTML for the Google homepage.
+    err = '404';
+  }
+  //else console.log(response.status.red);
+
+  if (err) console.log('Error: '.red, word.underline, JSON.stringify({syn:syn, pos:pos, err: err}));
+   else  console.log('Success: '.green, word.underline, JSON.stringify({syn:syn, pos:pos, err: err}));
+
+  return {syn:syn, pos:pos, err: err};
+}
+// add new synonyms to synonym dictionary
+function addWordSynonyms(dictionary, word) {
+  var obj = dictionary.words[word];
+  if (!obj.hasOwnProperty('syn')) obj.syn=[];
+  if (!obj.hasOwnProperty('pos')) obj.pos=[];
+  obj.err=false;
+ // if (obj.freq>100000) {
+ //   obj.err = 'too_common'; return;
+ // } else {
+    //console.log('Fetching synonyms for '+ word.red);
+    var result = fetchSynonymsSync(word);
+    if (!result.err) {
+      if (result.syn.length) {
+        //obj.freq_ratio = (obj.freq / dictionary.totals.wordcount) * 100000;
+        obj.syn = result.syn;
+        obj.pos = result.pos;
+        obj.err = false;
+        return;
+      } else if (result.err ==='404') {
+        result = fetchSynonymsSync(word);
+        if (result.err ==='404') {
+          obj.syn = [];
+          obj.err = '404';
+          return;
+        } else if (!result.err) {
+          obj.syn = result.syn;
+          obj.pos = result.pos;
+          obj.err = false;
+          return;
+        }
+      }
+  //  }
+    if (obj.syn.length===0 && obj.pos.length===0) obj.err='not_found';
+  }
+}
+
+function isBadWord(word){
+  return (filter.clean(word).match(/^[x]+$/) != null);
+}
+
+
+// build a list of all possible flashcards
+function synonymDictionaryFilter() {
+  // make a copy of dictionary if necessary
+  var synonyms = JSON.parse(fs.read('word_synonyms.json'));
+  var flashcards_file = 'word_flashcards.json';
+  var flashcards = {total: 0, levels: {}, words: {}};
+
+  var wordFreq = function(word) {    // return frequency of any word or FALSE if word not found
+    if (synonyms.words.hasOwnProperty(word)) return +synonyms.words[word].freq.trim(); else return 0;
+  };
+  var wordFreqSort = function(wordsArray) {    // sort word array by frequency
+    if(Object.prototype.toString.call( wordsArray ) != '[object Array]' ) return [];
+    return wordsArray.sort(function(w1, w2){ return wordFreq(w2) - wordFreq(w1); });
+  };
+  var pruneSynonyms = function() {
+    // remove words with error 404 or error "too_common"
+    // remove words without pos
+    var delcount=0;
+    var w, flag;
+    for (w in dictionary.words) {
+      var obj = dictionary.words[w];
+      if (!obj.hasOwnProperty('syn')) obj.syn = [];
+      if (!obj.hasOwnProperty('pos')) obj.pos = [];
+      if (!obj.hasOwnProperty('err')) obj.err = false;
+
+      flag = false;
+      if (!obj.hasOwnProperty('pos') || (obj.pos.length===0)) {
+        console.log('deleting word: '+w.green+', error: '+ 'no Part of Speech '.red);
+        flag = true;
+      }
+      if (flag) {
+        delcount++;
+        delete dictionary.words[w];
+      }
+    }
+    if (delcount) console.log('Deleted '+ delcount +' words.');
+  };
+  var addFlashcard = function(word, obj, minsyn) {
+    // if word is too short skip
+    if (word.length<4) return;
+    // if word is profane, skip
+    if (isBadWord(word)) {
+      console.log(word.red, ' removed as badword');
+      return;
+    }
+    //console.log("addFlashcard ", word, JSON.stringify(obj), maxperlevel, minsyn);
+    if (!minsyn) minsyn = 1;
+    if (obj.syn.length<minsyn) {
+      //console.log(w, ' has insufficient synonyms. ', obj.syn);
+      return;
+    }
+    //if (!flashcards.levels.hasOwnProperty[obj.level]) flashcards.levels[obj.level] = [];
+    var syn = obj.syn.slice();
+    // normalize synonyms
+    syn = syn.map(function(wrd){return wrd.trim().toLowerCase();});
+    // remove duplicates then sort by frequency
+    syn = wordFreqSort(uniqueArray(syn));
+
+    // remove very similar synonyms
+    // step through list
+    // if any previous synonym is similar, delete this one
+    for (var i = syn.length-1; i>=2; i--) {
+      var tst = syn[i];
+      var match = false;
+      for (var j=0; j<i; j++) {
+        if (levenshtein(tst, syn[j])<3) {match=syn[j]; break;}
+        else if (tst.indexOf(syn[j])>-1 || syn[j].indexOf(tst)>-1) {match=syn[j]; break;}
+      }
+      if (match) {
+        //console.log("Removeing synonym "+syn[i].red+" as it is too similar to "+match.green, syn);
+        syn.splice(i, 1);
+      }
+    }
+
+    // filter out synonyms that are too short, too similar to the word, contains part of the word etc.,
+    syn = syn.filter(function(s){
+      s = s.toLowerCase().trim();
+      var wrd = word.toLowerCase().trim();
+      // synonym too short
+      if (s.length<3) return false;
+      // word found in synonym or synonym found in word
+      else if ((s.indexOf(wrd)>-1 || wrd.indexOf(s)>-1)) {
+       // console.log(wrd.red, ' deleting synonym, word in word: ', s);
+        return false;
+      }
+      // synonym less common than word
+      else if (wordFreq(word) > wordFreq(s)) return false;
+      // synonym too similar
+      else if (levenshtein(s, wrd)<3) return false;
+      // remove if profane
+      else if (isBadWord(wrd)) {
+        console.log(wrd.red, ' deleting synonym, profane: ', s);
+        return false
+      }
+      return true;
+    });
+
+    //console.log("Sorted Syn List: ", syn);
+    syn = syn.slice(0,4);
+    var synlistgood = ((syn.length>=minsyn) && (wordFreq(word) <= wordFreq(syn[syn.length - 1])));
+    if (!synlistgood) {
+       //if (syn.length<minsyn) console.log(word.red, ' not enough synonyms: ', syn.length, syn);
+       //if (syn.length>=minsyn && wordFreq(word)>wordFreq(syn[syn.length-1])) console.log(word.red, syn[syn.length-1].green, ' synonym too difficult:  ', wordFreq(word),  wordFreq(syn[syn.length-1]));
+    }
+    var levelcount = flashcards.levels.hasOwnProperty(obj.level) ? flashcards.levels[obj.level].length : 0;
+    if (synlistgood) {
+      if (!levelcount) flashcards.levels[obj.level] = [];
+      flashcards.levels[obj.level].push(word);
+      flashcards.words[word] = {level: obj.level, syn: syn}; //, pos: obj.pos, freq: obj.freq_ratio};
+    }
+  };
+
+  // Iterate all synonyms between 2% and 99%
+  // var wordcount = Object.keys(synonyms.words).length;
+  for (var w in synonyms.words) if (synonyms.words.hasOwnProperty(w)) {
+    var obj = synonyms.words[w];
+    addFlashcard(w, obj);
+  }
+
+  // loop through each level and remove cards with less than three synonyms if > 100 cards
+  for (var level in flashcards.levels) {
+    var levelcards = flashcards.levels[level];
+    if (levelcards.length>100) {
+      console.log("Pruning low quality cards from level "+level+" as it has "+flashcards.levels[level].length+" cards.");
+      //flashcards.levels[level].length
+      for (var i = levelcards.length-1; i>=1; i--) {
+        if (levelcards.length>100) {
+          var card = levelcards[i];
+          //console.log(" Checking card "+card.green+", it has "+synonyms.words[card].syn.length+" synonyms.");
+          var remove = false;
+          if (flashcards.words[card].syn.length<3) {
+            //console.log(" Deleting card: "+card+" because only "+synonyms.words[card].syn.length+" synonym.");
+            remove = true;
+          } else if (flashcards.words[card].syn.indexOf('metropolis')>=0) { // city
+            remove = true;
+          } else if (flashcards.words[card].syn.indexOf('someone')>=0 &&
+              flashcards.words[card].syn.indexOf('somebody')>=0 &&
+              flashcards.words[card].syn.indexOf('person')>=0 ) { // person
+            remove = true;
+          }
+          if (remove) {
+            delete flashcards.words[card]; // remove data field
+            levelcards.splice(i, 1); // remove item from array
+          }
+        }
+      }
+      console.log(" level "+level+" now has "+flashcards.levels[level].length+" cards. \n");
+    }
+
+
+  }
+
+  // update the totals
+  flashcards.total = Object.keys(flashcards.words).length;
+  delete flashcards.levels;
+  // save flashcards object
+  fs.write(flashcards_file, JSON.stringify(flashcards, null, '\t'), {flag : 'w' });
+}
+
+function synonymAssessment() {
+  var load_flashcards = function() {
+    var w, cards = JSON.parse(fs.read('word_flashcards.json'));
+    cards.levels = {};
+    for (w in cards.words) if (cards.words.hasOwnProperty(w)) {
+      var obj = cards.words[w];
+      //obj.word = w;
+      if (!cards.levels.hasOwnProperty(obj.level)) cards.levels[obj.level] = [w];
+       else cards.levels[obj.level].push(w);
+    }
+    return cards;
+  };
+  var random_word_objs = function(cards, level, count, excludeList) {
+    //console.log('random_word_objs ', level, count);
+    if (!excludeList) excludeList = [];
+    if (!count) count = 1;
+    var result = {};
+    var levelarray = cards.levels[level];
+    //console.log(levelarray);
+    if (count>levelarray.length) {
+      console.log("random word objects error: ".red, " not "+count+" words at this level");
+      return false;
+    }
+    // returns object of word->value
+    do {
+     var word = levelarray[Math.floor(Math.random()*levelarray.length)];
+     if (excludeList.indexOf(word)<0) result[word] = cards.words[word].syn;
+    } while (Object.keys(result).length < count);
+    return result;
+  };
+
+  var cards = load_flashcards();
+  var rand_level = Math.floor(Math.random()*100);
+  //console.log(JSON.stringify(random_word_objs(cards, rand_level, 7) , null, '\t'));
+  var queryShortCircuit = function(queries, correct, incorrect) {
+    var result = false;
+    if (queries === 3) { // 2/1
+      if (correct >= 2) result = "pass"; else if (incorrect >= 1) result = "fail";
+    } else if (queries === 5) { // 3/2
+      if (correct >= 4) result = "pass"; else if (incorrect >= 2) result = "fail";
+    } else if (queries === 7) { // 4/3
+      if (correct >= 4) result = "pass"; else if (incorrect >= 3) result = "fail";
+    } else if (queries > 7) { // 70%/30%
+      if ((correct / queries * 100) > 69) result = "pass";
+       else if ((incorrect / queries * 100) > 29) result = "fail";
+    }
+    return result;
+  };
+  var synassess = function(testlevel, queries, num) {
+    if (!num) num = 6;
+    if (!queries) queries = 3;
+    if (queries === 0 || !!(queries && !(queries%2))) queries++; // if even number, add one
+    var excludeList = [];
+    console.log(" synassess testing "+ queries+" queries at level "+testlevel);
+    var totalcorrect = 0, totalincorrect = 0;
+    for (var i=0; i<queries; i++) {
+      var testcards = random_word_objs(cards, testlevel, num, excludeList);
+      var words = Object.keys(testcards);
+     // var correctItem, correctWord;
+      // grab a random word from the group so long as the word has not already been used
+     // do {
+      var correctItem = Math.floor(Math.random()*words.length);
+      var correctWord = words[correctItem];
+     // } while (prevcards.indexOf(correctWord)>=0);
+      //console.log(" Test level ", testlevel.toString().red);
+      var choices = [];
+      words.forEach(function(word){ choices.push(testcards[word].join(', ')); });
+      //console.log('choices words: ', choices);
+      var answer = readlineSync.keyInSelect(choices,
+        ' Which is most closely related to ' + correctWord.green, {cancel:false});
+      var pass = (answer === correctItem);
+      if (pass) totalcorrect++; else totalincorrect++;
+      console.log(pass ? "... correct".green : "... incorrect".red);
+      var ss = queryShortCircuit(queries, totalcorrect, totalincorrect);
+      if (ss) {
+        console.log("  Short circuiting set of "+queries+" tests at number "+ (i+1), ss.red);
+        success = (ss==='pass');
+        break; // leave this loop
+      }
+      excludeList.push(correctWord);
+    }
+    console.log("At level "+testlevel+" you got "+totalcorrect+" correct out of "+queries+". ", success ? "pass".green : "fail".red);
+    return success;
+  };
+
+  // assessment test
+  console.log('\033[2J');
+  var ceiling = 98, floor = 2, testlevel = Math.round((ceiling-floor)/2), level;
+  var round = 1, queries;
+  do {
+    console.log('=============================');
+    console.log(' Floor:', floor, "Ceiling:", ceiling);
+    testlevel = Math.round((ceiling - floor)/2)+floor;
+    // note: first assessment is 7 tests, second is 5, remaining are 3
+    if (round===1) queries = 10; else if (round===2) queries=7; else queries=5;
+    var pass = synassess(testlevel, queries, 5);
+    if (pass) console.log(" Correct".green); else console.log(" Incorrect".red);
+    if (pass) {
+      level = testlevel;
+      floor = testlevel;
+    } else ceiling=testlevel-1;
+    round++;
+  } while (ceiling>floor);
+  console.log('=============================');
+  console.log("You assessed at level: ", testlevel.toString().green);
+  console.log('=============================\n\n');
+
+}
+
+
+function uniqueArray(a) {
+    var seen = {};
+    var out = [];
+    var len = a.length;
+    var j = 0;
+    for(var i = 0; i < len; i++) {
+         var item = a[i];
+         if(seen[item] !== 1) {
+               seen[item] = 1;
+               out[j++] = item;
+         }
+    }
+    return out;
+}
+
+
+
+
+
+function comp_section_analysis(str) {
+  // split by sections (parts 1 - n-1 are sections)
+  var sections = str.split('<section ');
+  var ref, author, lastAuthor, date;
+  for (i=1; i<sections.length; i++) {
+    // author
+    ref = sections[i].match(/<p class='reference'.*?>(.*?)<\/p>/m);
+    if (ref) {
+      ref = ref[0].replace(/<p class='reference'.*?>(.*?)<\/p>/m, '$1');
+      if (ref.indexOf('Báb')>-1) author ='bab';
+       else if (ref.indexOf('Shoghi')>-1) author = 'shoghi';
+       else if (ref.indexOf('‘Abdu’l-Bahá')>-1) author = 'abd';
+       else if (ref.indexOf('Bahá’u’lláh')>-1) author = 'baha';
+       else if (ref.indexOf('Universal House of Justice')>-1) author = 'uhj';
+       else author = lastAuthor;
+       lastAuthor = author;
+       //console.log(author, ref, '\n');
+
+      // remove author if present then replace
+      sections[i] = sections[i].replace(/\s*data-author='.*?'/g, '');
+       sections[i] = sections[i].replace(/(data-sectionnum='.*?)>/g, "$1 data-author='"+author+"'>");
+
+      // as long as we have a reference, let's check for source originality
+      if ((['bab','baha','abd','shoghi'].indexOf(author)>=0) && (/[“”"]/.test(ref) === false)){
+        sections[i] = sections[i].replace(/\s*data-sourcetext='.*?'/g, '');
+        sections[i] = sections[i].replace(/(data-sectionnum='.*?)>/g, "$1 data-sourcetext='true'>");
+      }
+    }
+
+    // now lets try to get the date out of the reference
+    if ((date = ocnDateFromString(sections[i]))) {
+      sections[i] = sections[i].replace(/\s*data-date='.*?'/g, '');
+      sections[i] = sections[i].replace(/(data-sectionnum='.*?)>/g, "$1 data-date='"+ date +"'>");
+    }
+
+  }
+
+  // rejoin
+  str = sections.join('<section ');
+  return str;
+}
+
+function ocnTitleCase(str) {
+  // title case str with exceptions for words starting with apostrophe and Roman numerals
+  str = title_case(str);
+  // roman numerals
+  str = str.replace(/\b[lxvic]+\b/ig, function(str){return str.toUpperCase(); });
+  // 'A
+  str = str.replace(/‘a/g, '‘A');
+  // u’L
+  str = str.replace(/u’L/g, 'u’l');
+  // lLáh
+  str = str.replace(/lLáh/g, 'lláh');
+  // lLáh
+  str = str.replace(/-bahá/g, '-Bahá');
+  //
+  str = str.replace(/from (the|Letters)/g, 'From $1');
+  // article following initial number or roman numerals
+    // roman numerals
+  str = str.replace(/^[LXVIC0-9\.]*\s+[\.“ ]*[a-z]/im, function(str){return str.toUpperCase(); });
+
+  // uppercase first character following open quote
+  str = str.replace(/["“]./g, function(str){return str.toUpperCase(); });
+
+  return str;
+}
+
+// attempt to identify and extract any date from any string
+function ocnDateFromString(str) {
+  var months = 'January|February|March|April|May|June|July|August|September|October|November|December'.split('|');
+  var date, dateObj;
+
+  date = str.replace(/[\s\S]*?([0-9]+ (January|February|March|April|May|June|July|August|September|October|November|December) [0-9]+)[\s\S]*/gm, '$1');
+  dateObj = new Date(date);
+  if (dateObj) {
+    var day = dateObj.getDate();
+    var monthIndex = dateObj.getMonth();
+    var year = dateObj.getFullYear();
+    var formatDate = day + ' ' + months[monthIndex] + ' ' + year;
+    if (day && monthIndex && year) {
+      //console.log(formatDate);
+      return formatDate;
+    }
+  }
+}
+
+
+// =================================
+// Command parsing
+program
+  .version(app_ver)
+  .description("Ocntools is a collection of scripting tools to aid in the proofing and building of the Ocean library.")
+  .option('-v, --verbose', 'Allow console output', 0);
+
+program.command('import <filename> [targetdirectory]')
+  .description('Import new text file from raw folder (1.) to proofing (2.)').action(ocnImport);
+
+program.command('build <bookid>')
+  .description('Generate translation from textfile or Google Translate').action(ocnBuildBook);
+program.command('translate <bookid> [transfile]')
+  .description('Publish with span-wraped words and sentences').action(ocnTranslate);
+program.command('getdictionary')
+  .description('Update Accents Dictionary').action(ocnAccentsDictionary);
+program.command('report [filename]')
+  .description('Rebuild progress report').action(ocnReport);
+program.command('progresslog <entry>')
+  .description('Add progress log entry in the report').action(ocnProgressLog);
+program.command('accents <bookid> [logfile]')
+  .description('Builds accents report log for book <bookid> (default location is folder 3.)').action(ocnAccentsLog);
+program.command('library <bookid> [title] [author] [priority]')
+  .description('Add or edit book entry in library.config').action(ocnEditLibraryBook);
+
+program.command('textCleanup <filename>')
+  .description('General Regex up typography and spelling in text files').action(ocnTextCleanup);
+
+program.command('autoCorrect <filename>')
+  .description('General spelling autocorrect (includes html underscore codes)').action(ocnAutocorrect);
+
+program.command('renumberSections <filename>')
+  .description('Renumber paragraph ids. Using sections for section numbers').action(ocnRenumberSections);
+program.command('renumber <filename>')
+  .description('Renumber paragraph ids seqentially.').action(ocnRenumberSections);
+
+program.command('formatCompilation <filename>')
+  .description('Custom script to process a Compilation of Compilations file.').action(ocnFormatCompilation);
+
+program.command('assess <option>')
+  .description('Code for buiding and testing vocabulary assessment dictionary.').action(ocnAssessment);
+
+
+
+program.command('buildIndex')
+  .description('Build an index.html file in this directory for all matching files').action(buildIndex);
+
+program.parse(process.argv);
+
+// =================================
+// Helper Functions
+
+function log(str) {
+  if (program.verbose) console.log(str);
+}
+
+function load_library_config() {
+  var config;
+  config = fs.readJSON('./library-config.json');
+  config.books = fs.readJSON(config.paths.base + config.paths.library_books);
+  config.templates = loadTemplates();
+  return config;
+}
+function save_library_books(config) {
+  var books = JSON.stringify(config.books);
+  var path = config.paths.base + config.paths.library_books;
+  //fs.createReadStream(path).pipe(fs.createWriteStream(path+'.bak'));
+  fs.copy(path, path+'.bak', true);
+  //fs.writeFileSync(path, books);
+  fs.write(path, books);
+}
+function processCSS(config) {
+  // compile, minify and copy over all CSS files
+
+}
+function parse_final_book_html(bookdata, config){
+  var $ = cheerio.load(bookdata);
+  var bookobj = {};
+
+  // parse metadata
+  var meta = $('meta[name=description]').data();
+  meta.description = $('meta[name=description]').attr('content');
+  if (!meta.description.length) console.log("Warning: ".red + "book does not have a description, see: ".green +
+     "<meta name='description' content=''... ".white );
+  if (!meta.language) meta.language='en';
+
+  // meta data for Alignment and Terms
+  if (!meta.alignmentURL) meta.alignmentURL='';
+  if (!meta.termsDictionary) meta.termsDictionary='';
+
+  meta.documentStage='Published';
+
+  // fix: se>shoghi on old ocean books
+  if (/se\-(.*?\-.*?)/.test(meta.bookid)) meta.bookid = meta.bookid.replace(/se\-(.*?\-.*?)/, 'shoghi-$1');
+
+  if (!meta.bookid) {
+    if(meta.docid) {meta.bookid = meta.docid; delete meta.docid;}
+    else {
+      // generate author code
+      var author = meta.author;
+      if (!author) {
+        console.log("Failure: ".red + "book must have an author to proceed, see: .".green + "data-author=''".white);
+        return '';
+      }
+      if (author.match(/shoghi/i)) author = 'shoghi';
+       else if (author.match(/abd/i)) author = 'abd';
+       else if (author.match(/bah[aá]/i)) author = 'baha';
+       else if (author.match(/b[aá]b/i)) author = 'bab';
+       else if (author.match(/universal house/i)) author = 'uhj';
+       else if (author.match(/comp/i)) author = 'comp';
+       else author = author.split(' ').pop().toLowerCase().substring(0,8);
+      // create acronym
+      var acr = meta.title.toLowerCase().split(' ').filter(function(word){
+        var cpos = 'about,above,across,after,against,around,at,before,behind,below,beneath,beside,besides,between,'+
+        'beyond,by,down,during,except,for,from,in,inside,into,like,near,of,off,on,out,outside,over,since,through,'+
+        'throughout,till,to,toward,under,until,up,upon,with,without'+ ',and,the,is,are,an,a'
+         .split(',');
+        return (cpos.indexOf(word) === -1);
+      }).map(function(word){
+        return word.substring(0,1);
+      }).join('').substring(0,4);
+      meta.bookid = author+'-'+acr+'-'+meta.language;
+    }
+  }
+  // if not publisher given, detect common Baha'i authors for Ocean
+  if (!meta.publisher) {
+    if (meta.author.match(/shoghi|baha|bab|báb|abd|qur/i)) meta.publisher = 'Ocean:bahai-education.org';
+      else meta.publisher = 'FFA:firm-foundation.org';
+  }
+  meta.brand = meta.publisher.split(':')[0];
+  meta.publisherUrl = meta.publisher.split(':')[1];
+
+
+  // for optional values, assign emtpy string if missing
+  if (!meta.titleShort) meta.titleShort = '';
+  if (!meta.subtitle) meta.subtitle = '';
+  // for weight, organize by author or category
+  if (!meta.weight) {
+    var auth = meta.bookid.split('-').shift();
+    if (['bab','baha'].indexOf(auth)>-1) meta.weight = 1;
+     else if (['abd'].indexOf(auth)>-1) meta.weight = 2;
+     else if (['shoghi', 'comp'].indexOf(auth)>-1) meta.weight = 3;
+     else if (['muhammad','muh','qur','quran'].indexOf(auth)>-1) meta.weight = 4;
+     else if (['bible','gita','torah','pali','hadith','guru','tao', 'sacred'].indexOf(auth)>-1) meta.weight = 5;
+      else meta.weight = 10;
+  }
+  if (!meta.acronym) meta.acronym = meta.bookid.split('-')[1];
+  if (!meta.authorCode) meta.authorCode = meta.bookid.split('-')[0];
+  if (!meta.logo) meta.logo = meta.publisher.toLowerCase() + (meta.language!='en'?'-'+meta.language:'') + '-logo.svg';
+  if (!meta.cover) meta.cover = meta.acronym + (meta.language!='en'?'-'+meta.language:'') + '.png';
+  meta.langinfo = lang.getLanguageInfo(meta.language);
+
+  // calcualte missing fields
+  if (!meta.originalBookid) {
+    meta.originalBookid = meta.bookid; meta.originalLanguage = meta.language; meta.translator ='';
+  }
+  if (!meta.translator) meta.translator = '';
+  if (meta.language === 'en') {
+    meta.authorEnglish = meta.author;
+    meta.titleEnglish = meta.title;
+  }
+  if (meta.publisher.split(':').shift()==='Ocean') {
+    if (!meta.publishedSource) meta.publishedSource = '© Bahá’í International Community:reference.bahai.org';
+    if (!meta.subject) meta.subject='Religion:Bahá’í';
+  }
+  meta.source = meta.publishedSource.split(':')[0];
+  meta.sourceUrl = meta.publishedSource.split(':')[1];
+
+  // split html up into sections ($.html() grabs outerHTML)
+  var sections = [];
+  $('section').not('.titlepage,.contents').each(function() { sections.push($.html(this)); });
+  // with each section extract components
+  sections.some(function(section_html, index) {
+    var section = {}, classes; //
+    $ = cheerio.load(section_html);
+
+    // parse out section content
+    section.content = [];
+    $('div.par, p, .subhead, hr, .section, aside.fn').each(function(index) {
+      var obj = parse_content_block($.html(this), config, meta);
+      obj.index = index;
+      section.content.push(obj);
+    });
+
+    // parse out section header
+    section.data = [];
+    section.isContent = $('section').hasClass('content');
+    section.meta = $('section').data();
+    section.meta['content'] = $('section').hasClass('content');
+    section.id = $('section').attr('id');
+    section.header = {};
+    section.header.classes = [];
+    if ($('section div.section_header').attr('class')) {
+      section.header.classes = $('section div.section_header').attr('class').split(/[\s]+/)
+        .filter(function(str){ return str != 'section_header'; });
+    }
+
+  console.log(section.id, section.isContent);
+
+
+    //list of headers;
+    section.header.headers = [];
+    $('section').find('div.section_header h3').each(function(index) {
+      var obj = {
+        classes: [],
+        title:   $(this).html().trim(),
+        id:      section.id +'_'+ index
+      };
+      if ($(this).attr('class')) {
+        obj.classes = $(this).attr('class').trim().split(/[\s]+/);
+        obj.type = obj.classes.shift();
+      }
+      section.header.headers.push(obj);
+    });
+  /*
+    section.header.headers = [];
+    if (headers = $('section').find('div.section_header').html()) {
+      var headers = cheerio.load(headers);
+      section.header.headers = headers.split("\n")
+      .map(Function.prototype.call, String.prototype.trim)
+      .filter(function(str){ return str.length; })
+      .map(function(str, index){
+        var item = {};
+        item.classes = str.replace(/<h3[\s]+class=["'](.*?)["'].*?<\/h3>/, '$1').trim().split(/[\s]+/)
+            .map(Function.prototype.call, String.prototype.trim);
+        item.type = item.classes.shift();
+        item.title = decodeEntities(str.replace(/<h3.*?>(.*?)<\/h3>/, '$1').trim());
+        return item;
+      });
+    }*/
+    section.classes = $('section').attr('class').split(/[\s]+/)
+      .filter(function(str){ return str != 'content'; });
+    section.meta['sectiontype'] = section.classes.shift();
+    for (var property in section.meta) {
+      if (section.meta.hasOwnProperty(property)) {
+        section.data.push({'name': property, 'value': section.meta[property]});
+      }
+    }
+    sections[index] = section;
+  });
+
+
+  bookobj.meta = meta;
+  bookobj.sections = sections;
+
+  return bookobj;
+}
+
+function renumber_word_ids(html) {
+  var number = 0;
+
+  /*
+  $ = cheerio.load(html);
+  $('.w').each(function() {
+    id = $(this).attr('id');
+    number++;
+    html = html.replace("'"+id+"'", "'w"+ number +"'");
+  });*/
+
+  html = html.replace(/'_word_id_'/gi, function (){return "'_"+ (number++).toString(36) +"'" ;});
+
+  return html;
+}
+
+function build_html(book, config) {
+  var content = [];
+  book.sections.forEach(function(section){
+    content.push(build_section(section, config, book.meta));
+  });
+  book.bookcontent = content.join("\n\n\n\n");
+
+  book.config = config;
+    // generate table of contents
+  //var book.toc = decodeEntities(build_toc(html));
+  book.toc = '';
+  // apply to book template
+  var html = mark.up(config.templates.ocean_book, book);
+
+  // run entire content through re-numbering routine for expiremental numbering
+  html = renumber_word_ids(html);
+
+  return html;
+}
+//context.bookcontent = decodeEntities(content);
+function build_section(section, config, meta) {
+  var html = '';
+  // wrap each header title in a language block
+  section.header.headers.forEach(function(obj, index){
+    section.header.headers[index].title = build_languageblock(obj.title, obj.id, config, meta, section.isContent);
+  });
+  section.content.forEach(function(obj, index){
+    section.content[index] = build_content_block(obj, config, meta, section.isContent);
+  });
+  section.bookmeta = meta; // don't use this at the moment
+  // for language or author overrides?
+  html = mark.up(config.templates.section, section);
+  return html;
+}
+function  build_content_block(obj, config, meta, isContent) {
+  var result = '';//  >>> unidentified >>> "+JSON.stringify(obj);
+  if (obj.type === 'subhead') {
+    obj.content = build_languageblock(obj.content, obj.id, config, meta, isContent);
+    result = mark.up(config.templates.subheader, obj);
+  } else if (obj.type === 'section') {
+    obj.content = build_languageblock(obj.content, obj.id, config, meta, isContent);
+    result = mark.up(config.templates.sectionheader, obj);
+  } else if (obj.type === 'footnote') {
+    obj.content = build_languageblock(obj.content, obj.id, config, meta, isContent);
+    result = mark.up(config.templates.aside, obj);
+  } else if (obj.type === 'par') {
+    obj.content = build_languageblock(obj.content, obj.id, config, meta, isContent);
+    result = mark.up(config.templates.paragraph, obj);
+  } else if (obj.type === 'rule') {
+    result = mark.up(config.templates.rule, obj);
+  }
+  if (result === '') console.log('Warning, unidenfitied block: '.red+ JSON.stringify(obj));
+  return result;
+}
+function parse_content_block(html, config, meta) {
+  var $ = cheerio.load(html);
+  var block = {}, index;
+  // detect block type - p, div.p, .section, .subhead, hr, aside.fn
+  // for paragraphs, parse contents
+  var tag = $('*').get(0).tagName;
+  if ($(tag).hasClass('subhead')) block.type = 'subhead';
+   else if ($(tag).hasClass('section')) block.type = 'section';
+   else if (tag==='hr') block.type = 'rule';
+   else if (tag==='aside') block.type = 'footnote';
+   else block.type = 'par';
+  block.id = $(tag).attr('id');
+  // get classes list, remove par, section and subhead
+  block.classes = ($(tag).attr('class') ? $(tag).attr('class').split(/\s+/) : []);
+  if (index = (block.classes.indexOf('par') || block.classes.indexOf('section')
+       || block.classes.indexOf('subhead') || block.classes.indexOf('fn')) ) {
+    block.classes.splice(index, 1);
+  }
+  // get data object array
+  block.data = [];
+  block.meta = $(tag).data();
+  for (var property in block.meta) {
+    if (block.meta.hasOwnProperty(property)) {
+      block.data.push({'name': property, 'value': block.meta[property]});
+    }
+  }
+  // gather any block content
+  block.content = $(tag).html().trim();
+
+  return block;
+}
+
+function build_toc(html) {
+  var $ = cheerio.load(html);
+  var toc='', title, id = '', section_num = '', date, level, toc_level, next_id, next_id_disp;
+  $(".toc, .toc2, .toc3").each(function(i) {
+    var isSectionHeader = ($(this).hasClass('section_header'));
+    if (isSectionHeader) title = $(this).find('.title').html();
+     else title = $(this).html().trim() ? $(this).html().trim() : $(this).data('title').trim();
+
+    // some .section headers will have section numbers, like chapter number
+    section_num = '';
+    if (isSectionHeader) section_num = $('#'+$(this).attr('id').slice(0, - 1)).data('sectionnum');
+     else section_num = $(this).data('sectionnum') ? $(this).data('sectionnum') : '';
+     section_num = section_num ? "<span class=''>" + section_num +'.</span> ' : '';
+
+    // next_id is the first paragraph of the section or following the subheader
+    if ($(this).tagName==='SPAN') next_id = $(this).parent('p').attr('id');
+     else next_id = $(this).nextAll('p[id], div[id].par').first().attr('id');
+     next_id_disp = next_id ? " &nbsp; <span class='ref'> (" + next_id +')</span> ': '';
+
+     if ($(this).hasClass('nonum')) next_id_disp = '';
+
+    // get id to for linking
+    id = $(this).attr('id');
+     id = id ? id : next_id; // link to next par id if we don't have a header id
+
+    // letters and talks may have dates
+    if (isSectionHeader) date = $('#'+$(this).attr('id').slice(0, - 1)).data('date');
+     else date = $(this).data('date');
+    date = date ? "<span class='date'> - " + date + '</span>' : '';
+
+    // if we have sub-headers, indent by setting them level to 'second'
+    level = ($(this).hasClass('section') || $(this).hasClass('header')) ? 'toc_first' : 'toc_second';
+     if ($(this).hasClass('toc')) level = 'toc_first';
+      else if ($(this).hasClass('toc2')) level = 'toc_second';
+       else if ($(this).hasClass('toc3')) level = 'toc_third';
+
+    // build TOC item if we had at least a title and in id to link to
+    if (title && id) toc = toc + "<li class='"+level+"'>"  +
+       section_num + " <a href='#" + id + "' title='" + title + "'>" + title + "</a>"+ date + next_id_disp + "</li>";
+  });
+
+  if (toc.length>1) {
+    // pull table of contents title from section attribute to make it easy to translate or modify
+    toc_title = '<h2 class="section">'+$("#section_toc").data('title')+'</h2>';
+    toc = toc_title + '<ul>' + toc + '</ul>  <hr class="screenonly">';
+  }
+
+  return toc;
+}
+
+function decodeEntities(html) {
+
+  // gather and translate all numeric entities
+  var list = html.match(/\&\#x.*?\;/g);
+  if (list) {
+    list = list.sort().filter(function(item, pos, ary) { return !pos || item != ary[pos - 1]; });
+    list.forEach(function(item, index) {
+      var re = new RegExp(item, 'g');
+      html = html.replace(re, String.fromCharCode(parseInt(item.replace(/[&#x;]/g, ''), 16)));
+    });
+  }
+  // verify success
+  if (/&#x.*?;/.test(html)) {
+    console.log('Warning: '.red + "Some unresolved html entities still detected. ", html);
+    console.log ("Replace list: ", list.join(', '), "\n\n");
+  }
+
+  html= html.replace(/&apos;/g, "'");
+  html= html.replace(/&quot;/g, '"');
+
+  // gather and translate all standard entities
+  var index;
+  list = html.match(/\&[a-z]+\;/g);
+  if (list) {
+    list = list.sort().filter(function(item, pos, ary) { return !pos || item != ary[pos - 1]; });
+    if ((index = list.indexOf('&amp;'))>-1) {
+      console.log("Deleting list item: "+index+" "+list[index]);
+      list.splice(index, 1); // why is this not deleting?
+    }
+    list.forEach(function(item, index) {
+      var re = new RegExp(item, 'g');
+      //html = html.replace(re, String.fromCharCode(parseInt(item.replace(/[&#x;]/g, ''), 16)));
+    });
+    if (list.length) console.log("Warning: ".red + "found some dangling HTML entities: ", list.join(', '));
+  }
+
+  return html;
+}
+
+function build_languageblock(text, id, config, meta, isContent) {
+  text = text.replace(/class="(.*?)"/g, "class='$1'");
+  // TODO: fix any other parsing glitches?  data-page=?  footnotes?
+  text = decodeEntities(text);
+
+  // span-id wrap all words
+  // only span-wrap this content if in section.content
+  if (id && isContent) text = spanidwrapwords(text, id);
+
+  var context = {
+    langinfo: meta.langinfo,
+    language: meta.language,
+    content: text
+  };
+  // if span.block found, loop through and process text
+  // else process text
+
+  return mark.up(config.templates.language_content, context);
+}
+
+/*
+  Tokenize words and wrap each in a span
+ */
+function spanidwrapwords(text, id, totalcount) {
+  var tokens = ocnparse.tokenizeString(text);
+  var word_count = 0;
+  var sent_count = 1;
+  var words = [];
+  var prev = '';
+  tokens.forEach(function(token) {
+    if (token.word.trim().length>0) {
+      if (isNewSentence(token, prev) && word_count>10) {word_count=1; sent_count++;
+        //console.log("New Sentence: ", prev, token);
+      }
+       else word_count++;
+      //token.id = id +'-'+ sent_count +'.'+ word_count;
+      token.id = '_word_id_'; // test: replacing all out later with a single regex
+      prev = token;
+    }
+  });
+  // step through tokens with and add any other fields
+  tokens.forEach(function(token) {
+    if (token.id) token.word = "<w id='"+token.id+"'>"+token.word+"</w>";
+    words.push(token.prefix + token.word + token.suffix);
+  });
+  return words.join('');
+}
+
+
+
+/*
+   Load object containing all templtes in the ./templates folder
+ */
+function loadTemplates() {
+  // load all templates in the templates folder
+  var templates = {};
+  fs.expand(__dirname+"/templates/*.tpl.html").forEach(function(item, index) {
+    var name = item.split('/').slice(-1)[0].replace(/\.tpl\.html/, '');
+    templates[name] = fs.read(item);
+  });
+  return templates;
+}
+
+
+
+/*
+   Given two tokens, determine if the token is likely the first word of a new sentence.
+ */
+function isNewSentence(token, prev) {
+  if (!prev) return true;
+  var isCaps = token.word.slice(0,1)===token.word.slice(0,1).toUpperCase();
+  var endPunc = prev.suffix.match(/[!?]/) || token.prefix.match(/[!?]/);
+  var endPeriod = prev.suffix.match(/[.]/) || token.prefix.match(/[.]/);
+  var prevLength = prev.word.length;
+  var prevAbbr = isAbbrv(prev.word); ///^(mr|mrs|dr)$/i.test(prev.word);
+  if (isCaps && endPunc) return true;
+  if (isCaps && endPeriod && (prevLength>1 && !prevAbbr)) return true;
+  return false;
+}
+/*
+    Match word agaisnt large list of English common abbreviations. Helpful for determining if a full stop is a sentence ender.
+ */
+function isAbbrv(word) {
+  var abbv = "^(abbr|abr|acad|adj|adm|adv|agr|agri|agric|anon|app|approx|assn|bact|bap|bib|bibliog|biog|biol|bk|bkg"+
+    "|bldg|blvd|bot|bp|brig|gen|bro|bur|cal|cap|capt|cath|cc|cent|cf|ch|chap|chem|chm|chron|cir|circ|cit"+
+    "|civ|clk|cm|co|col|colloq|com|comdr|comr|comp|con|cond|conf|cong|consol|constr|cont|cont|contd|corp"+
+    "|cp|cpl|cr|crit|ct|cu|cwt|dec|def|deg|dep|dept|der|deriv|diag|dial|dict|dim|dipl|dir|disc|dist|dist"+
+    "r|div|dm|do|doc|doz|dpt|dr|dup|dupl|dwt|ea|eccl|eccles|ecol|econ|ed|elec|elect|elev|emp|enc|ency|en"+
+    "cyc|encycl|eng|entom|entomol|esp|est|al|etc|seq|ex|exch|exec|lib|fac|fax|fed|fem|ff|fol|fig|fin|fl|"+
+    "fn|fr|ft|fwd|gm|gal|gall|gaz|gen|geog|geol|geom|gloss|gov|govt|gr|gram|hab|corp|her|hist|hort|hr|ht"+
+    "|ib|ibid|id|illus|imp|in|inc|loc|cit|ins|inst|intl|introd|is|jour|jr|jud|kg|kilo|km|kt|kw|lab|lang|"+
+    "lat|lb|lib|lieut|lt|lit|ltd|lon|long|mach|mag|maj|mas|masc|math|mdse|mech|med|mem|memo|mfg|mfr|mg|m"+
+    "g|mgm|mgr|mi|misc|ml|ml|mm|mo|mod|ms|mss|mt|mts|mus|nn|narr|natl|nav|neg|no|seq|pag|obit|obj|op|cit"+
+    "|orch|orig|oz|pp|par|pat|patd|pct|pen|perf|philos|phys|pl|ppd|pref|prin|prod|tem|pron|pseud|psych|p"+
+    "sychol|pt|pub|publ|pwt|qr|qt|qt|qtd|ques|quot|rbi|RBI|quot|rec|ref|reg|rel|rev|riv|rpm|rps|rpt|sc|s"+
+    "ch|sci|sculp|sculp|sec|secy|sect|ser|serg|sergt|sgt|sic|sing|sol|sp|sq|sub|subj|sup|supt|surg|sym|s"+
+    "yn|tbs|tbsp|tel|temp|terr|theol|topog|trans|tr|treas|trig|trigon|tsp|twp|ult|univ|usu|uv|var|vb|ver"+
+    "s|vet|viz|vet|vol|vox|pop|vs|vs|vss|wpm|writ|wt|yd|yr|zn|mr|ms|mrs|sir)$";
+  var re = new RegExp(abbv, 'i');
+  return re.test(word);
+}
+

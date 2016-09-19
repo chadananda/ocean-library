@@ -1,0 +1,20 @@
+
+
+div.txt {
+  line-height: 1.75em !important;
+}
+
+div.par {
+  margin-bottom: 1em !important;
+}
+
+w.term {
+  padding: 5px; padding-top:0; padding-bottom: 0;
+  border: 1px solid silver;
+  border-radius: 5px;
+
+}
+
+w.flag {
+  background-color: red;
+}

@@ -1,0 +1,195 @@
+/*  CSS Rules specifically for Audio recording "Teleprompter" view */
+
+
+body.audio_reading {
+  padding-left: 3em !important;
+  position: relative;
+  font-size: 14pt;
+  background-color: #fafafa;
+}
+
+body.audio_reading section.content p, body.audio_reading section.content div.par,
+body.audio_reading section.content h1, body.audio_reading section.content h2, body.audio_reading section.content h3,
+  body.audio_reading section.titlepage h1, body.audio_reading section.titlepage h2, body.audio_reading section.titlepage h3,
+  body.audio_reading section.content h4,
+ body.audio_reading section.content div.section_header h3,
+ body.audio_reading section.content div.section_header h2,
+ body.ocean.audio_reading section.titlepage h1.title,
+ body.audio_reading section.content h1,
+ body.audio_reading section.content h2,
+ body.audio_reading section.content h3,
+ body.audio_reading section.content h4,
+ body.audio_reading section.content h5
+   {
+    width: 768px !important;
+    max-width: 768px !important;
+    min-height: 30px !important;
+    padding: 10px !important;
+    font-family: Sanchez !important;
+    text-shadow: none !important;
+    margin-left:60px !important;
+    line-height: 1.5em !important;
+    font-size: 14pt !important;
+}
+/* reset sizes for some remaining elements that did not get it */
+body.audio_reading section.content p, body.audio_reading section.content div.par,
+body.audio_reading section.content h2, body.audio_reading section.content h3,
+body.audio_reading section.content h4, body.audio_reading section.content h5 {
+  line-height: 1.5em !important;
+ font-size: 14pt !important;
+}
+
+body.audio_reading section.content div.section_header {
+  margin-left: 0 !important;
+}
+
+
+
+
+/* adjust paragraph numbering  */
+body.ocean p[id]:not(.noid):before, body.ocean div.par[id]:not(.noid):before {
+  left: -40px;
+}
+
+/* Reading instructions block */
+body.ocean.audio_reading div.reading_instructions {
+  font-family: Sanchez;
+  border: 5px solid #a1c1a1;
+  border-radius: 25px;
+  margin:3em !important; margin-left:0;
+  padding: .5em;
+  background: white;
+  margin-bottom: 10em !important;
+  page-break-after: always;
+  font-size: 12pt !important;
+  padding-top:0; padding-left:0;
+  margin-left:-2em !important;
+  max-width: 55em !important;
+}
+div.reading_instructions li, div.reading_instructions p, div.reading_instructions h1  {
+  margin-left: 1em !important; line-height: 1em !important;
+}
+div.reading_instructions .wordcount {font-size: 14pt; margin-left: 2em !important; border-bottom: 2px solid silver;}
+div.reading_instructions button#soundcheck_btn {
+  font-size: 14pt !important;  cursor: pointer;
+  font-family: Sanchez !important;
+  background-color: #fafafa; border: 1px solid gray; border-radius: 5px;
+ }
+div.reading_instructions button#soundcheck_btn:hover {box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);}
+
+section, h3, h2, h1, h4, h5 {
+  position: relative;
+}
+
+.audiocontrols_stop {
+  width: 70px; height: 30px; position: relative; font-size: 24pt;
+  /*position: absolute; right: 10px; bottom: 10px;*/
+  float: right; margin: 0px; margin-left: 10px;
+  text-shadow: none !important;
+  display: none;
+}
+.audiocontrols, .audiocontrols_save {
+  width: 60px; max-width: 60px; height: 30px; position: absolute; left: -117px; top: 0;
+  font-size: 24pt;
+  padding:0; margin:0;
+  text-shadow: 0; cursor: pointer;
+}
+.audiocontrols_save {
+  top: 0; left: auto; right: -80px;
+  display: none;
+  color: rgba(255, 0, 0, 0.39);
+}
+
+.hasAudio {
+  background-color: #f5f4f4;
+  padding: 20px !important; border-radius: 10px;
+  color: rgba(0, 0, 0, 0.5) !important;
+  border: 3px solid silver;
+}
+
+.playbutton, .recordbutton, .stopbutton, .finishedrecordingbutton, .finishedrecordingcontinuebutton {
+  color: rgba(61, 105, 61, 0.53); font-size: 24pt; cursor: pointer;
+}
+.recordbutton, .finishedrecordingbutton, .finishedrecordingcontinuebutton {color: rgba(255, 0, 0, 0.39);}
+.stopbutton {display: none;}
+.needsAudio {
+  border: 3px solid #f5f4f4;
+  padding: 20px !important; border-radius: 10px;
+}
+.needsAudio .playbutton  {display: none;}
+
+.clearfix:after {
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+
+.needsSaving {
+  background-color: #fdd !important;
+}
+
+
+
+.blink {
+  animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+  50% { opacity: 0.5; }
+}
+
+#countdown {
+  position: fixed;
+  left:-60px; top:0;
+  width: 120%; height: 300% !important;
+  background-color: rgba(0,0,0, 0.40) !important;
+  z-index: 1000;
+  display: none;
+}
+
+#countdown .content {
+  position: fixed;
+  width: 1200px;
+  text-align: center !important;
+  top: 150px;
+  font-size: 200px;
+  font-family: Sanchez;
+  font-weight: bold;
+  color: rgba(6, 3, 3, 0.66);
+  text-shadow: 0 0 20px #fff, 0 0 20px #fff, 0 0 20px #fff, 0 0 20px #fff;
+
+}
+#nowRecording {
+  font-size: 30pt; padding: 5px;
+  position: fixed;
+  color: red;
+  right: 0; bottom: 0;
+  display: none;
+  animation: blinker 1s linear infinite;
+}
+
+body.ocean.audio_reading {
+  background-color: #eee !important;
+}
+body.ocean.audio_reading.isRecording {
+  background-color: gray !important;
+}
+
+body.ocean.audio_reading .needsAudio {
+  background-color: #fff;
+}
+
+body.ocean.isRecording .needsAudio, body.isRecording .hasAudio {
+  background-color: gray;
+  border-color: darkgray;
+}
+
+body.ocean.isRecording .isRecording {
+  background-color: white !important; /* rgba(255, 0, 0, 0.05) !important;*/
+  box-shadow: 0px 0px 24px 4px rgba(255,255,255,1);
+}
+
+
+
+

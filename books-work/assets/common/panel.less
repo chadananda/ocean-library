@@ -87,7 +87,7 @@
        font-variant: normal !important;
     }
 
-    p, div.par, .section_header {margin-bottom: 2em !important; border-bottom: 2px solid #ddd; padding-bottom: 2em;}
+    p, div.par, .section_header {margin-bottom: 2em !important;  padding-bottom: 2em;}
     .section_header {
        margin-top: 6em !important;
        h3.title, h3.subtitle, h3.sectionnum, h3.date {
@@ -99,7 +99,7 @@
        margin-left:60px !important;
     }
 
-    hr {display: none !important;}
+    hr, .noaudio {display: none !important;}
 
     h1.section, h2.section, h3.section {
       margin-left:60px !important;
@@ -111,30 +111,11 @@
 
     .sentence_seperator {color: #ccc;}
 
-    div.reading_instructions {
-        font-family: Sanchez;
-        border: 5px solid #a1c1a1;
-        border-radius: 25px;
-       // box-shadow: 10px 10px 5px #ccc;
-        margin:3em !important;
-        padding: .5em;
-        background: white;
-        li {margin-left: 2em}
-        margin-bottom: 10em !important;
-        page-break-after: always;
 
-    }
 
     .sent_bk {margin-bottom: 1em; display: block;}
 
-    .audioreader {
-      width: 30px; height: 30px; position: absolute; left: -111px; top: -30px; color: silver;
-      text-shadow: 0px 0px 5px #fff, 0px 0px 6px #fff, 0px 0px 5px #fff, 0px 0px 7px #fff, 0px 0px 8px #fff
-          , 0px 0px 9px #fff, 0px 0px 10px #fff, 0px 0px 11px #fff ;
-      &:hover {
-        cursor: pointer;
-      }
-    }
+
 
     span.tts {border-bottom: 1px solid navy !important; color: navy;}
     span.tts:hover {background-color: yellow;}

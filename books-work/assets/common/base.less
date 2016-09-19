@@ -1,6 +1,4 @@
 
-
-
 @import "fonts.less";
 
 // font awesome
@@ -13,7 +11,7 @@
 
 // Color: white
 @main_text_color: lighten(black, 10%);
-@main_background_color: darken(white, 3%);
+@main_background_color: darken(white, 1%);
 @secondary_color: DarkOliveGreen;
 @grayed_color: fadeout(@main_text_color, 30%);
 @link_color: navy;
@@ -51,14 +49,17 @@
 /* global for all Ocean content */
 body.ocean {
   font-size: @main_font_size;
-  background-color: @main_background_color;
-  color: @main_text_color;
+  //background-color: @main_background_color;
+  //color: @main_text_color;
   padding-right: 1em;
   div {margin:0; padding:0;}
   a { // default link style
     text-decoration: none; color: @link_color;
     &:visited {text-decoration: none; color: @link_color;}
     &:hover {text-decoration: underline;}
+  }
+  .fullwidth img, img.fullwidth {
+    width:90%; margin-left: 5%; margin-right:5%
   }
   hr { // Section divider - TODO: add some more subclass styles
     display: block; border: 0; margin: 3em 0;   height: 35px;
@@ -68,6 +69,37 @@ body.ocean {
     &.small {background: url(hr2.png) 50% 0 no-repeat; background-size: 54px 8px;}
     &.compact {margin: 1em;}
   }
+  pre {
+    font-size: @main_font_size * .65;
+  }
+  h1,h2,h3,h4 {margin-left: 60px; margin-right: 60px;}
+  h1 {font-size: @main_font_size * 2.5 !important;}
+  h2 {font-size: @main_font_size * 2 !important;}
+  h3 {font-size: @main_font_size * 1.5;}
+  h4 {font-size: @main_font_size * 1.25;}
+  .allcaps {text-transform: uppercase;}
+  .smallcaps {font-variant: small-caps;}
+
+
+
+  .illustration {
+    text-align: center !important;
+    img {margin-left:auto !important; margin-right:auto !important;  padding-bottom: .75em; display: block; width: 80%;
+        max-width: 400pt; max-height: 600pt; }
+    .med img  {width: 60%;}
+    .small img {width: 40%;}
+    .full img {width: 96%;}
+  }
+  .centerquote {margin-left: auto !important; margin-right: auto !important; width: 20em;}
+
+  .list {
+    padding-left: 3em !important; white-space: pre-line; line-height: 1.5em !important;
+    .blockquote {padding-left: 6em !important;}
+  }
+
+  .nomargin-bottom {margin-bottom: 0 !important;}
+  .nomargin-top {margin-top: 0 !important;}
+  .nomargin {margin-bottom: 0 !important;margin-top: 0 !important;}
 
 
   table.basic {
@@ -102,18 +134,14 @@ body.ocean {
   // title page and front matter
   section.titlepage {
     font-family: @main_header_font;
-    margin:0; margin-bottom: 10em;
+    margin:0; margin-bottom: 14em;
     text-align: center;
     div,h1,h2,h3 {text-align: center; width: 100%; padding: 0; margin:0; margin-bottom:.5em; line-height: 1em; font-weight: normal;}
 
     .cover {
-      width: 80%; max-width: 30em;
+      width: 80%; max-width: 10em !important;
       opacity: 0.8;
       z-index: -100;
-      @media only screen {
-        -webkit-box-reflect: below -43px -webkit-gradient(linear, center top, center bottom, from(transparent),
-          color-stop(80%, transparent), to(@main_background_color));
-      }
     }
     .title {
       font-size: 2em;
@@ -165,6 +193,11 @@ body.ocean {
       margin-left: 50pt;
       text-indent: -10pt
     }
+    li.toc_fourth {
+      font-size: 12pt; line-height: 1.25em;
+      margin-left: 70pt;
+      text-indent: -10pt
+    }
     .date {
       font-style: italic;
       font-variant: normal;
@@ -176,6 +209,24 @@ body.ocean {
       color: @grayed_color;
     }
   } // section.contents
+
+  section.copyright {
+    font-size: @main_font_size * .5;
+    margin: 5em; margin-left: auto; margin-right: auto;
+    padding: 3em; padding-bottom: 1em;
+    /*border: 1px solid gray;*/
+    box-shadow: 1px 1px 8px #bbb;
+    background-color: #EFEEEE;
+    border-radius: 10px;
+    color: @grayed_color;
+    .section_header {
+      margin-top:0;
+    }
+    width: 60%;
+    overflow-x: hidden;
+
+
+  } // section.copyright
 
   // Content Sections Blocks (will not be in a section.content inside app)
   p, div.par {
@@ -223,8 +274,8 @@ body.ocean {
     .editor-note, &.editor-note, .question, &.question {font-style: italic; color: @grayed_color;}
     .verse, &.verse  {white-space: pre-line;}
     .signature, &.signature, .reference, &.reference {text-align:right;}
-    .reference, &.reference {margin-top: 0; margin-bottom: 2em;}
-    .ref, .reference, &.reference {font-style: italic;  color: @grayed_color !important;}
+    .reference, &.reference {margin-top: -.25em !important; margin-bottom: 2em;}
+    .ref, .reference, &.reference { color: @grayed_color !important; font-size: 75% !important;}
 
     // footnote links
     a[data-fnid]:before {
@@ -245,12 +296,12 @@ body.ocean {
     .audio_highlight2,.hl2 {text-shadow: 0 0 1.5em @audio_highlight, 0 0 1.5em @audio_highlight;}
 
     // set color and fix quotes
-    q {
+    &, q, &q, aside q, h3 q, h2 q, && {
       padding:.15em;
       &.baha, &.bab, &.abd, &.sacred, &.bible, &.muhammad, &.quran, &.jesus,
       &.ali, &.tradition, &.husayn, &.muh {font-style: italic;}
       &:before, &:after {content:'';}  // remove displayed quotes since they do not copy/paste
-      color: @main_text_color;
+       //     color: @main_text_color; // oops, this overrides all our theme text colors
        &.baha {color: @author1_color;}
        &.bab {color: @author2_color;}
        &.abd {color: @author3_color;}
@@ -305,7 +356,9 @@ body.ocean {
 
 
   // Dropcaps
-  .dropcap:first-letter, .section_header + p[id]:not(.nodropcap):first-letter, .subhead + p[id]:not(.nodropcap):first-letter
+  .dropcap:first-letter,
+  &:not(.nodropcap) .section_header + p[id]:not(.nodropcap):first-letter,
+  &:not(.nodropcap) .subhead + p[id]:not(.nodropcap):first-letter
   {
     float: left; padding-left: 0; font-style: normal; text-indent: 0; color: @secondary_color;
     font-family: Romantik;
@@ -326,16 +379,16 @@ body.ocean {
 
   // footnote blocks, currently using aside.fn
   .fn[id] {
-    margin: 1em; margin-left: 130px;
+    margin: 1em; margin-left: 150px;
     text-align: justify; text-justify: distribute;
     position: relative;
-    font-size: 80% !important;
+    font-size: 95% !important;
     display: none;
     color: @grayed_color;
     &:before {
       display: block;
       margin-right: 1em;
-      font-style: italic; font-size: 80% !important;
+      font-style: italic; font-size: 70% !important;
       content: '[' attr(id) ']';
       vertical-align:top;
       position: absolute;
@@ -343,15 +396,18 @@ body.ocean {
       font-style: normal;
     }
     p {
-      margin-left:0; margin-right: 1em;
+      margin-left:0; margin-right: 1em; margin-top: 0; margin-bottom: 1em;
+      text-align: justify; text-justify: distribute;
+      font-size: 95% !important;
+      color: @grayed_color;
     }
   }
 
   // section header and sub-headers
-  .subhead, .section, .section_header {
-    margin:0; padding:0; margin-top: 2em; //margin-left: 46pt;
+  .subhead, .section, .section_header, .header {
+    margin-top:0; margin-bottom:0; padding:0; margin-top: 2em; //margin-left: 46pt;
     color: @secondary_color; text-align:center;
-    font-size: 22pt; font-weight: normal; font-family: @secondary_header_font;
+    /*font-size: 22pt;*/ font-weight: normal; font-family: @secondary_header_font;
     page-break-after: avoid !important;
   }
   // one section header at the beginning of each section. Override CSS if no page break needed
@@ -389,19 +445,25 @@ body.ocean {
     }
     & + div.par {page-break-before: avoid;} // avoid breaking right after subheader
   } // .section, .section_header
-  section.content, .section {page-break-before: always !important;}
+  section.content.chapter, .section {page-break-before: always !important;}
 
 
   // theme overrides - default is white but can also be "sepia" or "night"
+  &:not(.theme_sepia):not(.theme_night)  {
+    background-color: @main_background_color;
+    color: @main_text_color;
+  }
+
+  // theme overrides - default is white but can also be "sepia" or "night"
   &.theme_sepia {
-    background-color: @sepia_background_color;
-    color: @sepia_text_color;
+    background-color: @sepia_background_color !important;
+    color: @sepia_text_color !important;
   }
 
   &.theme_night {
     background-color: @night_background_color;
-    color: @night_text_color;
-    a, a:visited {color: @night_link_color}
+    color: @night_text_color !important;
+    a, a:visited {color: @night_link_color !important}
 
     section.titlepage .author, .subhead, .section, .section_header, .dropcap:first-letter,
       .section_header + p[id]:not(.nodropcap):first-letter, .subhead + p[id]:not(.nodropcap):first-letter
@@ -426,60 +488,65 @@ body.ocean {
 
 
 
-
-
   // font overrides
-  &:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo),
+  &:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter),
    &.font_gentium  {p, aside,div.par {font-family: GentiumPlus, 'Georgia', 'serif';   font-size: @gentium_fontsize;}}
   &.font_cabin    {p, aside,div.par {font-family: Cabin, 'arial', 'sans-serif';       font-size: @cabin_fontsize;}}
   &.font_sanchez  {p, aside,div.par {font-family: Sanchez, 'arial', 'sans-serif';     font-size: @sanchez_fontsize;}}
   &.font_bembo    {p, aside,div.par {font-family: Bembo, 'Georgia', 'serif';          font-size: @bembo_fontsize;}}
   &.font_dyslexic {p, aside,div.par {font-family: Dyslexic, 'arial', 'sans-serif';    font-size: @dyslexic_fontsize;}}
-
+  &.font_typewriter {p,aside,div.par {font-family: Typewriter, 'Courier', 'mono';    font-size: @typed_fontsize;
+    letter-spacing: .5px; }}
 
   // line heights: a multiplier based on font, and also we need to adjust the dropcap
   &:not(.line-height_2):not(.line-height_3) { // .line-height_1 is default
     // line height changes affect each font differently
-    &:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo),
+    &:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter),
      &.font_gentium  {p,aside,div.par {line-height: @gentium_lineheight; }}
     &.font_cabin    {p,aside,div.par {line-height: @cabin_lineheight;   }}
     &.font_sanchez  {p,aside,div.par {line-height: @sanchez_lineheight; }}
     &.font_bembo    {p,aside,div.par {line-height: @bembo_lineheight;   }}
     &.font_dyslexic {p,aside,div.par {line-height: @dyslexic_lineheight;}}
+    &.font_typewriter {p,aside,div.par {line-height: @typed_lineheight;}}
     // dropcap size and position need to be adjusted also
     //section.titlepage .author, .subhead, .section, .section_header,
-    .dropcap:first-letter, .section_header + p[id]:not(.nodropcap):first-letter,
-      .subhead + p[id]:not(.nodropcap):first-letter {font-size: 49pt; margin-top:17pt;}
+    .dropcap:first-letter,
+      &:not(.nodropcap) .section_header + p[id]:not(.nodropcap):first-letter,
+      &:not(.nodropcap) .subhead + p[id]:not(.nodropcap):first-letter {font-size: 49pt; margin-top:17pt;}
     // woodcut: {font-size: 39pt; margin-top:12pt;}
     .dropcap.acorn:first-letter  {font-size: 50pt; margin-top:12pt;}
   }
   &.line-height_2 {
     // line height changes affect each font differently
-    &:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo),
+    &:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter),
      &.font_gentium  {p,aside,div.par {line-height: @gentium_lineheight * 1.15; }}
     &.font_cabin    {p,aside,div.par {line-height: @cabin_lineheight * 1.15;   }}
     &.font_sanchez  {p,aside,div.par {line-height: @sanchez_lineheight * 1.15; }}
     &.font_bembo    {p,aside,div.par {line-height: @bembo_lineheight * 1.15;   }}
     &.font_dyslexic {p,aside,div.par {line-height: @dyslexic_lineheight * 1.15;}}
+    &.font_typewriter {p,aside,div.par {line-height: @typed_lineheight * 1.15;}}
     // dropcap size and position need to be adjusted also
     //section.titlepage .author, .subhead, .section, .section_header,
-    .dropcap:first-letter, .section_header + p[id]:not(.nodropcap):first-letter,
-      .subhead + p[id]:not(.nodropcap):first-letter {font-size: 54pt; margin-top:14pt;}
+    .dropcap:first-letter,
+      &:not(.nodropcap) .section_header + p[id]:not(.nodropcap):first-letter,
+      &:not(.nodropcap) .subhead + p[id]:not(.nodropcap):first-letter {font-size: 54pt; margin-top:14pt;}
     // woodcut: {font-size: 44pt; margin-top:13pt;}
     .dropcap.acorn:first-letter  {font-size: 52pt; margin-top:14pt;}
   }
   &.line-height_3 {
     // line height changes affect each font differently
-    &:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo),
+    &:not(.font_cabin):not(.font_cabin):not(.font_sanchez):not(.font_dyslexic):not(.font_bembo):not(.font_typewriter),
      &.font_gentium  {p,aside,div.par {line-height: @gentium_lineheight * 1.3; }}
     &.font_cabin    {p,aside,div.par {line-height: @cabin_lineheight * 1.3;   }}
     &.font_sanchez  {p,aside,div.par {line-height: @sanchez_lineheight * 1.3; }}
     &.font_bembo    {p,aside,div.par {line-height: @bembo_lineheight * 1.3;   }}
     &.font_dyslexic {p,aside,div.par {line-height: @dyslexic_lineheight * 1.3;}}
+    &.font_typewriter {p,aside,div.par {line-height: @typed_lineheight * 1.3;}}
     // dropcap size and position need to be adjusted also
     //section.titlepage .author, .subhead, .section, .section_header,
-    .dropcap:first-letter, .section_header + p[id]:not(.nodropcap):first-letter,
-      .subhead + p[id]:not(.nodropcap):first-letter {font-size: 63pt; margin-top:13pt;}
+    .dropcap:first-letter,
+      &:not(.nodropcap) .section_header + p[id]:not(.nodropcap):first-letter,
+      &:not(.nodropcap) .subhead + p[id]:not(.nodropcap):first-letter {font-size: 63pt; margin-top:13pt;}
     // woodcut: {font-size: 50pt; margin-top:15pt;}
     .dropcap.acorn:first-letter  {font-size: 59pt; margin-top:15pt;}
   }
@@ -488,6 +555,9 @@ body.ocean {
   // override bits especially for printing & layout
   .printonly {display: none;}
   .screenonly {display: block;}
+  .no-pad-above {padding-top:0 !important; margin-top:0 !important;}
+  .no-pad-below {padding-bottom:0 !important;  margin-bottom:0 !important;}
+  .no-pad {padding-bottom:0 !important; padding-top:0 !important;  margin-top:0 !important; margin-bottom:0 !important;}
   .pad-above {padding-top:4em !important;}
   .pad-below {padding-bottom:4em !important;}
   .margin-above {margin-top:3em !important;}
@@ -498,6 +568,11 @@ body.ocean {
   .rtl {text-align:right !important;}
   .larger {font-size: 120% !important;}
   .smaller {font-size: 80% !important;}
+
+  .editor_note, &.editor_note, [data-author='editor'] {color: #525252; font-size: (@main_font_size * .9) !important;}
+
+
+
 
   @media only print {
     //font-size: 10pt !important;
@@ -518,7 +593,8 @@ body.ocean {
     .pagebreak-before {display:block; page-break-after: always !important;}
     .pagebreak-after {display:block; page-break-after: always !important;}
 
-    .section {padding-top: 10em !important; margin-left: 5em !important; margin-right: 5em !important;}
+    .section {padding-top: 4em !important; margin-left: 1em !important; margin-right: 1em !important;}
+    .section.chapter {padding-top: 10em !important;}
 
     section.contents {
       margin-left: 0pt;

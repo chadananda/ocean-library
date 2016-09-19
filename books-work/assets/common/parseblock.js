@@ -5,7 +5,6 @@
 
 
 
-
 function Parseblock() {}
 
 Parseblock.prototype.wrapSpanWords = function(htmlblock, dictionary) {
@@ -30,7 +29,7 @@ Parseblock.prototype.isPossibleTerm = function(token) {
   if (token.search(/[áÁíÍúÚḤḥḌḍṬṭẒẓṢṣ\’\‘\'\`\-]/g) === -1) return false;
   // next, remove illegal characters and see if anything changed
   //  first, remove any tags
-  var src = token.replace(/(<([^>]+)>)/ig, '')
+  var src = token.replace(/(<([^>]+)>)/ig, '');
   // next, remove all not allowed characters
   var modified = src.replace(/[^a-zA-ZáÁíÍúÚḤḥḌḍṬṭẒẓṢṣ\’\‘\'\`\-]/g, '').replace(/[eo]/g, '');
   // if no change after deleting not allowed characters, this might be a term
@@ -161,7 +160,7 @@ Parseblock.prototype.splitTokens = function(tokens, delimeter_regex_str) {
     }
     return tokens;
   }
-}
+};
 
 Parseblock.prototype.tokenizeString = function(str, type) {
   if (!str) return [];
@@ -290,7 +289,7 @@ Parseblock.prototype.term2phoneme = function(term) {
   // replace remaining dot-unders
   //term = term.replace(/ḥ/g, 'h').replace(/ṭ/g, 't').replace(/ẓ/g, 'z').replace(/ṣ/g, 's');
   // connectors
-  term = term.replace(/-i-/g, 'i-')
+  term = term.replace(/-i-/g, 'i-').replace(/-u-/g, 'u-')
    .replace(/’(d-D|_kh-_kh|_sh-_sh|_ch-_ch|_zh-_zh|b-b|p-p|j-j|t-t|d-d|r-r|z-z|s-s|f-f|q-q|k-k|l-l|m-m|n-n|h-h)/, '$1') ;
   // remove beginning or ending ayn and hamza
   //term = term.replace(/^[’‘]/, '').replace(/[’‘]$/, '');
@@ -303,13 +302,16 @@ Parseblock.prototype.term2phoneme = function(term) {
   term = term.replace(/ih\b/, 'î').replace(/ihs\b/, 'îs').replace(/an\b/, 'in');
 
   // for some reason some terminal consonants need doubled
-  term = term.replace(/n\b/, 'nn');
+  //term = term.replace(/n\b/, 'nn');
 
   // cannot handle some doubled consonants
-  term = term.replace(/bb/, 'b');
+  //term = term.replace(/bb/, 'b');
 
   // apostrophe l can drop the pause
   term = term.replace(/’[l]/, 'l');
+
+  //
+  // term = term.replace(/_/, '');
 
 
 
@@ -317,26 +319,26 @@ Parseblock.prototype.term2phoneme = function(term) {
 
 
   var vowels = {
-    'ay' : 'eI',
-    'iy' : 'eI',
-    'î' : 'eI', // for ih endings
-    'a'  : '{1',
-    'á'  : 'A:',
-    'i'  : 'e',
-    'í'  : 'i:',
-    'o'  : '@U',
-    'ú'  : 'u:'
+  //  'ay' : 'eI',
+    'iy' : 'ay',
+    'î' : 'eh', // for ih endings
+  //  'a'  : '{1',
+    'á'  : 'ah',
+    'i'  : 'eh',
+    'í'  : 'ee',
+  //  'o'  : '@U',
+    'ú'  : 'oo'
   };
   var consonants = {
-    '_kh' : 'x',
-    '_zh' : 'Z',
-    '_sh' : 'S1',
-    '_ch' : 'tS',
+   // '_kh' : 'x',
+    '_zh' : 'dj',
+   // '_sh' : 'S1',
+   // '_ch' : 'tS',
     'b'   : 'b',
     'p'   : 'p',
-    'j'   : 'dZ',
-    't'   : 't_h',
-    'ṭ'   : 't_h',
+   // 'j'   : 'dZ',
+   // 't'   : 't_h',
+    'ṭ'   : 't',
     'd'   : 'd',
     'r'   : 'r',
     'z'   : 'z',
@@ -344,7 +346,7 @@ Parseblock.prototype.term2phoneme = function(term) {
     's'   : 's',
     'ṣ'   : 's',
     'f'   : 'f',
-    'q'   : 'k_h ',
+   // 'q'   : 'k_h ',
     'k'   : 'k',
     'l'   : 'l',
     'm'   : 'm',
@@ -353,10 +355,10 @@ Parseblock.prototype.term2phoneme = function(term) {
     'ḥ'   : 'h',
     'w'   : 'w',
     'v'   : 'v',
-    'y'   : 'j',
-    '’'   : '?',
-    '‘'   : '?',
-    '-'   : '? ?',
+   // 'y'   : 'j',
+    '’'   : ' ',
+    '‘'   : '',
+    //'-'   : '? ?',
   };
 
   var letters = [];
@@ -366,7 +368,7 @@ Parseblock.prototype.term2phoneme = function(term) {
      else if ((term.slice(0,2) === 'ay') && (term.slice(0,3) != 'ayá')) nextletter = 'ay';
      else if (term.slice(0,2) === 'iy') nextletter = 'iy';
 
-    letters.push(nextletter);
+    letters.push(nextletter.replace(/_/g, ''));
     term = term.slice(nextletter.length);
     nextletter = '';
   }
@@ -380,7 +382,7 @@ Parseblock.prototype.term2phoneme = function(term) {
     if (replacements[letter]) letters[i] = replacements[letter];
   }
 
-  term = '_ '+ letters.join(' ') +' _ ';
+  term = letters.join(' ');
 
   //console.log(original + ': \\Prn="'+term+'"\\ ');
   return term;
@@ -493,4 +495,13 @@ Parseblock.prototype.soundex = function(s) {
 
 
 
-module.exports = Parseblock;
+//module.exports = new Parseblock();
+
+
+//return new Parseblock();
+
+
+
+
+
+
