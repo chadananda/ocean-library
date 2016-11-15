@@ -61,8 +61,21 @@ AudioFlags.prototype = {
     self.dbname = dbname;
     self.remoteDB = remoteDB;
     self.flags = {};
+    var options = {cache: true};
+
+    if (!self.userAuth()) {
+      alert('Data can not be synced unless you provide an access key');
+    } else {
+      options.auth = {
+          username: localStorage.getItem('auth_user'),
+          password: localStorage.getItem('auth_key')
+      };
+    }
+
+    console.log(options);
+
     // initialize DB
-    self.db = new PouchDB(self.dbname);
+    self.db = new PouchDB(self.dbname, options);
     // later, let's set this up to live monitor for changes online
     self.loadFlags();
   },
@@ -81,6 +94,25 @@ AudioFlags.prototype = {
         });
       });
     });
+  },
+
+  userAuth: function(force) {
+    if (force) {
+      localStorage.removeItem('auth_user');
+      localStorage.removeItem('auth_key');
+    }
+
+    if (!localStorage.getItem('auth_user')) {
+      localStorage.setItem('auth_user',
+        prompt("Please enter your DB user name", 'thervernfulatcherrearems').trim());
+    }
+
+    if (!localStorage.getItem('auth_key')) {
+      localStorage.setItem('auth_key',
+      prompt("Please enter your DB access key", '').trim());
+    }
+
+    return (localStorage.getItem('auth_user') && localStorage.getItem('auth_key'));
   },
 
   loadFlags: function(bookid) {

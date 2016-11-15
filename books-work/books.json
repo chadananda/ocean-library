@@ -103,8 +103,8 @@
 
   {
     "title": "Memorials of the Faithful", "author": "‘Abdu’l-Bahá",
-    "words": 43904, "formatted": true, "proofed": false, "audio": true,
-    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/2.%20formatted-notproofed/Abdu%27l-Baha%2CMemorials-of-the-Faithful%2Cen.html"
+    "words": 43904, "formatted": true, "proofed": true, "audio": true,
+    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/abd-mf-en.html"
   },
 
   {
@@ -258,7 +258,7 @@
     "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/1.%20raw-notproofed/__Shoghi-Effendi%2CArohanui%20-%20Letters%20to%20New%20Zealand.txt"
   },
   {
-    "title": "Messages to Cananda", "author": "Shoghi Effendi",
+    "title": "Messages to Canada", "author": "Shoghi Effendi",
     "words": 17387, "formatted": false, "proofed": false, "audio": false,
     "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/1.%20raw-notproofed/__Shoghi-Effendi%2CMessages-to-Canada%2Cen.html"
   },
@@ -288,13 +288,19 @@
     "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/1.%20raw-notproofed/Shoghi%20Effendi%20-%20Letters%20to%20Latin%20America.pdf"
   },
 
+  {
+    "title": "Dear Co-worker; Messages to Benelux Countries", "author": "Shoghi Effendi",
+    "words": 29262, "formatted": false, "proofed": false, "audio": false,
+    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/1.%20raw-notproofed/__Shoghi-Effendi%2CDear-Co-worker%2C%20Messages%20to%20Benelux%20Countries%2Cen.txt"
+  },
+
 
 
 
   {
     "title": "The Dawn-Breakers", "author": "Nabíl",
     "words": 269778, "formatted": true, "proofed": true, "audio": true,
-    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/nabil-dawn-breakers-en.html"
+    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/nabil-db-en.html"
   },
 
   {

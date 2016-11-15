@@ -2562,6 +2562,7 @@ body.ocean div.par {
   text-justify: distribute;
   position: relative;
   font-style: normal;
+  /* &[data-displayid][dir="rtl"]:not(.noid):before { display: none; }*/
   /*
     .block, .preamble, .salutation, .sig, .date, .continued, .blockquote, .nocontent, &.nocontent,
      .prayer, &.prayer, .reference, &.reference,
@@ -2591,6 +2592,20 @@ body.ocean div.par[id]:not(.noid):before {
   padding-left: 15px;
   font-style: normal;
   color: rgba(26, 26, 26, 0.7);
+}
+body.ocean p[data-displayid]:not(.noid):before,
+body.ocean div.par[data-displayid]:not(.noid):before {
+  content: attr(data-displayid);
+}
+body.ocean p[id][dir="rtl"]:not(.noid):before,
+body.ocean div.par[id][dir="rtl"]:not(.noid):before,
+body.ocean p[data-displayid][dir="rtl"]:not(.noid):before,
+body.ocean div.par[data-displayid][dir="rtl"]:not(.noid):before {
+  right: -55px;
+  left: 0;
+  padding-right: 15px;
+  padding-left: 0;
+  direction: rtl;
 }
 body.ocean p[id]:not(.noid).bm:before,
 body.ocean div.par[id]:not(.noid).bm:before {

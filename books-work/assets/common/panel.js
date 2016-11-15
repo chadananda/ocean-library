@@ -10,13 +10,14 @@ if (/plaintext=true/.test(window.location) ||
    document.getElementsByTagName("html")[0].style.display = "none";
 }
 
-var library_list = 'https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/proofing-list.html';
+var library_list = 'https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/'+
+  'books-work/proofing-list.html';
 var TTS_URLS = {};
 
 // globals for recording
 var recorder = {};
 var recorded_blocks = {};
-var audio_context;
+//var audio_context;
 //var audio_urls = {}; // a list of audio urls saved to the server keyed by selector id
 var current_block;
 var BOOK_ID ='';
@@ -25,10 +26,10 @@ var block_map = {};
 //var READER = '';
 
 
-var AWS_ACCESS_KEY = 'AKIAIAWEUQHYHHO46P7Q'; //
-var AWS_KEY2 = 'H4bjBuf049SsPYe52XUvwn5iaA+H+PKGWQw'; // GIQYc
+var AWS_ACCESS_KEY = 'AKIAJQ6K5GDWLDAA4JTQ'; //
+var AWS_KEY2 = '/NQP60gBgaD22QS4WD4m';
 var AWS_BUCKET = 'ocean-books-audio';
-var DEFAULT_AUDIO_FORMAT = 'audio/wav';
+//var DEFAULT_AUDIO_FORMAT = 'audio/wav';
 
 
 
@@ -172,7 +173,9 @@ $(function() {
 });
 
 
-
+/* ============================================
+      AUDIO READING TELEPROMPTER MODE
+=============================================== */
 
 function _show_as_audioreading(){
   $('body').append("<div id='control_panel_hidden' class='screenonly'>i</div>");
@@ -185,19 +188,21 @@ function _show_as_audioreading(){
   $('.illustration').remove();
   $('span[data-pg]').remove();
   $('p[id], div.par[id], .dropcap').removeClass('dropcap').addClass('nodropcap');
-  $('body').addClass('audio_reading line-height_3 font_sanchez');
+  $('body').addClass('audio_reading line-height_3');
+  $('hr').remove();
+  //$('p').each(function(){if ($(this).text().trim().length<1) $(this).hide();});
 
   var body = $('body').html();
-  var sentence_split = /([a-záíúḥḍẓ’]{3}(?:["|’|”]{0,2})[.|!|?|:](?:["|’|”]{0,2}))((?: <a.*?<\/a> |\s+| <span.*?<\/span> )(?:["|‘|“]{0,2})[A-ZÁÍÚḤṬẒḌ])/g;
+  var sentence_split = /([a-záíúḥḍẓ’]{3}(?:["|’|”]{0,2})[.|!|?|:](?:["|’|”]{0,2}))((?: <a.*?<\/a> |\s+| <span.*?<\/span> )(?:["|‘|“]{0,2})[A-ZÁÍÚḤṬẒḌ])/gi;
   var sentence2_split = /((?:[.|!|?])(?:<\/q>))(\s{1,2})/g;
   var sentence3_split = /((?:<\/q>)(?:[.|!|?]))(\s{1,2})/g;
   var sentence_marker = '$1<span class="sent_bk"></span>$2';
   var semicolon_split = /([;])( {1,2})/g;
   var semicolon_marker = '$1&nbsp;&nbsp;&nbsp; <span class="sentence_seperator">/</span>&nbsp;&nbsp;&nbsp; $2';
   var phrase_split = /([,”])( {1,2})/g;
-  var phrase_marker = '$1&nbsp;&nbsp; $2';
+  var phrase_marker = '$1&nbsp; $2';
   var quote_split = /(<\/q>)( {1,2})/g;
-  var quote_marker = '$1&nbsp;&nbsp; $2';
+  var quote_marker = '$1&nbsp; $2';
 
   // remove letter numbering from sub headers
   body = body.replace(/(<h[1-5].*?subhead.*?>)\s?[a-dA-D]\.\s?(.*?<\/h[1-5]>)/g, '$1$2');
@@ -209,8 +214,9 @@ function _show_as_audioreading(){
 
   $('body').html(body);
   BOOK_ID = $('head meta[name=description]').attr('data-bookid');
+  BOOK_LANGUAGE = BOOK_ID.split('-').pop().trim().toLowerCase();
 
-  //alert(genUserPassword('GIQYc'));
+
   _get_user_credentials();
   _insert_reading_instructions();
   _insert_new_section_titles();
@@ -228,85 +234,236 @@ function _show_as_audioreading(){
     $.getScript('https://sdk.amazonaws.com/js/aws-sdk-2.5.3.min.js').done(function(){
       AWS.config.credentials = {};
       AWS.config.credentials.accessKeyId  = AWS_ACCESS_KEY;
-      AWS.config.credentials.secretAccessKey  = localStorage.getItem('aws_key');
+      AWS.config.credentials.secretAccessKey = AWS_KEY2 + localStorage.getItem('pass');
       AWS.config.region = 'us-west-1';
       _fetch_S3_audio_filelist(); // loads appropriate audio files from S3 and attaches URLS to blocks
     });
-
-    // https://ocean-books-audio.s3.amazonaws.com/fn.js
-    //
-    // load the audio processing API
-    //$.getScript('assets/common/audioRecord.js/src/audioRecord.js').done(function(){
-    //
-
-    //$.getScript('https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/addons/p5.dom.min.js').done(function(){
-    //}).fail(function(err){console.log('error loading p5 from CDN', err);});
-
-    // ogg version
-    $.getScript('assets/common/Recorderjs/build/recorder.min.js').done(function(){
-    }).fail(function(err){console.log('error loading recorder', err);});
-
     // wav version
-    $.getScript('assets/common/Recorderjs/build/recorder.min.js').done(function(){
+    /*
+    $.getScript('assets/common/Recorderjs/dist/recorder.js').done(function(){
+       _init_wav_recorder();
+    }).fail(function(err){console.log('error loading recorder', err);});
+    */
+    $.getScript('assets/common/Recorderjs_opus/build/recorder.min.js').done(function(){
+      //_init_ogg_recorder();
     }).fail(function(err){console.log('error loading recorder', err);});
 
   }).attr("href", "assets/common/audioreader.css");
-
-
 }
 
+function _insert_recording_controls_item(block, audioid) {
+  var recordBlock = "<span class='audiocontrols'>"+
+   " <i class='fa fa-play-circle-o playbutton'></i> " +
+   " <i class='fa fa-stop-circle-o stopbutton'></i> " +
+   " <i class='fa fa-microphone recordbutton'></i> </span>";
+  var stopRecordBlock = "<span class='audiocontrols_stop '> "+
+   " <i class='fa fa-ban cancelrecordingbutton'></i> "+
+   " <i class='fa fa-stop-circle-o finishedrecordingbutton'></i> "+
+   " <i class='fa fa-arrow-circle-o-down finishedrecordingcontinuebutton'></i> "+
+   " </span> <span class='clearfix'></span> ";
+  var verifySaveBlock = '<span class="audiocontrols_save">'+
+   ' <i class="fa fa-floppy-o blink savebutton"></i>'+ "</span>";
+  var selector = getDomPath(block).replace(/(.*?)\.(.*?)/g, '$1\\.$2');
+  $(block).prepend(recordBlock).append(stopRecordBlock).prepend(verifySaveBlock);
+  $(block).attr('data-audioid', audioid).attr('data-selector', selector);
+  block_map[selector] = {
+    'audioid': audioid,
+    'selector': selector,
+    'url': ''
+  };
+  _display_block_audio_state(selector);
+}
+
+function _split_block(selector) {
+  var content = $(selector).html();
+  var blockID = $(selector).attr('id');
+  var blockIDstr = $(selector).attr('id').replace(/(.*?)\.(.*?)/g, '$1\\.$2');
+  result = [{ sel: getDomPath(selector),
+              selStr: getDomPath(selector).replace(/(.*?)\.(.*?)/g, '$1\\.$2'),
+              cont: content,
+              prevBlock: '',
+              hasChildren: false,
+              subNum: 0}];
+  if (blockID && $(selector).text().length > 1000) {
+    //console.log('splitting paragraph');
+    var chunks = content.split('<span class="sent_bk"></span>');
+    var newChunks = [''];
+    for (var i=0; i<chunks.length; i++) {
+      var len = $('<div>').html(newChunks[newChunks.length-1]).text().length;
+      if (len < 300) newChunks[newChunks.length-1] += chunks[i].trim() + '<span class="sent_bk"></span> ';
+       else newChunks.push(chunks[i]);
+    }
+    //console.log('Split paragraph into '+ chunks.length+ ' sub-blocks');
+    // assign data for each chunk
+    if (newChunks.length>1) {
+      result[0].sel = '#'+blockID;
+      result[0].cont = newChunks[0];
+      result[0].selStr = '#'+ blockIDstr;
+      result[0].hasChildren = true;
+      for (i=1; i<newChunks.length; i++) {
+        result.push({
+          cont: newChunks[i],
+          sel: '#'+blockID +'_'+ i,
+          selStr: '#'+ (blockIDstr+'_'+i),
+          prevBlock: (i<2) ? '#'+blockIDstr : '#'+blockIDstr +'_'+ (i-1),
+          subNum: i
+        });
+      }
+    }
+   if (blockID=='f.3') console.log(result);
+  }
+
+  return result;
+}
+
+function auto_ids() {
+  var auto_id = 1;
+  $('section.titlepage, section.content').find('h1,h2,h3,h4,h5,div.par,p').not('.noaudio').not('[id]').each(function(){
+     $(this).attr('id', 'auto_'+ auto_id++).addClass('noid');
+  });
+}
+function _insert_recording_controls() {
+  var audioid = 1;
+  auto_ids();
+  $('section.titlepage, section.content').find('h1,h2,h3,h4,h5,div.par,p').not('.noaudio').each(function(){
+    if ($(this).text().trim().length<1) return; // ignore empty blocks
+    var blocks = _split_block(this);
+    for (key=0; key<blocks.length; key++) {
+      var obj = blocks[key];
+      if (obj.hasChildren) $(obj.selStr).html(obj.cont).addClass('subBlockParent');
+      else if (obj.subNum>0){ // append block
+
+        var blockType = $(this).prop("tagName").toLowerCase();
+        var block = '<'+blockType+' id="'+obj.sel.replace(/\#/,'')+'"></'+blockType+'>';
+        if ($(this).attr('id')=='f.3') console.log(obj.sel, block, obj.prevBlock, obj);
+        $(obj.prevBlock).after(block);
+        $(obj.selStr).addClass('subBlock').attr('data-prev', obj.prevBlock).html(obj.cont);
+      }
+      if ($(obj.selStr).length) {
+        //console.log(obj.selStr, audioid);
+        _insert_recording_controls_item(obj.selStr, audioid);
+      }
+    }
+    audioid++;
+  });
+  // record and play icons
+  $('html').append("<div id='countdown'><span class='content'>3</span></div>");
+  $('body').append("<div id='nowRecording'><i class='fa fa-microphone'></i></div>");
+  $('html').append("<audio id='audio_player'><source src='' type='audio/mpeg'></audio>");
+  // play/record container
+  $('div.audioreader').click(function(){
+    //var id = $(this).data('id');
+    //
+    // ?
+    //
+  });
+  $('.playbutton').click(function(){
+    var selector = $(this).parent().parent().attr('data-selector');
+    _play_audio(selector);
+  });
+  $('.stopbutton').click(function(){
+    var selector = $(this).parent().parent().attr('data-selector');
+    _stop_audio(selector);
+  });
+  $('.recordbutton').click(function(){
+    var selector = $(this).parent().parent().attr('data-selector');
+    _record_audio(selector);
+  });
+  // finished recording buttons
+  $('.finishedrecordingbutton').click(_stop_recording);
+  $('.finishedrecordingcontinuebutton').click(function(){
+    //pause(1000);
+    _stop_recording();
+    current_block = $(this).parent().parent().attr('data-selector');
+    $(current_block).removeClass('needsAudio');
+    _scrollto_next_needsAudio(true); // force start of next paragraph
+  });
+  $('.cancelrecordingbutton').click(function(){
+    _stop_recording(true);
+  });
+  // save button
+  /*
+  $('.savebutton').click(function(){
+    var selector = $(this).parent().parent().attr('data-selector');
+    _save_audio(selector);
+  }); */
+  $('#soundcheck_btn').click(function(){
+    //alert("Sorry, this feature is not yet implemented.");
+  });
+}
+
+function _insert_reading_instructions(){
+  var wpm = 113.45;
+  var costpm = 5.8694;
+  var count = _word_count(), time;
+  var minutes_total = Math.floor(count / wpm) + 1;
+   if ((minutes_total % 60) > 55) minutes_total += (60-(minutes_total % 60));
+  var hours = Math.floor(minutes_total / 60);
+   if (hours>0) hours = hours.toString() + (hours > 1 ? ' hours' : ' hour')
+  var minutes = minutes_total % 60; //Math.floor(minutes_total - (hours * 10800));
+   if (minutes < 5) minutes = 0;
+   if (minutes>0) minutes = minutes.toString() + (minutes>1 ? ' minutes' : ' minute');
+  var cost_total = (minutes_total * costpm).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 
+  if (hours && minutes) time = hours +' and '+ minutes;
+   else if (hours) time = hours;
+    else if (minutes) time = minutes;
+
+  var instructions = '\n\n<div class="reading_instructions">\n';
+  instructions += '<h1> Audio Reading Instructions </h1>';
+  instructions += '<div class="wordcount"> With <b>'+ _numberWithCommas(count) + ' words</b>, this book’s final audio should be about <b>'+
+     time + '.</b> </div>';
+
+  // instructions list
+  var list = [];
+  list.push('Find a quiet place to read with no low background noise such as washing machines or air vents. '+
+    'Make sure to always read in exactly the same location so audio is consistent between sessions. ');
+  list.push('If your microphone has a "gain" (input volume) adjustment, set it to about 75%. Do not speak directly into the microphone but very slightly off center.');
+ // list.push('Each time you begin a new session, repeat the sound check process: '+
+ //   ' &nbsp; <button type="button" id="soundcheck_btn">Sound Check <span class="fa fa-microphone fa-sm"></span></button>');
+  list.push('Do not read paragraph numbers, these are only for your convenience. '+
+    'Phrase markers and sentence breaks are likewise only for convenience.');
+  //list.push();
+  list.push('For Bahá’í transliterated terms:  &nbsp; <a href="http://bit.ly/bahai-pronunciation">http://bit.ly/bahai-pronunciation</a> ');
+  list.push('After each paragraph is recorded, listen to check for mis-reads and re-record if necessary.');
+  list.push('<button type="button" onclick="_scrollto_next_needsAudio(); return false" id="soundcheck_btn">'+
+    '<span class="fa fa-microphone fa-sm"></span> &nbsp; Scroll down to next block needing recorded </button>');
+  instructions += '<ul>\n  <li>'+ list.join('</li><br>\n   <li>') +'</li>\n</ul><br>';
+
+  instructions += '\n</div>\n\n';
+  $('body').prepend(instructions);
+}
+
+// audio recording functions
 function _get_user_credentials() {
-  // var password = 'GIQYc' == GIQYc413
   var reader = localStorage.getItem("reader_name");
   if (!reader) {
-    reader = window.prompt("First Name: ", "");
-    if (reader) localStorage.setItem('reader_name', reader);
+    reader = window.prompt("Please provide your full name: ", "");
+    if (reader) localStorage.setItem('reader_name', reader.trim().replace(/[ ]/g, '-'));
   }
   var password = localStorage.getItem("pass");
-  var passcheck;
-  if (!_passcheck(password)) do {
+  if (!password) do {
     password = window.prompt("Password: ", "");
-    passcheck = _passcheck(password);
     localStorage.setItem("pass", password);
   } while (!passcheck);
-  localStorage.setItem('aws_key', AWS_KEY2 + password.slice(0,5));
-  //console.log ('AWS SECRET KEY: '+ localStorage.getItem('aws_key'));
-  //console.log ('User Password '+ localStorage.getItem('pass'));
 }
-
-function _genUserPassword(code) {
-  // password should be five characters with a numeric checksum appended
-  var chk = 0;
-  for (var i = 0; i < 5; i++) chk += code.charCodeAt(i);
-  return code + chk;
-}
-
-function _passcheck(password) {
-  if ((!password) || (password.length<6)) return false;
-  //if (! (parseInt(password.slice(5)) ) return false;
-  var chk = 0;
-  for (var i = 0; i < 5; i++) chk += password.charCodeAt(i);
-  return (chk=== parseInt(password.slice(5)));
-}
-
 function _block_url(block){
   var selector = $(block).attr('data-selector');
-  var path_url = _current_book_storage_path() + _gen_block_audio_path(selector) + '.ogg';
+  var path_url = _current_book_storage_path() + _gen_block_audio_path(selector) + '.wav';
   return 'https://'+AWS_BUCKET+'.s3.amazonaws.com/'+path_url;
 }
-
-function _gen_block_audio_path(block, end_block){
+function _gen_block_audio_path(block, end_block) {
   var selector = $(block).attr('data-selector');
   end_block = end_block ? '-'+ $(end_block).attr('data-selector') : '';
   var audioid = $(selector).attr('data-audioid');
+  // subBlockNum = (subBlockNum > 1) ? subBlockNum = '-'+ subBlockNum.trim(): '';
   var MAX_TEXT_LEN = 40;
-  var sampletext = $(selector).text().replace(/\&nbsp\;/g, ' ').replace(/\n/g, ' ').replace(/\s+/g,' ')
-    .replace(/[^a-zA-Z áÁíÍúÚ-’]/g, '').trim().slice(0, MAX_TEXT_LEN).trim();
+  var sampletext = $(selector).text().replace(/\&nbsp\;/g, ' ').replace(/[\n\—]/g, ' ').replace(/\s+/g,' ')
+    .replace(/[^a-zA-Z áÁíÍúÚ-’\-0-9]/g, '').trim().slice(0, MAX_TEXT_LEN).trim();
   if (sampletext.length===MAX_TEXT_LEN) sampletext = sampletext.slice(0, sampletext.lastIndexOf(' '));
   sampletext = sampletext.trim().replace(/\s+/g, '-');
-  var result = ('000'+audioid).slice(-4)+','+selector+ end_block+','+sampletext;
+  var result = ('000'+audioid).slice(-4) +','+ selector+end_block+ ',' +sampletext;
   return result;
 }
 function _current_book_storage_path() {
@@ -317,14 +474,19 @@ function _current_book_storage_path() {
   var result = path.join('/') + '/';
   return result;
 }
-
-
 function _fetch_S3_audio_filelist(callback) {
+  AWS.config.credentials.secretAccessKey = AWS_KEY2 + localStorage.getItem('pass');
   var storage_path = _current_book_storage_path();
   var bucket = new AWS.S3({params: {Bucket: AWS_BUCKET }});
   bucket.listObjects(function (err, data) {
-    if (err) console.log('Could not load objects from S3', err);
-    else {
+    if (err) {
+      console.log('Could not load audio objects from S3', err);
+      var password = window.prompt("Password failed, please enter it again: ", "");
+      if (password) {
+        localStorage.setItem("pass", password);
+        _fetch_S3_audio_filelist(callback);
+      }
+    } else {
       //console.log('Raw S3 data: ', data);
       var items = data.Contents.filter(function(item){
         return ((item.Key.indexOf(storage_path)===0) && (item.Key.length > storage_path.length));
@@ -333,8 +495,8 @@ function _fetch_S3_audio_filelist(callback) {
       items.forEach(function(item){
         var selector = item.Key.replace(/.*?\,(.*?)\,.*?$/ig, '$1');
         //var block = $(selector); // extract selector from path name
-        var url = 'https://'+AWS_BUCKET+'.s3.amazonaws.com/'+
-          _current_book_storage_path()+ encodeURIComponent(item.Key)+'.ogg';
+        var url = 'https://'+AWS_BUCKET+'.s3.amazonaws.com/'+ encodeURIComponent(item.Key);
+        //console.log('Fetched S# URL: '+ url);
         //var audioid =  $(block).attr('data-audioid'); // don't trust the number in the url
         block_map[selector].url = url;
         block_map[selector].s3 = item;
@@ -344,43 +506,6 @@ function _fetch_S3_audio_filelist(callback) {
     }
   });
 }
-
-
-
-function _init_recording(block) {
-  var selector = $(block).attr('data-selector');
-  if (DEFAULT_AUDIO_FORMAT === 'audio/ogg') {
-    recorder = new Recorder({
-                encoderApplication: 2048,
-                encoderPath: 'assets/common/Recorderjs/build/encoderWorker.min.js',
-                encoderSampleRate: 48000,
-                resampleQuality: 10,
-                streamPages: false,
-                leaveStreamOpen: false,
-                maxBuffersPerPage: 80,
-                bufferLength: 16384,
-                numberOfChannels: 1 });
-    recorder.addEventListener( "dataAvailable", function(e){
-      var dataBlob = new Blob( [e.detail], { type: 'audio/ogg' } );
-      block_map[selector].data = dataBlob;
-      block_map[selector].url = URL.createObjectURL(block_map[selector].data); // add to id map
-    });
-    recorder.addEventListener( "streamError", function(e){
-      console.log('Error encountered: ' + e.error.name );
-    });
-    recorder.addEventListener( "streamReady", function(e){
-      // console.log('Audio stream is ready.');
-    });
-    recorder.initStream();
-  } else if (DEFAULT_AUDIO_FORMAT==='audio/wav') {
-    // recorder = new Recorder(source [, config])
-    audio_context;
-    recorder = {};
-
-
-  }
-}
-
 function _insert_new_section_titles() {
   var section_pattern = $('head meta[data-section-title]').data('section-title');
     // insert new section title
@@ -412,6 +537,338 @@ function _insert_new_section_titles() {
     $(this).find('div.section_header').html("<h3 class='title'>"+title+"</h3>");
   });
 }
+// after altering block audio, reset display state
+function _display_block_audio_state(selector) {
+  selector = $(selector).attr('data-selector');
+  if (!selector || !block_map[selector] || !$(selector).length) {
+    console.log('Error:  audio selector problem: '+selector);
+    return;
+  }
+  if (block_map[selector].url) { // has audio
+    $(selector).removeClass('needsAudio').addClass('hasAudio');
+    $(selector).find('.playbutton').show();
+  } else {  // needs audio
+    $(selector).removeClass('hasAudio').addClass('needsAudio');
+    $(selector).find('.playbutton').hide();
+  }
+}
+
+function _init_ogg_recorder(selector) {
+  //console.log('Initialized ogg recorder for: '+ selector);
+  recorder = new Recorder({
+              encoderApplication: 2048,
+              encoderPath: 'assets/common/Recorderjs_opus/build/encoderWorker.min.js',
+              encoderSampleRate: 48000,
+              resampleQuality: 10,
+              streamPages: false,
+              leaveStreamOpen: false,
+              maxBuffersPerPage: 80,
+              bufferLength: 16384,
+              numberOfChannels: 1 });
+  recorder.addEventListener( "dataAvailable", function(e){
+    console.log('EventListener( "dataAvailable")');
+    var dataBlob = new Blob( [e.detail], { type: 'audio/ogg' } );
+    if (!cancelRecording) {
+      block_map[selector].data = dataBlob;
+      block_map[selector].url = URL.createObjectURL(block_map[selector].data); // add to id map
+      _save_audio_ogg(selector);
+      _display_block_audio_state(selector);
+    } else console.log('recording canceled');
+  });
+
+  recorder.addEventListener( "streamError", function(e){
+    console.log('Error encountered: ' + e.error.name );
+  });
+
+  recorder.addEventListener( "streamReady", function(e){
+    // console.log('Audio stream is ready.');
+  });
+
+  recorder.initStream();
+}
+/*
+function _init_wav_recorder() {
+  // webkit shim
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+  window.URL = window.URL || window.webkitURL;
+  //
+  audio_context = new AudioContext;
+  //
+  navigator.getUserMedia({audio: true}, function(stream){
+    var input = audio_context.createMediaStreamSource(stream);
+    //input.connect(audio_context.destination); // Uncomment if you want the audio to feedback directly
+    recorder = new Recorder(input, {numChannels:1} );
+  }, function(e) {
+    console.log('No live audio input: ' + e);
+  });
+}
+*/
+function _save_audio_ogg(selector){
+  selector = $(selector).attr('data-selector');
+  // upload to S3
+  var filename = _current_book_storage_path() + _gen_block_audio_path(selector) + '.opus';
+  //_AWS_save(filename, 'audio/wav', block_map[selector].data);
+  var bucket = new AWS.S3({params: {Bucket: AWS_BUCKET}});
+  var params = {Key: filename,  ContentType: 'audio/wav', Body: block_map[selector].data};
+  // attempt to upload
+  console.log('Saving audio to path: '+ filename);
+  bucket.upload(params, function (err, data) {
+    if (err) console.log('S3 Save Error: ', err);
+    else {
+      // release resource
+      //console.log('Releasing old URL and discarding data blob');
+      //URL.revokeObjectURL(block_map[selector].url);
+      //block_map[selector].data.close();
+      //block_map[selector].data = '';
+      // success, update block_map and mark item
+      console.log('S3 Saved file successfully');
+      // update audio list  block_map[selector]
+      block_map[selector].url = 'https://'+AWS_BUCKET+'.s3.amazonaws.com/'+_current_book_storage_path()+
+        encodeURIComponent(_gen_block_audio_path(selector))+'.opus';
+      $(selector).find('.savebutton').hide();
+      $(selector).removeClass('needsSaving').addClass('hasAudio');
+      //var next_block_selector = $(selector).next('.needsSaving').eq(0).attr('data-selector');
+      //if (!next_block_selector) next_block_selector = $('.needsSaving').eq(0).attr('data-selector');
+      //_scrollto_block(next_block_selector);
+    }
+  });
+}
+/*
+function _save_audio(block){
+  var selector = $(block).attr('data-selector');
+  // upload to S3
+  var filename = _current_book_storage_path() + _gen_block_audio_path(selector) + '.wav';
+  //_AWS_save(filename, 'audio/wav', block_map[selector].data);
+  var bucket = new AWS.S3({params: {Bucket: AWS_BUCKET}});
+  var params = {Key: filename,  ContentType: 'audio/wav', Body: block_map[selector].data};
+  // attempt to upload
+  console.log('Saving audio to path: '+ filename);
+  bucket.upload(params, function (err, data) {
+    if (err) console.log('S3 Save Error: ', err);
+    else {
+      // success, update block_map and mark item
+      console.log('S3 Saved file successfully');
+      // update audio list  block_map[selector]
+      block_map[selector].url = 'https://'+AWS_BUCKET+'.s3.amazonaws.com/'+_current_book_storage_path()+
+        encodeURIComponent(_gen_block_audio_path(selector))+'.wav';
+      $(selector).find('.savebutton').hide();
+      $(selector).removeClass('needsSaving').addClass('hasAudio');
+      //var next_block_selector = $(selector).next('.needsSaving').eq(0).attr('data-selector');
+      //if (!next_block_selector) next_block_selector = $('.needsSaving').eq(0).attr('data-selector');
+      //_scrollto_block(next_block_selector);
+    }
+  });
+}
+*/
+
+function _record_audio(selector) {
+  selector = $(selector).attr('data-selector');
+  console.log("_record_audio: ", selector);
+  current_block = selector;
+  _scrollto_block(selector);
+  cancelRecording = false;
+  $(selector).find('recordbutton').hide();
+  $(selector).find('.playbutton').hide();
+  $(selector).find('.stopbutton').hide();
+  $(selector).find('.audiocontrols_stop').show();
+
+  // initialize or re-initialize recorder object
+  _init_ogg_recorder(selector);
+
+  // show countdown
+  $('#countdown .content').text('3').parent().show();
+  setTimeout(function(){$('#countdown .content').text('2');}, 750);
+  setTimeout(function(){$('#countdown .content').text('1');}, 1500);
+  setTimeout(function(){
+    $('#countdown').hide();
+    $('#nowRecording').show();
+    $(selector).addClass('isRecording');
+    $('body').addClass('isRecording');
+    recorder.start();
+    //recorder.record();
+  }, 2250);
+}
+function _stop_recording(forceCancel) {
+  var selector = $(current_block).attr('data-selector');
+  if (!(forceCancel===true)) forceCancel = false;
+  cancelRecording = forceCancel;
+  //console.log('_stop_recording', 'cancelRecording: '+cancelRecording);
+  //console.log('  body.isRecording: '+ ($('body').hasClass('isRecording') ? 'true' : 'false' ));
+  //console.log('  .isRecording: '+ ($(selector).hasClass('isRecording') ? 'true' : 'false' ));
+  if (!$('body').hasClass('isRecording')) return;
+  if ((!current_block) || (!$(current_block).hasClass('isRecording'))) return;
+  // I'll bet a lot of this reset business would better go in _display_block_audio_state
+  $(selector).find('.recordbutton').show();
+  $(selector).find('.stopbutton').hide();
+  $(selector).find('.audiocontrols_stop').hide();
+  $(selector).removeClass('isRecording');
+  $('body').removeClass('isRecording');
+  $('#nowRecording').hide();
+  //console.log("That's it, I'm stopping this recording!!");
+  recorder.stop();
+  _display_block_audio_state(selector);
+  // for recorderjs we need to save the data
+  if (!forceCancel) {
+    //console.log("Recorded audio for current_block: ", selector);
+    $(selector).find('.playbutton').show();
+    $(selector).find('.audiocontrols_save').show();
+    $(selector).addClass('needsSaving');
+    /*
+    recorder.exportWAV(function(blob) {
+      block_map[selector].data = blob;
+      block_map[selector].url = URL.createObjectURL(block_map[selector].data); // add to id map
+      recorder.clear();
+      //_save_audio(selector);
+      _display_block_audio_state(selector);
+    });
+    */
+  }
+
+  if (forceCancel) _scrollto_block(selector);
+}
+
+function _play_audio(block) {
+
+console.log('Playing audio for block: '+block, block_map[$(block).attr('data-selector')].url);
+
+  var selector = $(block).attr('data-selector');
+  _stop_recording(current_block);
+  current_block = selector;
+  var url = block_map[selector].url;
+  //console.log('Playing audio for "'+selector+'"', url);
+  // display state
+  $(selector).find('.stopbutton').show();
+  $(selector).find('.playbutton').hide();
+  $(selector).find('.recordbutton').hide();
+
+  //var el = $('#audio_player')[0];
+  $('#audio_player').trigger('pause').prop("currentTime", 0);
+  $('#audio_player source').attr('src', url);
+  $('#audio_player').trigger('load').trigger('play');
+  $('#audio_player')[0].addEventListener('ended', function(){
+    _stop_audio(selector);
+  });
+}
+function _stop_audio(block) {
+  var selector = $(block).attr('data-selector');
+  var current_block_selector = $(current_block).attr('data-selector');
+  if (current_block_selector) {
+    $(current_block_selector).find('.playbutton').show();
+    $(current_block_selector).find('.recordbutton').show();
+    $(current_block_selector).find('.stopbutton').hide();
+  }
+  if (selector && (selector !== current_block_selector)) {
+    $(selector).find('.playbutton').show();
+    $(selector).find('.recordbutton').show();
+    $(selector).find('.stopbutton').hide();
+  }
+  $('#audio_player').trigger('pause');
+}
+function _scrollto_next_needsAudio(force_start_recording) {
+  var current_selector = $(current_block).attr('data-selector');
+  var next_block_selector = $(current_selector).next('.needsAudio').eq(0).attr('data-selector');
+   // console.log ('next_block_selector', next_block_selector);
+  if (!next_block_selector) next_block_selector = $('.needsAudio').eq(0).attr('data-selector');
+  if (next_block_selector) {
+    _scrollto_block(next_block_selector);
+    if (force_start_recording) _record_audio(next_block_selector);
+  }
+}
+function _scrollto_block(selector){
+  if (!selector) return;
+  var offset = $(selector).offset();
+  $('html, body').animate({
+      scrollTop: offset.top - 200,
+      scrollLeft: 0
+  });
+  //console.log("Tried to scroll to: ", offset);
+}
+function getDomPath(el) {
+  var result = '';
+  if (!el) {
+    console.log('error, no DOM element passed to getDomPath');
+    return result;
+  }
+
+  if ($(el).attr('id')) result = '#'+$(el).attr('id');
+
+  if (el.hasOwnProperty('jquery')) el = el[0];
+  // if no id, generate absolute reference
+  if (!result) {
+    //console.log('getDomPath calculating path for: ', el);
+    var stack = [];
+    var result = '';
+    while ( el.parentNode !== null ) {
+      //console.log(el.nodeName);
+      var sibCount = 0;
+      var sibIndex = 0;
+      for ( var i = 0; i < el.parentNode.childNodes.length; i++ ) {
+        var sib = el.parentNode.childNodes[i];
+        if ( sib.nodeName == el.nodeName ) {
+          if ( sib === el ) {
+            sibIndex = sibCount;
+          }
+          sibCount++;
+        }
+      }
+      if ( el.hasAttribute('id') && el.id != '' ) {
+        stack.unshift(el.nodeName.toLowerCase() + '#' + el.id);
+      } else if ( sibCount > 1 ) {
+        stack.unshift(el.nodeName.toLowerCase() + ':eq(' + sibIndex + ')');
+      } else {
+        stack.unshift(el.nodeName.toLowerCase());
+      }
+      el = el.parentNode;
+    }
+    // removes the html and body elements
+    result = stack.slice(2).join('>');
+    // remove anything preceding the last id if one found
+    if ((pos = result.lastIndexOf('#'))>-1) {
+      //console.log(pos+', Cutting string "'+result+'" into "'+result.slice(pos)+'"')
+      result = result.slice(pos);
+    }
+    //console.log('getDomPath calculated path: '+ result);
+  }
+
+  if (!result) {
+    console.log('error, empty value returned from getDomPath');
+    return;
+  }
+
+  return result;
+}
+function downsampleBuffer(buffer, rate) {
+  // based on:
+  // http://stackoverflow.com/questions/16296645/decrease-bitrate-on-wav-file-created-with-recorderjs/26245260#26245260
+  if (!rate) rate = 16000;
+  if (rate == sampleRate) return buffer;
+  if (rate > sampleRate) {
+    throw "downsampling rate show be smaller than original sample rate";
+  }
+  var sampleRateRatio = sampleRate / rate;
+  var newLength = Math.round(buffer.length / sampleRateRatio);
+  var result = new Float32Array(newLength);
+  var offsetResult = 0;
+  var offsetBuffer = 0;
+  while (offsetResult < result.length) {
+    var nextOffsetBuffer = Math.round((offsetResult + 1) * sampleRateRatio);
+    var accum = 0, count = 0;
+    for (var i = offsetBuffer; i < nextOffsetBuffer && i < buffer.length; i++) {
+      accum += buffer[i];
+      count++;
+    }
+    result[offsetResult] = accum / count;
+    offsetResult++;
+    offsetBuffer = nextOffsetBuffer;
+  }
+  return result;
+}
+
+/* ============================================
+=============================================== */
+
+
 
 
 
@@ -471,8 +928,6 @@ function _insert_pronunciation_buttons() {
 
 
   }
-
-
 }
 
 
@@ -517,254 +972,26 @@ function _tts_word(word) {
   }
 }
 
-// after altering block audio, reset display state
-function _display_block_audio_state(block) {
-  var selector =  $(block).attr('data-selector');
-  if (!selector || !block_map[selector]) return;
-  if (block_map[selector].url) { // has audio
-    $(block).removeClass('needsAudio').addClass('hasAudio');
-  } else {  // needs audio
-    $(block).removeClass('hasAudio').addClass('needsAudio');
-  }
-}
-
-
-
-function  _insert_recording_controls() {
-  var audioid = 1;
-  $('section.titlepage, section.content').find('h1,h2,h3,h4,h5,div.par,p').each(function(){
-    var recordBlock = "<span class='audiocontrols'>"+
-     " <i class='fa fa-play-circle-o playbutton'></i> " +
-     " <i class='fa fa-stop-circle-o stopbutton'></i> " +
-     " <i class='fa fa-microphone recordbutton'></i> </span>";
-    var stopRecordBlock = "<span class='audiocontrols_stop '> "+
-     " <i class='fa fa-stop-circle-o finishedrecordingbutton'></i> "+
-     " <i class='fa fa-arrow-circle-o-down finishedrecordingcontinuebutton'></i> "+
-     " </span> <span class='clearfix'></span> ";
-    var verifySaveBlock = '<span class="audiocontrols_save">'+
-     ' <i class="fa fa-floppy-o blink savebutton"></i>'+ "</span>";
-    var selector = getDomPath(this);
-    $(this).prepend(recordBlock).append(stopRecordBlock).prepend(verifySaveBlock);
-    $(this).attr('data-audioid', audioid).attr('data-selector', selector);
-    block_map[selector] = {
-      'audioid': audioid++,
-      'selector': selector,
-      'url': ''
-    };
-    _display_block_audio_state(selector);
-  });
-  // record and play icons
-  $('html').append("<div id='countdown'><span class='content'>3</span></div>");
-  $('body').append("<div id='nowRecording'><i class='fa fa-microphone'></i></div>");
-  $('html').append("<audio id='audio_player'><source src='' type='audio/mpeg'></audio>");
-  // play/record container
-  $('div.audioreader').click(function(){
-    //var id = $(this).data('id');
-    //
-    // ?
-    //
-  });
-  $('.playbutton').click(function(){
-    var selector = $(this).parent().parent().attr('data-selector');
-    _play_audio(selector);
-  });
-  $('.stopbutton').click(_stop_recording);
-  $('.recordbutton').click(function(){
-    var selector = $(this).parent().parent().attr('data-selector');
-    _record_audio(selector);
-  });
-  // finished recording buttons
-  $('.finishedrecordingbutton').click(_stop_recording);
-  $('.finishedrecordingcontinuebutton').click(function(){
-    _stop_recording();
-    _scrollto_next_needsAudio(true); // force start of next paragraph
-  });
-  // save button
-  $('.savebutton').click(function(){
-    var selector = $(this).parent().parent().attr('data-selector');
-    _save_audio(selector);
-    var next_block_selector = $(selector).next('.needsSaving').eq(0).attr('data-selector');
-    if (!next_block_selector) next_block_selector = $('.needsSaving').eq(0).attr('data-selector');
-    _scrollto_block(next_block_selector);
-  });
-}
-
-function _save_audio(block){
-  var selector = $(block).attr('data-selector');
-  $(selector).find('.savebutton').hide();
-  $(selector).removeClass('needsSaving').addClass('hasAudio');
-
-  // upload to S3
-  var filename = _current_book_storage_path() + _gen_block_audio_path(selector) + '.ogg';
-  _AWS_save(filename, 'audio/ogg', block_map[selector].data);
-
-  // update audio list  block_map[selector]
-  block_map[selector].url = 'https://'+AWS_BUCKET+'.s3.amazonaws.com/'+_current_book_storage_path()+
-    encodeURIComponent(_gen_block_audio_path(selector))+'.ogg';
-}
-
-
-function _AWS_save(filename, mime_type, data) {
-  var bucket = new AWS.S3({params: {Bucket: AWS_BUCKET}});
-  var params = {Key: filename,  ContentType: mime_type, Body: data};
-  console.log('Saving audio to path: '+ filename);
-  bucket.upload(params, function (err, data) {
-    console.log(err ? 'AWS SAVE ERROR!' : 'AWS SAVED SUCCESSFULLY.');
-  });
-}
 
 
 
 
 
-function _record_audio(block) {
-  //console.log("Recording block: ", $(block).attr('id'));
-  var selector = $(block).attr('data-selector');
-  current_block = selector;
-  _scrollto_block(selector);
-  $(selector).find('recordbutton').hide();
-  $(selector).find('.playbutton').hide();
-  $(selector).find('.stopbutton').hide();
-  $(selector).find('.audiocontrols_stop').show();
-
-  _init_recording(selector);
-
-  // show countdown
-  $('#countdown .content').text('3').parent().show();
-  setTimeout(function(){$('#countdown .content').text('2');}, 750);
-  setTimeout(function(){$('#countdown .content').text('1');}, 1500);
-  setTimeout(function(){
-    $('#countdown').hide();
-    $('#nowRecording').show();
-    $(selector).addClass('needsSaving').addClass('isRecording');
-    $('body').addClass('isRecording');
-    recorder.start();
-  }, 2250);
-}
-
-function _stop_recording() {
-  if (!$('body').hasClass('isRecording')) return;
-  if ((!current_block) || (!$(current_block).hasClass('isRecording'))) return;
-  var selector = $(current_block).attr('data-selector');
-  $(selector).find('.playbutton').show();
-  $(selector).find('.recordbutton').show();
-  $(selector).find('.stopbutton').hide();
-  $(selector).find('.audiocontrols_stop').hide();
-  $(selector).find('.recordbutton').show();
-  $(selector).find('.audiocontrols_save').show();
-  $(selector).addClass('needsSaving');
-  $(selector).removeClass('isRecording').removeClass('needsAudio');
-  $('body').removeClass('isRecording');
-  console.log("Recorded audio for current_block: ", selector);
-  recorder.stop();
-  $('#nowRecording').hide();
-}
 
 
-function _play_audio(block) {
-  var selector = $(block).attr('data-selector');
-  _stop_recording(current_block);
-  current_block = selector;
-  var url = block_map[selector].url;
-  //console.log('Playing audio for "'+selector+'"', url);
-  // display state
-  $(selector).find('.stopbutton').show();
-  $(selector).find('.playbutton').hide();
-  $(selector).find('.recordbutton').hide();
-
-  //var el = $('#audio_player')[0];
-  $('#audio_player').trigger('pause').prop("currentTime", 0);
-  $('#audio_player source').attr('src', url);
-  $('#audio_player').trigger('load').trigger('play');
-  $('#audio_player')[0].addEventListener('ended', function(){
-    _stop_audio(selector);
-  });
 
 
-}
-
-function _stop_audio(block) {
-  var selector = $(block).attr('data-selector');
-  var current_block_selector = $(current_block).attr('data-selector');
-  if (current_block_selector) {
-    $(current_block_selector).find('.playbutton').show();
-    $(current_block_selector).find('.recordbutton').show();
-    $(current_block_selector).find('.stopbutton').hide();
-  }
-  if (selector && (selector !== current_block_selector)) {
-    $(selector).find('.playbutton').show();
-    $(selector).find('.recordbutton').show();
-    $(selector).find('.stopbutton').hide();
-  }
-  $('#audio_player').trigger('pause');
-}
 
 
-function _scrollto_next_needsAudio(force_start_recording) {
-  var current_selector = $(current_block).attr('data-selector');
-  var next_block_selector = $(current_selector).next('.needsAudio').eq(0).attr('data-selector');
-   // console.log ('next_block_selector', next_block_selector);
-  if (!next_block_selector) next_block_selector = $('.needsAudio').eq(0).attr('data-selector');
-  if (next_block_selector) {
-    _scrollto_block(next_block_selector);
-    if (force_start_recording) _record_audio(next_block_selector);
-  }
-}
-
-function _scrollto_block(selector){
-  if (!selector) return;
-  var offset = $(selector).offset();
-  $('html, body').animate({
-      scrollTop: offset.top - 200,
-      scrollLeft: 0
-  });
-  //console.log("Tried to scroll to: ", offset);
-}
-
-function _insert_reading_instructions(){
-  var wpm = 113.45;
-  var costpm = 5.8694;
-  var count = _word_count(), time;
-  var minutes_total = Math.floor(count / wpm) + 1;
-   if ((minutes_total % 60) > 55) minutes_total += (60-(minutes_total % 60));
-  var hours = Math.floor(minutes_total / 60);
-   if (hours>0) hours = hours.toString() + (hours > 1 ? ' hours' : ' hour')
-  var minutes = minutes_total % 60; //Math.floor(minutes_total - (hours * 10800));
-   if (minutes < 5) minutes = 0;
-   if (minutes>0) minutes = minutes.toString() + (minutes>1 ? ' minutes' : ' minute');
-  var cost_total = (minutes_total * costpm).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 
-  if (hours && minutes) time = hours +' and '+ minutes;
-   else if (hours) time = hours;
-    else if (minutes) time = minutes;
 
-  var instructions = '\n\n<div class="reading_instructions">\n';
-  instructions += '<h1> Audio Reading Instructions </h1>';
-  instructions += '<div class="wordcount"> With <b>'+ _numberWithCommas(count) + ' words</b>, this book’s final audio should be about <b>'+
-     time + '.</b> </div>';
 
-  // instructions list
-  var list = [];
-  list.push('Find a quiet place to read with no low background noise such as washing machines or air vents. '+
-    'Make sure to always read in exactly the same location so audio sounds consistent. '+
-    'Preferably, use a tablet computer with USB microphone instead of a noisy desktop or laptop.');
-  list.push('Adjust microphone gain to 75% and do not speak directly into the microphone but very slightly off center.');
-  list.push('Each time you begin a new session, repeat the sound check process: '+
-    ' &nbsp; <button type="button" id="soundcheck_btn">Sound Check <span class="fa fa-microphone fa-sm"></span></button>');
-  list.push('Do not read paragraph numbers, these are only for your convenience. '+
-    'Phrase markers and sentence breaks are likewise only for convenience.');
-  //list.push();
-  list.push('For Bahá’í transliterated terms:  &nbsp; <a href="http://bit.ly/bahai-pronunciation">http://bit.ly/bahai-pronunciation</a> ');
-  list.push('After each paragraph is recorded, listen once to check for mis-reads and re-record if necessary.');
-  list.push('<button type="button" onclick="_scrollto_next_needsAudio(); return false" id="soundcheck_btn">'+
-    '<span class="fa fa-microphone fa-sm"></span> &nbsp; Scroll down to next block needing recorded </button>');
-  instructions += '<ul>\n  <li>'+ list.join('</li><br>\n   <li>') +'</li>\n</ul><br>';
 
-  instructions += '\n</div>\n\n';
-  $('body').prepend(instructions);
 
-}
+
+
+
 
 
 
@@ -1075,60 +1302,7 @@ function _show_loading_screen() {
   $('body').append(box);
 }
 
-function getDomPath(el) {
-  var result = '';
-  if (!el) {
-    console.log('error, no DOM element passed to getDomPath');
-    return result;
-  }
 
-  if ($(el).attr('id')) result = '#'+$(el).attr('id');
-
-  if (el.hasOwnProperty('jquery')) el = el[0];
-  // if no id, generate absolute reference
-  if (!result) {
-    //console.log('getDomPath calculating path for: ', el);
-    var stack = [];
-    var result = '';
-    while ( el.parentNode !== null ) {
-      //console.log(el.nodeName);
-      var sibCount = 0;
-      var sibIndex = 0;
-      for ( var i = 0; i < el.parentNode.childNodes.length; i++ ) {
-        var sib = el.parentNode.childNodes[i];
-        if ( sib.nodeName == el.nodeName ) {
-          if ( sib === el ) {
-            sibIndex = sibCount;
-          }
-          sibCount++;
-        }
-      }
-      if ( el.hasAttribute('id') && el.id != '' ) {
-        stack.unshift(el.nodeName.toLowerCase() + '#' + el.id);
-      } else if ( sibCount > 1 ) {
-        stack.unshift(el.nodeName.toLowerCase() + ':eq(' + sibIndex + ')');
-      } else {
-        stack.unshift(el.nodeName.toLowerCase());
-      }
-      el = el.parentNode;
-    }
-    // removes the html and body elements
-    result = stack.slice(2).join('>');
-    // remove anything preceding the last id if one found
-    if ((pos = result.lastIndexOf('#'))>-1) {
-      //console.log(pos+', Cutting string "'+result+'" into "'+result.slice(pos)+'"')
-      result = result.slice(pos);
-    }
-    //console.log('getDomPath calculated path: '+ result);
-  }
-
-  if (!result) {
-    console.log('error, empty value returned from getDomPath');
-    return;
-  }
-
-  return result;
-}
 
 
 

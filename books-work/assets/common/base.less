@@ -246,6 +246,17 @@ body.ocean {
       font-style: normal;
       color: @grayed_color;
     }
+    // override if block has data-displayid
+    &[data-displayid]:not(.noid):before {
+      content: attr(data-displayid);
+    }
+    /* &[data-displayid][dir="rtl"]:not(.noid):before { display: none; }*/
+    // override position for rtl
+    &[id][dir="rtl"]:not(.noid):before,  &[data-displayid][dir="rtl"]:not(.noid):before {
+      right:-55px; left: 0; padding-right:15px; padding-left:0; direction: rtl;
+    }
+
+
 
     &[id]:not(.noid).bm:before {
       //background-color: @main_text_color;

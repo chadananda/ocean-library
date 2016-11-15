@@ -168,7 +168,7 @@ function ocnBuildBook(bookid) {
   }
 
   if (bookid.split('-').length===2) bookid+='-en';
-  log("Building completed book".green +' '+bookid.red);
+  console.log("Building completed book".green +' '+bookid.red);
 
 
   var book =  (config.books[bookid]? config.books[bookid] : {});
@@ -1935,16 +1935,22 @@ program.command('import <filename> [targetdirectory]')
 
 program.command('build <bookid>')
   .description('Generate translation from textfile or Google Translate').action(ocnBuildBook);
+
 program.command('translate <bookid> [transfile]')
   .description('Publish with span-wraped words and sentences').action(ocnTranslate);
+
 program.command('getdictionary')
   .description('Update Accents Dictionary').action(ocnAccentsDictionary);
+
 program.command('report [filename]')
   .description('Rebuild progress report').action(ocnReport);
+
 program.command('progresslog <entry>')
   .description('Add progress log entry in the report').action(ocnProgressLog);
+
 program.command('accents <bookid> [logfile]')
   .description('Builds accents report log for book <bookid> (default location is folder 3.)').action(ocnAccentsLog);
+
 program.command('library <bookid> [title] [author] [priority]')
   .description('Add or edit book entry in library.config').action(ocnEditLibraryBook);
 
