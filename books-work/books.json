@@ -109,7 +109,7 @@
 
   {
     "title": "A Traveler’s Narrative", "author": "‘Abdu’l-Bahá",
-    "words": 25249, "formatted": true, "proofed": true, "audio": false,
+    "words": 25249, "formatted": true, "proofed": true, "audio": true,
     "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/abd-tn-en.html"
   },
 
@@ -190,7 +190,7 @@
 
   {
     "title": "The World Order of Bahá’u’lláh", "author": "Shoghi Effendi",
-    "words": 57433, "formatted": true, "proofed": true, "audio": false,
+    "words": 57433, "formatted": true, "proofed": true, "audio": true,
     "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/shoghi-wob-en.html"
   },
 
@@ -222,17 +222,7 @@
     "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/shoghi-directives.html"
   },
 
-  {
-    "title": "Special UN Committee on Palestine - 1947", "author": "Shoghi Effendi",
-    "words": 2342, "formatted": true, "proofed": true, "audio": false,
-    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/shoghi-palestine-statement.html"
-  },
 
-  {
-    "title": "The Baha'i Faith - The World Religion", "author": "Shoghi Effendi",
-    "words": 994, "formatted": true, "proofed": true, "audio": false,
-    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/shoghi-summary-world-religion.html"
-  },
 
 
   {
@@ -254,8 +244,8 @@
   },
   {
     "title": "Arohanui - Letters to New Zealand", "author": "Shoghi Effendi",
-    "words": 24380, "formatted": false, "proofed": false, "audio": false,
-    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/1.%20raw-notproofed/__Shoghi-Effendi%2CArohanui%20-%20Letters%20to%20New%20Zealand.txt"
+    "words": 24380, "formatted": true, "proofed": false, "audio": false,
+    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/se-arohanui-en%2C%20Letters%20to%20New%20Zealand.html"
   },
   {
     "title": "Messages to Canada", "author": "Shoghi Effendi",
@@ -290,8 +280,28 @@
 
   {
     "title": "Dear Co-worker; Messages to Benelux Countries", "author": "Shoghi Effendi",
-    "words": 29262, "formatted": false, "proofed": false, "audio": false,
-    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/1.%20raw-notproofed/__Shoghi-Effendi%2CDear-Co-worker%2C%20Messages%20to%20Benelux%20Countries%2Cen.txt"
+    "words": 29262, "formatted": true, "proofed": false, "audio": false,
+    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/se-dcowoker-en%2C%20Dear%20Coworker%2C%20%20Messages%20to%20Benelux%20Countries.html"
+  },
+
+ 
+
+  {
+    "title": "Published, Uncompiled Letters from Shoghi Effendi", "author": "Shoghi Effendi",
+    "words": 310000, "formatted": false, "proofed": false, "audio": false,
+    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/shoghi-uncompiled-en.html"
+  },
+  
+ {
+    "title": "Special UN Committee on Palestine - 1947", "author": "Shoghi Effendi",
+    "words": 2342, "formatted": true, "proofed": true, "audio": false,
+    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/shoghi-palestine-statement.html"
+  },
+
+  {
+    "title": "The Baha'i Faith - The World Religion", "author": "Shoghi Effendi",
+    "words": 994, "formatted": true, "proofed": true, "audio": false,
+    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/shoghi-summary-world-religion.html"
   },
 
 

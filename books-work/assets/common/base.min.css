@@ -2392,9 +2392,19 @@ body.ocean .illustration .med img {
 }
 body.ocean .illustration .small img {
   width: 40%;
+  max-width: 250pt;
 }
 body.ocean .illustration .full img {
   width: 96%;
+}
+body.ocean .illustration.right {
+  float: right;
+  margin-left: 1em;
+  margin-top: .5em !important;
+  text-align: center !important;
+  padding-bottom: .5em;
+  width: 40%;
+  margin-bottom: 0 !important;
 }
 body.ocean .centerquote {
   margin-left: auto !important;

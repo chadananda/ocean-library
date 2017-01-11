@@ -12,8 +12,8 @@ var colors = require('colors');
 var inquirer = require("inquirer");
 var cheerio = require('cheerio');
 var mark = require('markup-js');
-var fs = require('fs-sync'); fs.defaultEncoding = 'utf-8';
-    var fs_node = require('fs');
+var fs = require('fs'); fs.defaultEncoding = 'utf8';
+ 
 var lang = require('languages');
 var ocnparse = require('./ocnparse');
 var httpsync = require('urllib-sync').request;
@@ -24,6 +24,8 @@ var request = require('request');
 var readlineSync = require('readline-sync');
 var levenshtein = require('levenshtein-edit-distance');
 var Filter = require('bad-words'), filter = new Filter();
+
+var cwd = require('cwd');
 
 
 var accents_url = 'http://diacritics.iriscouch.com/accents/_design/terms_list/_view/terms_list';
@@ -53,17 +55,17 @@ function ocnAccentsDictionary() {
 
   // if cache file exists, check to see if it's fresh (about one hour or less)
   if (fs.exists(cachefile)) {
-    var modified = fs_node.statSync(cachefile).mtime;
+    var modified = fs.statSync(cachefile).mtime;
     var hours_since_modified = Math.round((Date.now() - Date.parse(modified)) / (1000 * 60 * 60));
     cache_fresh = (hours_since_modified < 1);
   }
   if (cache_fresh) {
-    res = fs.readJSON(cachefile);
+    res = JSON.parse(fs.readFileSync(cwd(cachefile), 'utf8'));
     console.log('Using recently cached dictionary.');
   } else {
     console.log('Downloading new copy of dictionary.');
     res = JSON.parse(httpsync.get(accents_url).end().data);
-    fs.write(cachefile, JSON.stringify(res)); // save to cached file
+    fs.writeFileSync(cachefile, JSON.stringify(res)); // save to cached file
   }
   console.log('Current dictionary contains '+ (res.rows).red + ' entries.');
   return res;
@@ -181,7 +183,7 @@ function ocnBuildBook(bookid) {
   if (!fs.exists(book_src)) {console.log('Error, expecting book file at: '.red + book_src.green); return;}
 
   // parse source file into data object
-  var bookobj = parse_final_book_html(fs.read(book_src), config);
+  var bookobj = parse_final_book_html(fs.readFileSync(cwd(book_src), 'utf8'), config);
   bookid = bookobj.meta.bookid;
   // do this later because we might have modified the bookid
   var book_dest   = config.paths.base+config.paths.published+bookid.split('-').slice(0,2).join('-') +'/'+bookid+'.html';
@@ -189,7 +191,7 @@ function ocnBuildBook(bookid) {
   // render data into new html
   var bookHTML = build_html(bookobj, config);
   // output HTML to published folder
-  fs.write(book_dest, bookHTML);
+  fs.writeFileSync(book_dest, bookHTML);
 
   // compile, minify and copy over CSS files
   processCSS(config);
@@ -325,23 +327,27 @@ function ocnTextCleanup(cmd, env) {
   // loop through files matching filename but not containing '-cleaned.'
   // modify file text
   var files = env.parent.rawArgs.slice(3);
-  console.log(' Processing files ', files);
+  //console.log(' Processing files ', files);
 
-  files.forEach(function(file){
-    //if (file.indexOf('-clean.')>-1) return console.log('Skipping file: '.green, file.red);
+  files.forEach(function(file) { if (!fs.lstatSync(cwd(file)).isDirectory()) { 
+    var src = cwd(file);
+    var dir = cwd()+'/textCleanup/';
+    var dest = dir+file; 
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir);  
     console.log(' Processing file '.green, file.red);
 
     // load file text
-    var str = fs.read(file, 'utf8');
+    //var str = fs.read(file, 'utf8');
+    var str = fs.readFileSync(src, 'utf8');
     str = ocnTextCleanupStr(str);
 
     // output
-    fs.write('cleaned/'+file, str);
-    console.log(' Output cleaned text to: '.green + 'cleaned/'+file);
-  });
+    fs.writeFileSync(dest, str);
+    console.log(' Output cleaned text to: '.green + dest);
+  }});
 
   // build an index file
-  if (files.length>2) fs.write('cleaned/index.html', quickIndex(files, process.cwd().split('/').pop().trim()));
+  //if (files.length>2) fs.writeFileSync('cleaned/index.html', quickIndex(files, process.cwd().split('/').pop().trim()));
 
 }
 
@@ -358,7 +364,7 @@ function buildIndex() {
   if (files.length>2) {
     var title = process.cwd().split('/').pop().trim();
     var indexfile = quickIndex(files, title);
-    fs.write('index.html', indexfile);
+    fs.writeFileSync('index.html', indexfile);
     console.log('Created index.html file for ', files.length , ' files');
   }
 }
@@ -373,13 +379,13 @@ function quickIndex(files, title) {
   files.sort();
   files.forEach(function(file){
     if (file.indexOf('wrapper.html')>-1) return replace.count--;
-    content = fs.read(file);
+    content = fs.readFileSync(cwd(file), 'utf8');
     title = content.substring(content.indexOf('<title>')+7, content.indexOf('</title>')).trim();
     replace.booklist += "<li class='book'>"+ '<a href="'+encodeURI(file.replace(/\'/g, "\'"))+
     '" target="_blank">'+ title +"</a> <br>"+
       " &nbsp; &nbsp; <span class='small filename'>"+file+"</span> \n\n\n";
   });
-  return mark.up(fs.read(__dirname+"/templates/index.tpl.html"), replace);
+  return mark.up(fs.readFileSync(__dirname+"/templates/index.tpl.html", 'utf8'), replace);
 }
 
 function ocnAutocorrect(cmd, env) {
@@ -388,22 +394,21 @@ function ocnAutocorrect(cmd, env) {
   var files = env.parent.rawArgs.slice(3);
   console.log(' Processing files ', files);
 
-  files.forEach(function(file){
-    //if (file.indexOf('-clean.')>-1) return console.log('Skipping file: '.green, file.red);
+  files.forEach(function(file) { if (!fs.lstatSync(cwd(file)).isDirectory()) { 
+    var src = cwd(file);
+    var dir = cwd()+'/autoCorrect/';
+    var dest = dir+file; 
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir); 
     console.log(' Processing file '.green, file.red);
 
     // load file text
-    var str = fs.read(file, 'utf8');
+    var str = fs.readFileSync(src, 'utf8');
     str = fixCommonBahaiWords(str, true);
 
     // output
-    fs.write('cleaned/'+file, str);
+    fs.writeFileSync(dest, str);
     console.log(' Output cleaned text to: '.green + 'cleaned/'+file);
-  });
-
-  // build an index file
-  if (files.length>2) fs.write('cleaned/index.html', quickIndex(files, process.cwd().split('/').pop().trim()));
-
+  }}); 
 }
 
 function fixCommonBahaiWords(str, forceHTML) {
@@ -879,9 +884,9 @@ function fixCommonBahaiWords(str, forceHTML) {
 
 function ocnRenumberSections(file) {
   console.log(' RenumberSections -- Processing file '.green, file.red);
-  var str = fs.read(file);
+  var str = fs.readFileSync(cwd(file), 'utf8');
   str = ocnRenumberSectionsStr(str);
-  fs.write('cleaned/'+file, str);
+  fs.writeFileSync(cwd('cleaned/'+file), str);
 }
 function ocnRenumberSectionsStr(str){
   var sections = [];
@@ -935,7 +940,7 @@ function ocnRenumberSectionsStr(str){
 }
 function ocnRenumber(file) {
   console.log(' Renumber Paragraphs -- Processing file '.green, file.red);
-  var str = fs.read(file);
+  var str = fs.readFileSync(cwd(file), 'utf8');
 }
 
 // replaces find with incrementing integer
@@ -947,7 +952,7 @@ function ocnReplaceIncrement(str, find) {
 
 function ocnFormatCompilation(file) {
   console.log(' FormatCompilation -- Processing file '.green, file.red);
-  var str = fs.read(file, 'utf8');
+  var str = fs.readFileSync(cwd(file), 'utf8');
 
 
   //  some common fixes:
@@ -1362,7 +1367,7 @@ function ocnFormatCompilation(file) {
 
 
   // save new file to /cleaned directory
-  fs.write('cleaned/'+file.substr(0, file.lastIndexOf('.')) + '.html', html);
+  fs.writeSync('cleaned/'+file.substr(0, file.lastIndexOf('.')) + '.html', html);
 }
 
 /*
@@ -1386,7 +1391,7 @@ function ocnAssessment(cmd) {
     var source = 'word_frequency.json';
     var w;
     if (!fs.exists(target)) fs.copy(source, target);
-    var dictionary = JSON.parse(fs.read(target));
+    var dictionary = JSON.parse(fs.readFileSync(cwd(target), 'utf8'));
     var wordFreq = function(word) {      // return frequency of any word or FALSE if word not found
       if (dictionary.words.hasOwnProperty(word)) return +dictionary.words[word].freq.trim(); else return 0;
     };
@@ -1405,7 +1410,7 @@ function ocnAssessment(cmd) {
         fetched++;
         if (fetched % 1000 === 0) { // save periodically
           console.log('Saving list...');
-          fs.write(target, JSON.stringify(dictionary, null, '\t'), {flag : 'w' });
+          fs.writeFileSync(target, JSON.stringify(dictionary, null, '\t'), {flag : 'w' });
         }
       }*/
 
@@ -1421,7 +1426,7 @@ function ocnAssessment(cmd) {
     }
 
 
-    fs.write(target, JSON.stringify(dictionary, null, '\t'), {flag : 'w' });
+    fs.writeFileSync(target, JSON.stringify(dictionary, null, '\t'), {flag : 'w' });
   }
     //dictionary.totals.filtered_wordcount = Object.keys(dictionary.words).length;
   else if (cmd==='filter') {
@@ -1438,12 +1443,11 @@ function ocnAssessment(cmd) {
   } else {
     console.log ("Allowed assessment commands are " +
       "syntest".green+", "+"build".green+", "+"filter".green+"status".green+", and "+ "assess".green);
-  }
-  //var str = fs.read(file, 'utf8');
+  }  
 
 
    // save new file to /cleaned directory
-  //fs.write('cleaned/'+file.substr(0, file.lastIndexOf('.')) + '.html', html);
+  //fs.writeFileSync('cleaned/'+file.substr(0, file.lastIndexOf('.')) + '.html', html);
 }
 
 // given any word, attempt to fetch synonyms from bighugelabs.com api
@@ -1551,7 +1555,7 @@ function isBadWord(word){
 // build a list of all possible flashcards
 function synonymDictionaryFilter() {
   // make a copy of dictionary if necessary
-  var synonyms = JSON.parse(fs.read('word_synonyms.json'));
+  var synonyms = JSON.parse(fs.readFileSync(cwd('word_synonyms.json'), 'utf8'));
   var flashcards_file = 'word_flashcards.json';
   var flashcards = {total: 0, levels: {}, words: {}};
 
@@ -1704,12 +1708,12 @@ function synonymDictionaryFilter() {
   flashcards.total = Object.keys(flashcards.words).length;
   delete flashcards.levels;
   // save flashcards object
-  fs.write(flashcards_file, JSON.stringify(flashcards, null, '\t'), {flag : 'w' });
+  fs.writeFileSync(flashcards_file, JSON.stringify(flashcards, null, '\t'), {flag : 'w' });
 }
 
 function synonymAssessment() {
   var load_flashcards = function() {
-    var w, cards = JSON.parse(fs.read('word_flashcards.json'));
+    var w, cards = JSON.parse(fs.readFileSync(cwd('word_flashcards.json'), 'utf8'));
     cards.levels = {};
     for (w in cards.words) if (cards.words.hasOwnProperty(w)) {
       var obj = cards.words[w];
@@ -1987,8 +1991,8 @@ function log(str) {
 
 function load_library_config() {
   var config;
-  config = fs.readJSON('./library-config.json');
-  config.books = fs.readJSON(config.paths.base + config.paths.library_books);
+  config = JSON.parse(fs.readFileSync('./library-config.json', 'utf8'));
+  config.books = JSON.parse(fs.readFileSync(config.paths.base + config.paths.library_books, 'utf8'));
   config.templates = loadTemplates();
   return config;
 }
@@ -1998,7 +2002,7 @@ function save_library_books(config) {
   //fs.createReadStream(path).pipe(fs.createWriteStream(path+'.bak'));
   fs.copy(path, path+'.bak', true);
   //fs.writeFileSync(path, books);
-  fs.write(path, books);
+  fs.writeFileSync(path, books);
 }
 function processCSS(config) {
   // compile, minify and copy over all CSS files
@@ -2426,7 +2430,7 @@ function loadTemplates() {
   var templates = {};
   fs.expand(__dirname+"/templates/*.tpl.html").forEach(function(item, index) {
     var name = item.split('/').slice(-1)[0].replace(/\.tpl\.html/, '');
-    templates[name] = fs.read(item);
+    templates[name] = fs.readFileSync(cwd(item), 'utf8');
   });
   return templates;
 }

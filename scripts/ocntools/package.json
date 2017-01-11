@@ -16,6 +16,7 @@
     "cheerio": "^0.19.0",
     "colors": "^1.1.0",
     "commander": "^2.8.1",
+    "cwd": "^0.10.0",
     "fs-sync": "^1.0.2",
     "inquirer": "^0.8.4",
     "languages": "^0.1.3",

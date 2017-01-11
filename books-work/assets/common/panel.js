@@ -214,7 +214,7 @@ function _show_as_audioreading(){
 
   $('body').html(body);
   BOOK_ID = $('head meta[name=description]').attr('data-bookid');
-  BOOK_LANGUAGE = BOOK_ID.split('-').pop().trim().toLowerCase();
+  BOOK_LANGUAGE = BOOK_ID.split('-').pop().trim().toLowerCase() || BOOK_LANGUAGE;
 
 
   _get_user_credentials();
@@ -274,7 +274,29 @@ function _insert_recording_controls_item(block, audioid) {
   _display_block_audio_state(selector);
 }
 
+function _html_textlength(block) {
+  // returns text length given a block of html.  If array, items are first joined
+  if (Array.isArray(block)) block = block.join('\n');
+  return $('<div>').html(block).text().length;  
+}
+
+function _split_block_by_delimiter(content, delimiter, maxlength) {
+  // returns an array of items split by delimiter, attempting to keep them under maxlength per item
+  if (!maxlength) maxlength = 600;
+  var chunks = content.split(delimiter);
+  var newChunks = [[]];
+  for (var i=0; i<chunks.length; i++) { 
+    var last_len = _html_textlength(newChunks[newChunks.length-1]); 
+    var new_len = _html_textlength(chunks[i]);
+    if ((last_len+new_len < maxlength) || (last_len===0)) newChunks[newChunks.length-1].push(chunks[i]);
+    else newChunks.push([chunks[i]]); 
+  }
+  for (var i=0; i<newChunks.length; i++) newChunks[i] = newChunks[i].join(delimiter);
+  return newChunks;       
+}
+
 function _split_block(selector) {
+  var maxlength = 600;  
   var content = $(selector).html();
   var blockID = $(selector).attr('id');
   var blockIDstr = $(selector).attr('id').replace(/(.*?)\.(.*?)/g, '$1\\.$2');
@@ -284,15 +306,57 @@ function _split_block(selector) {
               prevBlock: '',
               hasChildren: false,
               subNum: 0}];
-  if (blockID && $(selector).text().length > 1000) {
+  if (!blockID) return false;
+  
+  if (_html_textlength(content) > maxlength) {
+    
+    
     //console.log('splitting paragraph');
-    var chunks = content.split('<span class="sent_bk"></span>');
+    var sentence_delimiter = '<span class="sent_bk"></span>';
+    var semicolon_delimiter = '&nbsp;&nbsp;&nbsp; <span class="sentence_seperator">/</span>&nbsp;&nbsp;&nbsp;';
+    // split block by sentence delimiter
+    var newChunks = [];
+    var chunks = _split_block_by_delimiter(content, sentence_delimiter, maxlength);
+    for (var i=0; i<chunks.length; i++) {
+      if (_html_textlength(chunks[i]) <= maxlength) newChunks.push(chunks[i]);
+      else {
+        // split sentnce by semicolon delimiter
+        var semichunks = _split_block_by_delimiter(chunks[i], semicolon_delimiter, maxlength);
+        newChunks.push.apply(newChunks, semichunks);
+      }      
+    }
+    
+    /*
+    var chunks = content.split(sentence_delimiter);
     var newChunks = [''];
     for (var i=0; i<chunks.length; i++) {
-      var len = $('<div>').html(newChunks[newChunks.length-1]).text().length;
-      if (len < 300) newChunks[newChunks.length-1] += chunks[i].trim() + '<span class="sent_bk"></span> ';
-       else newChunks.push(chunks[i]);
-    }
+      var len = _html_textlength(newChunks[newChunks.length-1]);  
+      var newlen = _html_textlength(chunks[i]);
+      if ((len+newlen < 600) || (len===0)) newChunks[newChunks.length-1] += chunks[i] + sentence_delimiter;
+      else newChunks.push(chunks[i]);
+      // check if this block is still too long and splitable
+      var blocklen = _html_textlength(newChunks[newChunks.length-1]);
+      if (blocklen>600) {
+        //console.log('#'+blockID +" Sentence block too long: ("+ blocktext.length +"),  "+ blocktext);
+        var semichunks = newChunks[newChunks.length-1].split(semicolon_delimiter);
+        var newsemichunks = [''];
+        for (var j=0; j<semichunks.length; j++) {
+          var len = _html_textlength(newsemichunks[newsemichunks.length-1]);
+          var newlen = _html_textlength(semichunks[j]);
+          if ((len+newlen < 600) || (len===0)) newsemichunks[newsemichunks.length-1] += semichunks[j] + semicolon_delimiter;
+          else newsemichunks.push(semichunks[j]);
+        }
+        // if we did a split, add them all to the main list
+        if (newsemichunks.length>1) {
+          console.log('split sub-block into '+newsemichunks.length+' parts: '+newsemichunks);
+          newChunks.pop();
+          newChunks.push.apply(newChunks, newsemichunks);
+        }
+      }
+    }*/
+    
+    
+    
     //console.log('Split paragraph into '+ chunks.length+ ' sub-blocks');
     // assign data for each chunk
     if (newChunks.length>1) {
@@ -310,7 +374,7 @@ function _split_block(selector) {
         });
       }
     }
-   if (blockID=='f.3') console.log(result);
+   //if (blockID=='f.3') console.log(result);
   }
 
   return result;
@@ -335,7 +399,7 @@ function _insert_recording_controls() {
 
         var blockType = $(this).prop("tagName").toLowerCase();
         var block = '<'+blockType+' id="'+obj.sel.replace(/\#/,'')+'"></'+blockType+'>';
-        if ($(this).attr('id')=='f.3') console.log(obj.sel, block, obj.prevBlock, obj);
+        //if ($(this).attr('id')=='f.3') console.log(obj.sel, block, obj.prevBlock, obj);
         $(obj.prevBlock).after(block);
         $(obj.selStr).addClass('subBlock').attr('data-prev', obj.prevBlock).html(obj.cont);
       }
@@ -370,13 +434,16 @@ function _insert_recording_controls() {
     _record_audio(selector);
   });
   // finished recording buttons
-  $('.finishedrecordingbutton').click(_stop_recording);
+  $('.finishedrecordingbutton').click(function(){
+    setTimeout(_stop_recording, 200);
+  });
   $('.finishedrecordingcontinuebutton').click(function(){
-    //pause(1000);
-    _stop_recording();
     current_block = $(this).parent().parent().attr('data-selector');
-    $(current_block).removeClass('needsAudio');
-    _scrollto_next_needsAudio(true); // force start of next paragraph
+    setTimeout(function(){
+      _stop_recording();
+      $(current_block).removeClass('needsAudio');
+      _scrollto_next_needsAudio(true); // force start of next paragraph      
+    }, 350);     
   });
   $('.cancelrecordingbutton').click(function(){
     _stop_recording(true);
@@ -474,6 +541,11 @@ function _current_book_storage_path() {
   var result = path.join('/') + '/';
   return result;
 }
+function _current_book_playlist_path() { 
+  var path = BOOK_ID.trim().toLowerCase() +'-'+
+    localStorage.getItem("reader_name").trim().toLowerCase() +'.m3u';
+  return path;
+}
 function _fetch_S3_audio_filelist(callback) {
   AWS.config.credentials.secretAccessKey = AWS_KEY2 + localStorage.getItem('pass');
   var storage_path = _current_book_storage_path();
@@ -504,8 +576,9 @@ function _fetch_S3_audio_filelist(callback) {
         _display_block_audio_state(selector);
       });
     }
-  });
+  }); 
 }
+
 function _insert_new_section_titles() {
   var section_pattern = $('head meta[data-section-title]').data('section-title');
     // insert new section title
@@ -631,9 +704,32 @@ function _save_audio_ogg(selector){
       //var next_block_selector = $(selector).next('.needsSaving').eq(0).attr('data-selector');
       //if (!next_block_selector) next_block_selector = $('.needsSaving').eq(0).attr('data-selector');
       //_scrollto_block(next_block_selector);
+      //
+      _save_playlist();
     }
   });
 }
+function _save_playlist() {
+  var list = []; 
+  var complete = true;
+  var keys = Object.keys(block_map); 
+  keys.forEach(function(key){ 
+    if (block_map[key].url.length<5) complete = false;
+    else list.push(block_map[key].url); 
+  });
+  var filepath = _current_book_playlist_path();  
+  var bucket = new AWS.S3({params: {Bucket: AWS_BUCKET}});
+  var params = {Key: filepath,  ContentType: 'audio/x-mpegurl', Body: list.join('\n')};
+  // attempt to upload
+  //console.log('Saving playlist: '+ filepath);
+  bucket.upload(params, function (err, data) {
+    if (err) console.log('S3 Save Error: ', err); 
+    else console.log('  Playlist saved successfully:  https://'+AWS_BUCKET+'.s3.amazonaws.com/'+filepath);     
+  });
+ 
+}
+
+
 /*
 function _save_audio(block){
   var selector = $(block).attr('data-selector');
@@ -690,6 +786,7 @@ function _record_audio(selector) {
   }, 2250);
 }
 function _stop_recording(forceCancel) {
+  
   var selector = $(current_block).attr('data-selector');
   if (!(forceCancel===true)) forceCancel = false;
   cancelRecording = forceCancel;
@@ -699,38 +796,42 @@ function _stop_recording(forceCancel) {
   if (!$('body').hasClass('isRecording')) return;
   if ((!current_block) || (!$(current_block).hasClass('isRecording'))) return;
   // I'll bet a lot of this reset business would better go in _display_block_audio_state
-  $(selector).find('.recordbutton').show();
-  $(selector).find('.stopbutton').hide();
-  $(selector).find('.audiocontrols_stop').hide();
-  $(selector).removeClass('isRecording');
-  $('body').removeClass('isRecording');
-  $('#nowRecording').hide();
-  //console.log("That's it, I'm stopping this recording!!");
-  recorder.stop();
-  _display_block_audio_state(selector);
-  // for recorderjs we need to save the data
-  if (!forceCancel) {
-    //console.log("Recorded audio for current_block: ", selector);
-    $(selector).find('.playbutton').show();
-    $(selector).find('.audiocontrols_save').show();
-    $(selector).addClass('needsSaving');
-    /*
-    recorder.exportWAV(function(blob) {
-      block_map[selector].data = blob;
-      block_map[selector].url = URL.createObjectURL(block_map[selector].data); // add to id map
-      recorder.clear();
-      //_save_audio(selector);
-      _display_block_audio_state(selector);
-    });
-    */
-  }
+ 
+    $(selector).find('.recordbutton').show();
+    $(selector).find('.stopbutton').hide();
+    $(selector).find('.audiocontrols_stop').hide();
+    $(selector).removeClass('isRecording');
+    $('body').removeClass('isRecording');
+    $('#nowRecording').hide();
+    //console.log("That's it, I'm stopping this recording!!");
+    //
+    // I'm delaying the stop recording for 1 second to try to prevent cutting the last word
 
-  if (forceCancel) _scrollto_block(selector);
+    recorder.stop();
+    _display_block_audio_state(selector);
+    
+    // for recorderjs we need to save the data
+    if (!forceCancel) {
+      //console.log("Recorded audio for current_block: ", selector);
+      $(selector).find('.playbutton').show();
+      $(selector).find('.audiocontrols_save').show();
+      $(selector).addClass('needsSaving');
+      /*
+      recorder.exportWAV(function(blob) {
+        block_map[selector].data = blob;
+        block_map[selector].url = URL.createObjectURL(block_map[selector].data); // add to id map
+        recorder.clear();
+        //_save_audio(selector);
+        _display_block_audio_state(selector);
+      });
+      */
+    }
+    if (forceCancel) _scrollto_block(selector);
 }
 
 function _play_audio(block) {
 
-console.log('Playing audio for block: '+block, block_map[$(block).attr('data-selector')].url);
+   //console.log('Playing audio for block: '+block, block_map[$(block).attr('data-selector')].url);
 
   var selector = $(block).attr('data-selector');
   _stop_recording(current_block);
