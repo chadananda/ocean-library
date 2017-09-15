@@ -194,7 +194,7 @@ function _show_as_audioreading(){
 
   var body = $('body').html();
   var sentence_split = /([a-záíúḥḍẓ’]{3}(?:["|’|”]{0,2})[.|!|?|:](?:["|’|”]{0,2}))((?: <a.*?<\/a> |\s+| <span.*?<\/span> )(?:["|‘|“]{0,2})[A-ZÁÍÚḤṬẒḌ])/gi;
-  var sentence2_split = /((?:[.|!|?])(?:<\/q>))(\s{1,2})/g;
+  var sentence2_split = /((?:[.|!|?|”])(?:<\/q>))(\s{1,2})/g;
   var sentence3_split = /((?:<\/q>)(?:[.|!|?]))(\s{1,2})/g;
   var sentence_marker = '$1<span class="sent_bk"></span>$2';
   var semicolon_split = /([;])( {1,2})/g;
@@ -546,37 +546,62 @@ function _current_book_playlist_path() {
     localStorage.getItem("reader_name").trim().toLowerCase() +'.m3u';
   return path;
 }
-function _fetch_S3_audio_filelist(callback) {
+function _fetch_S3_audio_filelist(callback, last_key) { 
   AWS.config.credentials.secretAccessKey = AWS_KEY2 + localStorage.getItem('pass');
   var storage_path = _current_book_storage_path();
+console.log(_current_book_storage_path());
   var bucket = new AWS.S3({params: {Bucket: AWS_BUCKET }});
-  bucket.listObjects(function (err, data) {
+  var params = request = {Prefix: storage_path, Delimiter: '/'};
+  if (last_key) params.Marker = last_key;
+  bucket.listObjects(params, function (err, data) {
     if (err) {
       console.log('Could not load audio objects from S3', err);
       var password = window.prompt("Password failed, please enter it again: ", "");
       if (password) {
         localStorage.setItem("pass", password);
-        _fetch_S3_audio_filelist(callback);
+        _fetch_S3_audio_filelist(callback, last_key);
       }
     } else {
-      //console.log('Raw S3 data: ', data);
+  console.log('Raw S3 data: ', data); 
       var items = data.Contents.filter(function(item){
-        return ((item.Key.indexOf(storage_path)===0) && (item.Key.length > storage_path.length));
+        var match = ((item.Key.indexOf(storage_path)===0) && (item.Key.length > storage_path.length));
+        if (!match) console.log (item.Key+', '+storage_path+', '+item.Key.indexOf(storage_path));
+        return match;
       });
-      //console.log('Filtered S3 items: ', items);
+  //console.log(items.length+' filtered S3 items: ', items);
       items.forEach(function(item){
         var selector = item.Key.replace(/.*?\,(.*?)\,.*?$/ig, '$1');
+  //console.log(selector);
         //var block = $(selector); // extract selector from path name
         var url = 'https://'+AWS_BUCKET+'.s3.amazonaws.com/'+ encodeURIComponent(item.Key);
         //console.log('Fetched S# URL: '+ url);
-        //var audioid =  $(block).attr('data-audioid'); // don't trust the number in the url
-        block_map[selector].url = url;
-        block_map[selector].s3 = item;
+        //var audioid =  $(block).attr('data-audioid'); // don't trust the number in the 
+
+        block_map[selector] = {url: url, s3: item};
         // audio_urls[selector] = {url: info.url};
         _display_block_audio_state(selector);
+
+        last_key = item.Key;
       });
+      if (data.IsTruncated) _fetch_S3_audio_filelist(callback, last_key);
     }
-  }); 
+  });
+}
+// after altering block audio, reset display state
+function _display_block_audio_state(selector) {
+  if (!$(selector).length) return;
+  selector = $(selector).attr('data-selector');
+  if (!selector || !block_map[selector] || !$(selector).length) {
+    console.log('Error:  audio selector problem: '+selector);
+    return;
+  }
+  if (block_map[selector].url) { // has audio
+    $(selector).removeClass('needsAudio').addClass('hasAudio');
+    $(selector).find('.playbutton').show();
+  } else {  // needs audio
+    $(selector).removeClass('hasAudio').addClass('needsAudio');
+    $(selector).find('.playbutton').hide();
+  }
 }
 
 function _insert_new_section_titles() {
@@ -610,21 +635,7 @@ function _insert_new_section_titles() {
     $(this).find('div.section_header').html("<h3 class='title'>"+title+"</h3>");
   });
 }
-// after altering block audio, reset display state
-function _display_block_audio_state(selector) {
-  selector = $(selector).attr('data-selector');
-  if (!selector || !block_map[selector] || !$(selector).length) {
-    console.log('Error:  audio selector problem: '+selector);
-    return;
-  }
-  if (block_map[selector].url) { // has audio
-    $(selector).removeClass('needsAudio').addClass('hasAudio');
-    $(selector).find('.playbutton').show();
-  } else {  // needs audio
-    $(selector).removeClass('hasAudio').addClass('needsAudio');
-    $(selector).find('.playbutton').hide();
-  }
-}
+
 
 function _init_ogg_recorder(selector) {
   //console.log('Initialized ogg recorder for: '+ selector);
@@ -815,7 +826,7 @@ function _stop_recording(forceCancel) {
       //console.log("Recorded audio for current_block: ", selector);
       $(selector).find('.playbutton').show();
       $(selector).find('.audiocontrols_save').show();
-      $(selector).addClass('needsSaving');
+      $(selector).addClass('needsSaving').addClass('hasAudio');
       /*
       recorder.exportWAV(function(blob) {
         block_map[selector].data = blob;
@@ -831,7 +842,7 @@ function _stop_recording(forceCancel) {
 
 function _play_audio(block) {
 
-   //console.log('Playing audio for block: '+block, block_map[$(block).attr('data-selector')].url);
+  //console.log('Playing audio for block: '+block, block_map[$(block).attr('data-selector')].url);
 
   var selector = $(block).attr('data-selector');
   _stop_recording(current_block);
@@ -867,17 +878,26 @@ function _stop_audio(block) {
   $('#audio_player').trigger('pause');
 }
 function _scrollto_next_needsAudio(force_start_recording) {
-  var current_selector = $(current_block).attr('data-selector');
+  //var current_selector = $(current_block).attr('data-selector');
+  //while (!current_selector.length) current_selector
+  //
+  var next_block_selector = $('.hasAudio').last().next('.needsAudio');
+  _scrollto_block(next_block_selector);
+  if (force_start_recording) _record_audio(next_block_selector);
+  /*return;
+  
+  //if (!current_selector.length) console.dir(current_block);
+
   var next_block_selector = $(current_selector).next('.needsAudio').eq(0).attr('data-selector');
    // console.log ('next_block_selector', next_block_selector);
   if (!next_block_selector) next_block_selector = $('.needsAudio').eq(0).attr('data-selector');
   if (next_block_selector) {
     _scrollto_block(next_block_selector);
     if (force_start_recording) _record_audio(next_block_selector);
-  }
+  }*/
 }
 function _scrollto_block(selector){
-  if (!selector) return;
+  if (!$(selector).length) return;
   var offset = $(selector).offset();
   $('html, body').animate({
       scrollTop: offset.top - 200,

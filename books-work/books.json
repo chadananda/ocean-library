@@ -64,6 +64,14 @@
     "words": 8936, "formatted": true, "proofed": true, "audio": false,
     "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/baha-svfv-en.html"
   },
+  {
+    "title": "Days of Remembrance", "author": "Bahá’u’lláh",
+    "words": 52789, "formatted": true, "proofed": true, "audio": false,
+    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/baha-remembrance-en.html"
+  },  
+  
+  
+  
 
   {
     "title": "Selections from the Writings of the Báb", "author": "The Báb",
@@ -79,7 +87,7 @@
 
   {
     "title": "The Will and Testament", "author": "‘Abdu’l-Bahá",
-    "words": 7239, "formatted": true, "proofed": true, "audio": false,
+    "words": 7239, "formatted": true, "proofed": true, "audio": true,
     "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/abd-wt-en.html"
   },
 
@@ -97,7 +105,7 @@
 
   {
     "title": "Paris Talks", "author": "‘Abdu’l-Bahá",
-    "words": 32999, "formatted": true, "proofed": true, "audio": false,
+    "words": 32999, "formatted": true, "proofed": true, "audio": true,
     "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/abd-pt-en.html"
   },
 
@@ -115,7 +123,7 @@
 
   {
     "title": "Secret of Divine Civilization", "author": "‘Abdu’l-Bahá",
-    "words": 22163, "formatted": true, "proofed": false, "audio": false,
+    "words": 22163, "formatted": true, "proofed": false, "audio": true,
     "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/abd-sdc-en.html"
   },
 
@@ -172,13 +180,13 @@
 
   {
     "title": "God Passes By", "author": "Shoghi Effendi",
-    "words": 138115, "formatted": true, "proofed": true, "audio": false,
+    "words": 138115, "formatted": true, "proofed": true, "audio": true,
     "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/shoghi-god-passes-by-en.html"
   },
 
   {
     "title": "The Advent of Divine Justice", "author": "Shoghi Effendi",
-    "words": 26223, "formatted": true, "proofed": true, "audio": false,
+    "words": 26223, "formatted": true, "proofed": true, "audio": true,
     "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/shoghi-adj-en.html"
   },
 
@@ -228,7 +236,7 @@
   {
     "title": "Messages to the Indian Subcontinent", "author": "Shoghi Effendi",
     "words": 131459, "formatted": false, "proofed": false, "audio": false,
-    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/1.%20raw-notproofed/__Shoghi-Effendi%2CMessages%20to%20the%20Indian%20Subcontinent.txt"
+    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/4.%20proofed-done/Shoghi-Effendi%2CMessages%20to%20the%20Indian%20Subcontinent.html"
   },
 
 
@@ -250,7 +258,7 @@
   {
     "title": "Messages to Canada", "author": "Shoghi Effendi",
     "words": 17387, "formatted": false, "proofed": false, "audio": false,
-    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/1.%20raw-notproofed/__Shoghi-Effendi%2CMessages-to-Canada%2Cen.html"
+    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/2.%20formatted-notproofed/Shoghi-Effendi%2CMessages%20to%20Canada.html"
   },
   {
     "title": "The Light of Divine Guidance v1 - Letters to Germany and Austria", "author": "Shoghi Effendi",
@@ -334,6 +342,17 @@
     "words": 162821, "formatted": true, "proofed": false, "audio": false,
     "href": ""
   },
+  {
+    "title": "Bahá’í Prayers", "author": "Compilation",
+    "words": 46203, "formatted": false, "proofed": false, "audio": false,
+    "href": "https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/2.%20formatted-notproofed/bahai-prayers-en.html"
+  },
+  {
+    "title": "Fire and Light", "author": "Compilation",
+    "words": 20203, "formatted": false, "proofed": false, "audio": false,
+    "href": "https://bahai-library.com/compilation_fire_light"
+  },
+  
 
   {
     "title": "Lights of Guidance", "author": "Compilation",
