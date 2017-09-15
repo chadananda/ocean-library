@@ -7,5 +7,5 @@ Formatting Style Guide:  https://docs.google.com/document/d/1WSdx728aAl60GRCRx7z
 
 ### Sample formatted Books:
 
-https://dl.dropboxusercontent.com/u/382588/JS/Projects/ocean_library/index.html
+http://chadananda.github.io/ocean-library/
  
