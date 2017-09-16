@@ -5,7 +5,8 @@
 // 
 // 
 if(window.location.protocol != 'https:') {
-  location.href = location.href.replace("http://", "https://");
+  var loc = location.href;
+  if (loc.indexOf('http://')>-1 && loc.indexOf('github.io')>-1) location.href = loc.replace("http://", "https://");
 }
 
 

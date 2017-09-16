@@ -4,9 +4,9 @@
   <meta charset='UTF-8' />
   <title>Sacred Writings Library, English </title>
   <link rel="shortcut icon" href="books-work/assets/common/ocean-logo.png"/>
-  <script>
     if(window.location.protocol != 'https:') {
-      location.href = location.href.replace("http://", "https://");
+      var loc = location.href;
+      if (loc.indexOf('github.io')>-1) location.href = loc.replace("http://", "https://");
     }
   </script>
   
