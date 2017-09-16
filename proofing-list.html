@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset='UTF-8' />
+  <title>Sacred Writings Library, English </title>
+  <link rel="shortcut icon" href="assets/common/ocean-logo.png"/>
+  <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+  <base href='//chadananda.github.io/ocean-library/books-work/'>
+  <link rel='stylesheet' type='text/css' href='assets/common/base.min.css'>
+  <style>
+    hr.small {height: 8px !important; margin:1em !important; background-position: 0 0 !important;}
+    body.ocean h1.section {text-align: left !important; margin: 0 !important;
+     margin-top: 0 !important;
+     font-size: 34px !important; margin-left: -1em !important;
+    }
+    #prog_report {margin-left: 2em !important;}
+    #prog_report h3, #prog_report h4 {font-family: courier; font-weight: normal; margin: .25em !important;}
+    #prog_report h4 {margin-left: 1em !important;}
+    .book_details {margin-left: 1em !important; color: DarkOliveGreen;
+      font-family: courier !important; font-weight: normal;
+      font-variant: normal; font-size: 12pt;
+      margin-bottom: 1em !important;
+    }
+    .book_details .notchecked { color: maroon;}
+    .book_details .checked::before { content: '\f046 \0000a0 \0000a0 ';
+       font-family: fontawesome;
+       margin-left:.5em; margin-right:-.5em;}
+    .book_details .notchecked::before { content: '\f096 \0000a0 \0000a0 ';
+       font-family: fontawesome;
+       margin-left:.5em; margin-right:-.5em;}
+
+    body.ocean .section { page-break-before: avoid !important;  margin-top: 1em !important; padding-top:0 !important;}
+  </style>
+  <script src="parsebooks.js"></script>
+  </head>
+
+<body class='ocean'>
+<img style=' width:100px; float:right; margin-top:-15px' src='assets/common/ocean-logo.svg' />
+
+
+
+<section id='section_toc' class='contents'>
+  <h1 class='section'>&nbsp; &nbsp; Sacred Writings Library</h1>
+  <div id='prog_report'></div>
+  <ol id='book_list' class='books'></ol>
+</section>
+
+
+
