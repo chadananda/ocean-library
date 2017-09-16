@@ -2,6 +2,11 @@
 // a script for generating a booklist and progress status
 // requires jquery
 // looks for a books.json file
+// 
+// 
+if(window.location.protocol != 'https:') {
+  location.href = location.href.replace("http://", "https://");
+}
 
 
 // read the booklist
