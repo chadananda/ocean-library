@@ -6,7 +6,7 @@
 
 // read the booklist
 $( document ).ready(function() {
-  $.getJSON("books.json", function( books ) {
+  $.getJSON("books-work/books.json", function( books ) {
 
     var summary = {
       total:0, words: 0, formatted:0, formatted_words:0,

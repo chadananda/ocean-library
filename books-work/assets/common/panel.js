@@ -10,8 +10,7 @@ if (/plaintext=true/.test(window.location) ||
    document.getElementsByTagName("html")[0].style.display = "none";
 }
 
-var library_list = 'https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/'+
-  'books-work/proofing-list.html';
+var library_list = 'books-work/proofing-list.html';
 var TTS_URLS = {};
 
 // globals for recording
@@ -36,7 +35,7 @@ var AWS_BUCKET = 'ocean-books-audio';
 
 $(function() {
 
-  $('head').append('<link rel="stylesheet" type="text/css" href="assets/common/panel.min.css">');
+  $('head').append('<link rel="stylesheet" type="text/css" href="../assets/common/panel.min.css">');
   $('body').append("<div id='control_panel_hidden' class='screenonly'>i</div>");
 
   var color_themes = ['theme_white','theme_sepia','theme_night'];
@@ -94,7 +93,7 @@ $(function() {
       $('body').removeClass('study_format_centered');
     }
     else if (id === 'validate') {
-      var base_en="https://dl.dropboxusercontent.com/u/382588/JS/Projects/ocean_library/Library/";
+      var base_en="";
       var base_tr= base_en+"translation/";
       var validator_url = "http://validator.w3.org/check?uri=";
       var loc = window.location.href;
@@ -107,7 +106,7 @@ $(function() {
     }
     else if (id === 'accents') {
       //var base_en="https://dl.dropboxusercontent.com/u/382588/JS/Projects/ocean_library/Library/";
-      var base_en="https://dl.dropboxusercontent.com/u/382588/ocean2.0/Library/books-work/";
+      var base_en="books-work/";
       var base_tr= base_en+"translation/";
       var loc = window.location.href;
       if (!(/check_accents=true/.test(loc))) loc += '?check_accents=true';
@@ -120,7 +119,7 @@ $(function() {
       window.open(loc);
     }
     else if (id === 'plaintext') {
-      var base_en="https://dl.dropboxusercontent.com/u/382588/JS/Projects/ocean_library/Library/";
+      var base_en="";
       var base_tr= base_en+"translation/";
       var loc = window.location.href;
       // for local files, add the dropbox path
@@ -132,7 +131,7 @@ $(function() {
       } else _show_as_plaintext();
     }
     else if (id === 'audio_reading') {
-      var base_en="https://dl.dropboxusercontent.com/u/382588/JS/Projects/ocean_library/Library/";
+      var base_en="";
       var base_tr= base_en+"translation/";
       var loc = window.location.href;
       if (!(/audioreading=true/.test(loc))) loc += '?audioreading=true';
@@ -165,10 +164,10 @@ $(function() {
 
   // if not audioreader mode, load fn.js, toc.js
   if ($('html').is(":visible")) {
-    $.getScript('assets/common/toc.js');
-    $.getScript('assets/common/fn.js');
+    $.getScript('../assets/common/toc.js');
+    $.getScript('../assets/common/fn.js');
   }
-  $.getScript('assets/common/scrollintoview.js');
+  $.getScript('../assets/common/scrollintoview.js');
 
 });
 
@@ -1385,7 +1384,7 @@ function _load_accents_scripts(){
   // next, show all footnotes
   $('aside.fn').show();
   //alert('got here');
-  var base_url = 'https://dl.dropboxusercontent.com/u/382588/JS/Projects/diacritical/';
+  var base_url = '';
   $.getScript(base_url + 'diacritical.js', function() {
     console.log('diacritical.js loaded');
      $.getScript(base_url + 'suggest.js', function() {
