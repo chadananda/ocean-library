@@ -227,7 +227,7 @@ function _show_as_audioreading(){
   // add CSS and functionality and then show html after CSS is loaded
   $('body').append('<link rel="stylesheet" id="audioreader_stylesheet" href="">');
   $("#audioreader_stylesheet").load(function(){
-    $.getScript('assets/common/audioreader.js');
+    $.getScript('../assets/common/audioreader.js');
     $('html').show();
     // Amazon S3
     $.getScript('https://sdk.amazonaws.com/js/aws-sdk-2.5.3.min.js').done(function(){
@@ -243,11 +243,11 @@ function _show_as_audioreading(){
        _init_wav_recorder();
     }).fail(function(err){console.log('error loading recorder', err);});
     */
-    $.getScript('assets/common/Recorderjs_opus/build/recorder.min.js').done(function(){
+    $.getScript('../assets/common/Recorderjs_opus/build/recorder.min.js').done(function(){
       //_init_ogg_recorder();
     }).fail(function(err){console.log('error loading recorder', err);});
 
-  }).attr("href", "assets/common/audioreader.css");
+  }).attr("href", "../assets/common/audioreader.css");
 }
 
 function _insert_recording_controls_item(block, audioid) {
@@ -640,7 +640,7 @@ function _init_ogg_recorder(selector) {
   //console.log('Initialized ogg recorder for: '+ selector);
   recorder = new Recorder({
               encoderApplication: 2048,
-              encoderPath: 'assets/common/Recorderjs_opus/build/encoderWorker.min.js',
+              encoderPath: '../assets/common/Recorderjs_opus/build/encoderWorker.min.js',
               encoderSampleRate: 48000,
               resampleQuality: 10,
               streamPages: false,
@@ -996,7 +996,7 @@ function _insert_pronunciation_buttons() {
   // load in the blockparse script
   //
   //console.log('_insert_pronunciation_buttons');
-  $.getScript('assets/common/parseblock.js', function() {
+  $.getScript('../assets/common/parseblock.js', function() {
     // console.log('got parseblock.js');
     $('section.titlepage, p[id], div.par, section_header').not('.audiobuttons')
       .hover( _insert_pronunciation_buttons_block, null);
@@ -1418,7 +1418,7 @@ function _numberWithCommas(x) {
 function _show_loading_screen() {
   var box = '<div id="loadpage" style="position:absolute; left:0px; top:0px; background-color:white; '+
     'layer-background-color:white; height:100%; width:100%;"> <p align="center" style="font-size: large;"> '+
-        ' <img src="assets/common/spinner.gif"> <b>Loading Bahá’í Terms Dictionary ... Please wait!</b> </p> </div>';
+        ' <img src="../assets/common/spinner.gif"> <b>Loading Bahá’í Terms Dictionary ... Please wait!</b> </p> </div>';
   $('body').append(box);
 }
 
