@@ -25,8 +25,8 @@ var block_map = {};
 //var READER = '';
 
 
-var AWS_ACCESS_KEY = 'AKIAJQ6K5GDWLDAA4JTQ'; //
-var AWS_KEY2 = '/NQP60gBgaD22QS4WD4m';
+var ACCESS_PART_CRED = 'AKIAJQ6K5GDWLDAA4JTQ'; //
+var ACCESS_SEC_PART = '/NQP60gBgaD22QS4WD4m';
 var AWS_BUCKET = 'ocean-books-audio';
 //var DEFAULT_AUDIO_FORMAT = 'audio/wav';
 
@@ -232,8 +232,8 @@ function _show_as_audioreading(){
     // Amazon S3
     $.getScript('https://sdk.amazonaws.com/js/aws-sdk-2.5.3.min.js').done(function(){
       AWS.config.credentials = {};
-      AWS.config.credentials.accessKeyId  = AWS_ACCESS_KEY;
-      AWS.config.credentials.secretAccessKey = AWS_KEY2 + localStorage.getItem('pass');
+      AWS.config.credentials.accessKeyId  = ACCESS_PART_CRED;
+      AWS.config.credentials.secretAccessKey = ACCESS_SEC_PART + localStorage.getItem('pass');
       AWS.config.region = 'us-west-1';
       _fetch_S3_audio_filelist(); // loads appropriate audio files from S3 and attaches URLS to blocks
     });
@@ -546,9 +546,9 @@ function _current_book_playlist_path() {
   return path;
 }
 function _fetch_S3_audio_filelist(callback, last_key) { 
-  AWS.config.credentials.secretAccessKey = AWS_KEY2 + localStorage.getItem('pass');
+  AWS.config.credentials.secretAccessKey = ACCESS_SEC_PART + localStorage.getItem('pass');
   var storage_path = _current_book_storage_path();
-console.log(_current_book_storage_path());
+//console.log(_current_book_storage_path());
   var bucket = new AWS.S3({params: {Bucket: AWS_BUCKET }});
   var params = request = {Prefix: storage_path, Delimiter: '/'};
   if (last_key) params.Marker = last_key;
@@ -561,7 +561,7 @@ console.log(_current_book_storage_path());
         _fetch_S3_audio_filelist(callback, last_key);
       }
     } else {
-  console.log('Raw S3 data: ', data); 
+  //console.log('Raw S3 data: ', data); 
       var items = data.Contents.filter(function(item){
         var match = ((item.Key.indexOf(storage_path)===0) && (item.Key.length > storage_path.length));
         if (!match) console.log (item.Key+', '+storage_path+', '+item.Key.indexOf(storage_path));
