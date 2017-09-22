@@ -477,7 +477,7 @@ function _insert_reading_instructions(){
     else if (minutes) time = minutes;
 
   var instructions = '\n\n<div class="reading_instructions">\n';
-  instructions += '<h1> Audio Reading Instructions (v1.7) </h1>';
+  instructions += '<h1> Audio Reading Instructions (v1.8) </h1>';
   instructions += '<div class="wordcount"> With <b>'+ _numberWithCommas(count) + ' words</b>, this book’s final audio should be about <b>'+
      time + '.</b> </div>';
 
