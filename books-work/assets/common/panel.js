@@ -227,7 +227,7 @@ function _show_as_audioreading(){
   // add CSS and functionality and then show html after CSS is loaded
   $('body').append('<link rel="stylesheet" id="audioreader_stylesheet" href="">');
   $("#audioreader_stylesheet").load(function(){
-    $.getScript('../assets/common/audioreader.js');
+    // $.getScript('../assets/common/audioreader.js');
     $('html').show();
     // Amazon S3
     $.getScript('https://sdk.amazonaws.com/js/aws-sdk-2.5.3.min.js').done(function(){
@@ -276,7 +276,7 @@ function _insert_recording_controls_item(block, audioid) {
 function _html_textlength(block) {
   // returns text length given a block of html.  If array, items are first joined
   if (Array.isArray(block)) block = block.join('\n');
-  return $('<div>').html(block).text().length;  
+  return $('<div>').html(block).text().length;
 }
 
 function _split_block_by_delimiter(content, delimiter, maxlength) {
@@ -284,18 +284,18 @@ function _split_block_by_delimiter(content, delimiter, maxlength) {
   if (!maxlength) maxlength = 600;
   var chunks = content.split(delimiter);
   var newChunks = [[]];
-  for (var i=0; i<chunks.length; i++) { 
-    var last_len = _html_textlength(newChunks[newChunks.length-1]); 
+  for (var i=0; i<chunks.length; i++) {
+    var last_len = _html_textlength(newChunks[newChunks.length-1]);
     var new_len = _html_textlength(chunks[i]);
     if ((last_len+new_len < maxlength) || (last_len===0)) newChunks[newChunks.length-1].push(chunks[i]);
-    else newChunks.push([chunks[i]]); 
+    else newChunks.push([chunks[i]]);
   }
   for (var i=0; i<newChunks.length; i++) newChunks[i] = newChunks[i].join(delimiter);
-  return newChunks;       
+  return newChunks;
 }
 
 function _split_block(selector) {
-  var maxlength = 600;  
+  var maxlength = 600;
   var content = $(selector).html();
   var blockID = $(selector).attr('id');
   var blockIDstr = $(selector).attr('id').replace(/(.*?)\.(.*?)/g, '$1\\.$2');
@@ -306,10 +306,10 @@ function _split_block(selector) {
               hasChildren: false,
               subNum: 0}];
   if (!blockID) return false;
-  
+
   if (_html_textlength(content) > maxlength) {
-    
-    
+
+
     //console.log('splitting paragraph');
     var sentence_delimiter = '<span class="sent_bk"></span>';
     var semicolon_delimiter = '&nbsp;&nbsp;&nbsp; <span class="sentence_seperator">/</span>&nbsp;&nbsp;&nbsp;';
@@ -322,14 +322,14 @@ function _split_block(selector) {
         // split sentnce by semicolon delimiter
         var semichunks = _split_block_by_delimiter(chunks[i], semicolon_delimiter, maxlength);
         newChunks.push.apply(newChunks, semichunks);
-      }      
+      }
     }
-    
+
     /*
     var chunks = content.split(sentence_delimiter);
     var newChunks = [''];
     for (var i=0; i<chunks.length; i++) {
-      var len = _html_textlength(newChunks[newChunks.length-1]);  
+      var len = _html_textlength(newChunks[newChunks.length-1]);
       var newlen = _html_textlength(chunks[i]);
       if ((len+newlen < 600) || (len===0)) newChunks[newChunks.length-1] += chunks[i] + sentence_delimiter;
       else newChunks.push(chunks[i]);
@@ -353,9 +353,9 @@ function _split_block(selector) {
         }
       }
     }*/
-    
-    
-    
+
+
+
     //console.log('Split paragraph into '+ chunks.length+ ' sub-blocks');
     // assign data for each chunk
     if (newChunks.length>1) {
@@ -441,8 +441,8 @@ function _insert_recording_controls() {
     setTimeout(function(){
       _stop_recording();
       $(current_block).removeClass('needsAudio');
-      _scrollto_next_needsAudio(true); // force start of next paragraph      
-    }, 350);     
+      _scrollto_next_needsAudio(true); // force start of next paragraph
+    }, 350);
   });
   $('.cancelrecordingbutton').click(function(){
     _stop_recording(true);
@@ -540,12 +540,12 @@ function _current_book_storage_path() {
   var result = path.join('/') + '/';
   return result;
 }
-function _current_book_playlist_path() { 
+function _current_book_playlist_path() {
   var path = BOOK_ID.trim().toLowerCase() +'-'+
     localStorage.getItem("reader_name").trim().toLowerCase() +'.m3u';
   return path;
 }
-function _fetch_S3_audio_filelist(callback, last_key) { 
+function _fetch_S3_audio_filelist(callback, last_key) {
   AWS.config.credentials.secretAccessKey = ACCESS_SEC_PART + localStorage.getItem('pass');
   var storage_path = _current_book_storage_path();
 //console.log(_current_book_storage_path());
@@ -561,7 +561,7 @@ function _fetch_S3_audio_filelist(callback, last_key) {
         _fetch_S3_audio_filelist(callback, last_key);
       }
     } else {
-  //console.log('Raw S3 data: ', data); 
+  //console.log('Raw S3 data: ', data);
       var items = data.Contents.filter(function(item){
         var match = ((item.Key.indexOf(storage_path)===0) && (item.Key.length > storage_path.length));
         if (!match) console.log (item.Key+', '+storage_path+', '+item.Key.indexOf(storage_path));
@@ -574,7 +574,7 @@ function _fetch_S3_audio_filelist(callback, last_key) {
         //var block = $(selector); // extract selector from path name
         var url = 'https://'+AWS_BUCKET+'.s3.amazonaws.com/'+ encodeURIComponent(item.Key);
         //console.log('Fetched S# URL: '+ url);
-        //var audioid =  $(block).attr('data-audioid'); // don't trust the number in the 
+        //var audioid =  $(block).attr('data-audioid'); // don't trust the number in the
 
         block_map[selector] = {url: url, s3: item};
         // audio_urls[selector] = {url: info.url};
@@ -720,23 +720,23 @@ function _save_audio_ogg(selector){
   });
 }
 function _save_playlist() {
-  var list = []; 
+  var list = [];
   var complete = true;
-  var keys = Object.keys(block_map); 
-  keys.forEach(function(key){ 
+  var keys = Object.keys(block_map);
+  keys.forEach(function(key){
     if (block_map[key].url.length<5) complete = false;
-    else list.push(block_map[key].url); 
+    else list.push(block_map[key].url);
   });
-  var filepath = _current_book_playlist_path();  
+  var filepath = _current_book_playlist_path();
   var bucket = new AWS.S3({params: {Bucket: AWS_BUCKET}});
   var params = {Key: filepath,  ContentType: 'audio/x-mpegurl', Body: list.join('\n')};
   // attempt to upload
   //console.log('Saving playlist: '+ filepath);
   bucket.upload(params, function (err, data) {
-    if (err) console.log('S3 Save Error: ', err); 
-    else console.log('  Playlist saved successfully:  https://'+AWS_BUCKET+'.s3.amazonaws.com/'+filepath);     
+    if (err) console.log('S3 Save Error: ', err);
+    else console.log('  Playlist saved successfully:  https://'+AWS_BUCKET+'.s3.amazonaws.com/'+filepath);
   });
- 
+
 }
 
 
@@ -796,7 +796,7 @@ function _record_audio(selector) {
   }, 2250);
 }
 function _stop_recording(forceCancel) {
-  
+
   var selector = $(current_block).attr('data-selector');
   if (!(forceCancel===true)) forceCancel = false;
   cancelRecording = forceCancel;
@@ -806,7 +806,7 @@ function _stop_recording(forceCancel) {
   if (!$('body').hasClass('isRecording')) return;
   if ((!current_block) || (!$(current_block).hasClass('isRecording'))) return;
   // I'll bet a lot of this reset business would better go in _display_block_audio_state
- 
+
     $(selector).find('.recordbutton').show();
     $(selector).find('.stopbutton').hide();
     $(selector).find('.audiocontrols_stop').hide();
@@ -819,7 +819,7 @@ function _stop_recording(forceCancel) {
 
     recorder.stop();
     _display_block_audio_state(selector);
-    
+
     // for recorderjs we need to save the data
     if (!forceCancel) {
       //console.log("Recorded audio for current_block: ", selector);
@@ -884,7 +884,7 @@ function _scrollto_next_needsAudio(force_start_recording) {
   _scrollto_block(next_block_selector);
   if (force_start_recording) _record_audio(next_block_selector);
   /*return;
-  
+
   //if (!current_selector.length) console.dir(current_block);
 
   var next_block_selector = $(current_selector).next('.needsAudio').eq(0).attr('data-selector');
