@@ -640,7 +640,7 @@ function _init_ogg_recorder(selector) {
   //console.log('Initialized ogg recorder for: '+ selector);
   recorder = new Recorder({
               encoderApplication: 2048,
-              encoderPath: '../assets/common/Recorderjs_opus/build/encoderWorker.min.js',
+              encoderPath: '../assets/common/rec/encoderWorker.min.js',
               encoderSampleRate: 48000,
               resampleQuality: 10,
               streamPages: false,
