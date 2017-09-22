@@ -243,7 +243,7 @@ function _show_as_audioreading(){
        _init_wav_recorder();
     }).fail(function(err){console.log('error loading recorder', err);});
     */
-    $.getScript('../assets/common/Recorderjs_opus/build/recorder.min.js').done(function(){
+    $.getScript('../../assets/common/Recorderjs_opus/build/recorder.min.js').done(function(){
       //_init_ogg_recorder();
     }).fail(function(err){console.log('error loading recorder', err);});
 
