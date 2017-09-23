@@ -498,7 +498,7 @@ function _insert_reading_instructions(){
     '<span class="fa fa-trash fa-sm"></span> &nbsp; Reset Password </button>');
   instructions += '<ul>\n  <li>'+ list.join('</li><br>\n   <li>') +'</li>\n</ul><br>';
 
-  instructions += ' &nbsp; &nbsp; <span style="font-size: 6pt; color: silver;">v1.11, '+cost_total+'</span> ';
+  instructions += ' &nbsp; &nbsp; <span style="font-size: 6pt; color: silver;">v1.12, '+cost_total+'</span> ';
 
   instructions += '\n</div>\n\n';
   $('body').prepend(instructions);
@@ -515,7 +515,7 @@ function _get_user_credentials() {
   if (!password) do {
     password = window.prompt("Password: ", "");
     localStorage.setItem("pass", password);
-  } while (!passcheck);
+  } while (!password);
 }
 
 function _clear_password() {
