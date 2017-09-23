@@ -477,7 +477,7 @@ function _insert_reading_instructions(){
     else if (minutes) time = minutes;
 
   var instructions = '\n\n<div class="reading_instructions">\n';
-  instructions += '<h1> Audio Reading Instructions (v1.9) </h1>';
+  instructions += '<h1> Audio Reading Instructions  </h1>';
   instructions += '<div class="wordcount"> With <b>'+ _numberWithCommas(count) + ' words</b>, this book’s final audio should be about <b>'+ time + '.</b> </div>';
 
   // instructions list
@@ -496,7 +496,7 @@ function _insert_reading_instructions(){
     '<span class="fa fa-microphone fa-sm"></span> &nbsp; Scroll down to next block needing recorded </button>');
   instructions += '<ul>\n  <li>'+ list.join('</li><br>\n   <li>') +'</li>\n</ul><br>';
 
-  instructions += '('+cost_total+')';
+  instructions += ' &nbsp; &nbsp; <span style="font-size: 6pt; color: silver;">v1.10, '+cost_total+'</span> ';
 
   instructions += '\n</div>\n\n';
   $('body').prepend(instructions);
