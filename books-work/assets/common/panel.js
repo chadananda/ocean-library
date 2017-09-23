@@ -490,7 +490,7 @@ function _insert_reading_instructions(){
   list.push('Do not read paragraph numbers, these are only for your convenience. '+
     'Phrase markers and sentence breaks are likewise only for convenience.');
   //list.push();
-  list.push('For Bahá’í transliterated terms:  &nbsp; <a href="http://bit.ly/bahai-pronunciation">http://bit.ly/bahai-pronunciation</a> ');
+  // list.push('For Bahá’í transliterated terms:  &nbsp; <a href="http://bit.ly/bahai-pronunciation">http://bit.ly/bahai-pronunciation</a> ');
   list.push('After each paragraph is recorded, listen to check for mis-reads and re-record if necessary.');
   list.push('<button type="button" onclick="_scrollto_next_needsAudio(); return false" id="soundcheck_btn">'+
     '<span class="fa fa-microphone fa-sm"></span> &nbsp; Scroll down to next block needing recorded </button>');
