@@ -494,9 +494,11 @@ function _insert_reading_instructions(){
   list.push('After each paragraph is recorded, listen to check for mis-reads and re-record if necessary.');
   list.push('<button type="button" onclick="_scrollto_next_needsAudio(); return false" id="soundcheck_btn">'+
     '<span class="fa fa-microphone fa-sm"></span> &nbsp; Scroll down to next block needing recorded </button>');
+  list.push('<button type="button" onclick="_clear_password(); return false" id="soundcheck_btn">'+
+    '<span class="fa fa-trash fa-sm"></span> &nbsp; Reset Password </button>');
   instructions += '<ul>\n  <li>'+ list.join('</li><br>\n   <li>') +'</li>\n</ul><br>';
 
-  instructions += ' &nbsp; &nbsp; <span style="font-size: 6pt; color: silver;">v1.10, '+cost_total+'</span> ';
+  instructions += ' &nbsp; &nbsp; <span style="font-size: 6pt; color: silver;">v1.11, '+cost_total+'</span> ';
 
   instructions += '\n</div>\n\n';
   $('body').prepend(instructions);
@@ -515,6 +517,13 @@ function _get_user_credentials() {
     localStorage.setItem("pass", password);
   } while (!passcheck);
 }
+
+function _clear_password() {
+  localStorage.setItem('reader_name', '');
+  localStorage.setItem('pass', '');
+  _get_user_credentials();
+}
+
 function _block_url(block){
   var selector = $(block).attr('data-selector');
   var path_url = _current_book_storage_path() + _gen_block_audio_path(selector) + '.wav';
