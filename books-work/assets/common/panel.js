@@ -470,7 +470,7 @@ function _insert_reading_instructions(){
    if (minutes < 5) minutes = 0;
    if (minutes>0) minutes = minutes.toString() + (minutes>1 ? ' minutes' : ' minute');
   var cost_total = (minutes_total * costpm).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
+  var cost_total2 = (minutes_total * 1.6).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
   if (hours && minutes) time = hours +' and '+ minutes;
    else if (hours) time = hours;
@@ -498,7 +498,7 @@ function _insert_reading_instructions(){
     '<span class="fa fa-trash fa-sm"></span> &nbsp; Reset Password </button>');
   instructions += '<ul>\n  <li>'+ list.join('</li><br>\n   <li>') +'</li>\n</ul><br>';
 
-  instructions += ' &nbsp; &nbsp; <span style="font-size: 6pt; color: silver;">v1.12, '+cost_total+'</span> ';
+  instructions += ' &nbsp; &nbsp; <span style="font-size: 6pt; color: gray;">v1.13 - '+cost_total+', '+cost_total2+'</span> ';
 
   instructions += '\n</div>\n\n';
   $('body').prepend(instructions);
