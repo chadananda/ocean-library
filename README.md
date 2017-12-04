@@ -1,4 +1,4 @@
-Ocean Core Library
+Ocean Core Literature
 =================
 
 ## Library of Proofread Core Literature for Ocean
