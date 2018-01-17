@@ -1,4 +1,4 @@
-Ocean Core Library
+Ocean Core Literature
 =================
 
 ## Library of Proofread Core Literature for Ocean
@@ -7,5 +7,5 @@ Formatting Style Guide:  https://docs.google.com/document/d/1WSdx728aAl60GRCRx7z
 
 ### Sample formatted Books:
 
-https://chadananda.github.io/ocean-library/
+## https://chadananda.github.io/ocean-library/
  
