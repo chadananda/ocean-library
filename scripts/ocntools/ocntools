@@ -23,7 +23,8 @@ var _ = require('lodash');
 var request = require('request');
 var readlineSync = require('readline-sync');
 var levenshtein = require('levenshtein-edit-distance');
-var Filter = require('bad-words'), filter = new Filter();
+var Filter = require('bad-words'), filter = new Filter(); 
+var html2md = require('html-markdown');
 
 var cwd = require('cwd');
 
@@ -410,6 +411,135 @@ function ocnAutocorrect(cmd, env) {
     console.log(' Output cleaned text to: '.green + 'cleaned/'+file);
   }}); 
 }
+
+function extractMetaFromPath(filepath, metatag) {
+  var meta = {}
+  var path = filepath.split('/')
+  var index=path.indexOf('Archive - Text')
+  //console.log(path)
+  if (index>-1) {
+    path = path.slice(index+1)
+    //console.log(path)
+    var file = path.pop() // last one
+    var filename = file.split('.'); filename.pop(); filename = filename.join('.')
+    var fileparts = filename.split(',').map((part)=>part.trim())
+    meta.language = path.shift()
+    meta.religion = path.shift()
+    meta.category = path.shift().replace(/([0-9]+\.\s?)?(.*?)/, '$2').replace(/(.*?)\s\(.*?\)/, '$1').trim()
+    if (meta.category === 'Pilgrim Notes') { 
+      meta.date = fileparts.shift()
+      meta.author = fileparts.shift()
+      meta.title = fileparts.shift() || `${meta.author} Notes`
+    } else if  (meta.category === ' ') { 
+ 
+    }
+  }
+  // extract from header metatag if provided
+  if (metatag) {
+    if (metatag.indexOf(`name='description'`)>-1) { 
+      meta.description = metatag.replace(/[\s\S]+name='description'\s+content='(.*?)'[\s\S]+/, '$1');
+    }
+    if (metatag.indexOf('data-author=')>-1) { 
+     var author = metatag.replace(/[\s\S]+data-author='(.*?)'[\s\S]+/, '$1');
+     if (author) meta.author = author;
+    }
+    if (metatag.indexOf('data-title=')>-1) { 
+     var title = metatag.replace(/[\s\S]+data\-title='(.*?)'\s[\s\S]+/, '$1');
+     if (title) meta.title = title; 
+    }
+    if (metatag.indexOf('data-bookid=')>-1) {
+     var bookid = metatag.replace(/[\s\S]+data-bookid='(.*?)'\s[\s\S]+/, '$1');
+     if (bookid) meta.bookid = bookid;
+    }
+    if (metatag.indexOf('data-notes=')>-1) {
+     var notes = metatag.replace(/[\s\S]+data-notes='(.*?)'[\s\S]+/, '$1');
+     if (notes) meta.notes = notes;
+    }
+  }
+  
+  return meta
+}
+ 
+
+function ocnToMD(cmd, env) { 
+  // modify file text
+  var files = env.parent.rawArgs.slice(3); 
+  files.forEach(function(file) { if (!fs.lstatSync(cwd(file)).isDirectory()) { 
+    var src = cwd(file)
+    var dir = cwd()+'/markDown/'
+    var fparts = file.split('.')
+    var type = fparts.pop() 
+    fparts.push('md')
+    var destFile = fparts.join('.')
+    var dest = dir + destFile
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir)
+    var meta = {}
+    var header = []
+    // load file   
+    var str = fs.readFileSync(src, 'utf8');
+    if (type==='txt') {
+      console.log('processing text file'.green, `"${file}"`.red, `"${destFile}"`.green)
+       
+    } else if (type === 'glyph' || type === 'glf') {
+      console.log('processing glyph file'.green, `"${file}"`.red, `"${destFile}"`.green)
+       
+    } else if (type === 'md') {
+      console.log('processing markdown file'.green, `"${file}"`.red, `"${destFile}"`.green)
+       
+    } else if (type === 'html' || type === 'htm') {
+      console.log('processing html file'.green, `"${file}"`.red, `"${destFile}"`.green)
+      // get metadata from contents      
+      var metatag = str.replace(/[\s\S]+?(<meta name='description' content='.*?'[\s\S]*?>)[\s\S]+/, '$1');
+      meta = extractMetaFromPath(cwd()+'/'+file, metatag)
+        
+      str = fixCommonBahaiWords(str, true);
+      // strip out the part of this document we actually want
+      str = str.replace(/[\s\S]+<body.*?>(.*?)/, '$1') // remove header
+      str = str.replace(/[\s\S]+<h3>Table of Contents <\/h3>\s+<\/section>([\s\S]+)/, '$1') // remove down to end of table of contents
+      str = str.replace(/<!--[\s\S]+?-->/g, '') // remove comment lines
+      str = str.replace(/<section class='content copyright'[\s\S]+?<h3/g, '<h3')
+      str = str.replace(/(<\/div>|<\/section>)/g, '') 
+      // fix section titles
+      str = str.replace(/<h3 class='title.*?>(.*?)<\/h3>/g, '<h2>$1</h2>')
+      // remove section crap
+      str = str.replace(/<section class='content.*?>/g, '')
+      // simplify subheads
+      str = str.replace(/<h3 class='subhead.*?>/g, '<h3>')
+      // fix blockquotes
+      str = str.replace(/<p.*?class='blockquote'.*?>([\s\S]+?)<\/p>/g, '<blockquote>$1</blockquote>')
+      
+      
+      // remove ids
+      str= str.replace(/id='[0-9a-z_]+'/g, '')
+      // remove remaining divs
+      str= str.replace(/<div.*?>|<section.*?>/g, '')
+      // simplify italic block pars
+      str=str.replace(/<p.*?class='italic'.*?>([\s\S]+?)<\/p>/g, '<p><i>$1</i></p>')
+      
+      //console.log(meta)
+      str = html2md.html2mdFromString(str)
+      
+      // remove excess spaces 
+      str = str.replace(/\r/g, ''); 
+      str = str.replace(/\n\s*\n\s*\n/g, '\n\n'); str = str.replace(/\n\s*\n\s*\n/g, '\n\n'); str = str.replace(/\n\s*\n\s*\n/g, '\n\n');
+      str = str.replace(/\n\s*\n\s*\n/g, '\n\n'); str = str.replace(/\n\s*\n\s*\n/g, '\n\n'); str = str.replace(/\n\s*\n\s*\n/g, '\n\n');
+      str = str.replace(/\n/g, '\n'); 
+      
+      // add title to top of document
+      str = `# ${meta.title}  \n## ${meta.author}  \n### ${meta.description}  \n------\n\n`+ str
+      
+      // create header out of meta 
+      Object.keys(meta).map(key => header.push(`${key}: ${meta[key]}  `))
+      str = header.join('\n') + '\n\n\n' +str
+       
+    } 
+
+    // output
+    fs.writeFileSync(dest, str); 
+  }}); 
+}
+
+
 
 function fixCommonBahaiWords(str, forceHTML) {
 
@@ -1963,7 +2093,10 @@ program.command('textCleanup <filename>')
 
 program.command('autoCorrect <filename>')
   .description('General spelling autocorrect (includes html underscore codes)').action(ocnAutocorrect);
-
+  
+program.command('toMD <filename>')
+  .description('Convert text or html files to MD with spelling corrections').action(ocnToMD);
+   
 program.command('renumberSections <filename>')
   .description('Renumber paragraph ids. Using sections for section numbers').action(ocnRenumberSections);
 program.command('renumber <filename>')
