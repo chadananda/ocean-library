@@ -6,8 +6,7 @@
 
 var app_ver = '0.0.3';
 var program = require('commander');
-var title_case = require('to-title-case');
-//var fs = require('fs');
+var title_case = require('to-title-case'); 
 var colors = require('colors');
 var inquirer = require("inquirer");
 var cheerio = require('cheerio');
