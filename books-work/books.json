@@ -19,7 +19,7 @@
 
   {
     "title": "Gleanings from the Writings of Bahá’u’lláh", "author": "Bahá’u’lláh",
-    "words": 68428, "formatted": true, "proofed": true, "audio": false,
+    "words": 68428, "formatted": true, "proofed": true, "audio": true,
     "href": "books-work/4.%20proofed-done/baha-gwb-en.html"
   },
 
@@ -66,7 +66,7 @@
   },
   {
     "title": "Days of Remembrance", "author": "Bahá’u’lláh",
-    "words": 52789, "formatted": true, "proofed": true, "audio": false,
+    "words": 52789, "formatted": true, "proofed": true, "audio": true,
     "href": "books-work/4.%20proofed-done/baha-remembrance-en.html"
   },  
   
@@ -99,7 +99,7 @@
 
   {
     "title": "Promulgation of Universal Peace", "author": "‘Abdu’l-Bahá",
-    "words": 159092, "formatted": true, "proofed": true, "audio": false,
+    "words": 159092, "formatted": true, "proofed": true, "audio": true,
     "href": "books-work/4.%20proofed-done/abd-pup-en.html"
   },
 
@@ -129,7 +129,7 @@
 
   {
     "title": "Selections from the Writings of the ‘Abdu’l-Bahá", "author": "‘Abdu’l-Bahá",
-    "words": 77426, "formatted": true, "proofed": true, "audio": false,
+    "words": 77426, "formatted": true, "proofed": true, "audio": true,
     "href": "books-work/4.%20proofed-done/abd-swa-en.html"
   },
 
@@ -154,7 +154,7 @@
 
   {
     "title": "Tablet to the Hague", "author": "‘Abdu’l-Bahá",
-    "words": 3888, "formatted": true, "proofed": false, "audio": false,
+    "words": 3888, "formatted": true, "proofed": false, "audio": true,
     "href": "books-work/4.%20proofed-done/abd-tablet-to-the-hague.html"
   },
 
@@ -344,7 +344,7 @@
   },
   {
     "title": "Bahá’í Prayers", "author": "Compilation",
-    "words": 46203, "formatted": false, "proofed": false, "audio": false,
+    "words": 46203, "formatted": false, "proofed": false, "audio": true,
     "href": "books-work/2.%20formatted-notproofed/bahai-prayers-en.html"
   },
   {
