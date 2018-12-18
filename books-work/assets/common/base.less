@@ -291,11 +291,11 @@ body.ocean {
 
     // footnote links
     a[data-fnid]:before {
-      content: '[' attr(data-fnid) ']'; font-size: 50%; line-height:50%; color: @grayed_color;
+      content: attr(data-fnid); font-size: 50%; line-height:50%; color: @grayed_color;
       position: relative; top: -1em;
       text-decoration: none !important;
     }
-    [dir='rtl'] a[data-fnid]:before {content: ']' attr(data-fnid) '['; }
+    [dir='rtl'] a[data-fnid]:before {content: attr(data-fnid); }
     a[data-fnid]:hover {cursor:pointer;}
 
 
@@ -401,7 +401,7 @@ body.ocean {
       display: block;
       margin-right: 1em;
       font-style: italic; font-size: 70% !important;
-      content: '[' attr(id) ']';
+      content: attr(id);
       vertical-align:top;
       position: absolute;
       top: 0; left: -70px;

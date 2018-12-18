@@ -2712,7 +2712,7 @@ body.ocean div.par.reference {
 }
 body.ocean p a[data-fnid]:before,
 body.ocean div.par a[data-fnid]:before {
-  content: '[' attr(data-fnid) ']';
+  content: attr(data-fnid);
   font-size: 50%;
   line-height: 50%;
   color: rgba(26, 26, 26, 0.7);
@@ -2722,7 +2722,7 @@ body.ocean div.par a[data-fnid]:before {
 }
 body.ocean p [dir='rtl'] a[data-fnid]:before,
 body.ocean div.par [dir='rtl'] a[data-fnid]:before {
-  content: ']' attr(data-fnid) '[';
+  content: attr(data-fnid);
 }
 body.ocean p a[data-fnid]:hover,
 body.ocean div.par a[data-fnid]:hover {
@@ -3133,7 +3133,7 @@ body.ocean .fn[id]:before {
   margin-right: 1em;
   font-style: italic;
   font-size: 70% !important;
-  content: '[' attr(id) ']';
+  content: attr(id);
   vertical-align: top;
   position: absolute;
   top: 0;
