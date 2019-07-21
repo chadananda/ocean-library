@@ -52,6 +52,7 @@ $(function() {
   links+= '   --- <br> \n';
   for (i=0; i<line_height.length; i++) links += ' <a id="'+line_height[i]+'">'+line_height[i]+'</a><br> \n ';
   links+= '   --- <br> \n';
+
   links+= ' <a id="study_format">Print Study Ver.</a><br> \n';
   links+= ' <a id="study_format_centered">Centered Study</a><br> \n';
   links+= '   --- <br> \n';
@@ -84,8 +85,8 @@ $(function() {
     else if (line_height.indexOf(id)>-1) $('body').removeClass(line_height.join(' ')).addClass(id);
     else if (id === 'study_format') {
       $('body').addClass('study_format');
-      window.print();
-      $('body').removeClass('study_format');
+      // window.print();
+      // $('body').removeClass('study_format');
     }
     else if (id === 'study_format_centered') {
       $('body').addClass('study_format_centered');
