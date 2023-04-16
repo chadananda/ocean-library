@@ -26,7 +26,7 @@
     "lodash": "^3.9.3",
     "markup-js": "^1.5.21",
     "readline-sync": "^1.4.7",
-    "request": "^2.83.0",
+    "request": "^2.88.2",
     "request-promise": "^3.0.0",
     "synonymator": "0.0.1",
     "thesaurus-service": "^1.2.3",
